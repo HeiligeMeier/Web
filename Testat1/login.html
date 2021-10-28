@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="text/css" href="style.css">    
+    </head>
+    <body>
+        <form action="danke.html" method="post">
+
+            <!-- Bild und Überschrift -->
+            <img src="images/chat.png" alt="Chat Symbol" width="10%">
+            <h1>Please sign in</h1>
+        
+            <!-- Login-Formular -->
+            <fieldset>
+                <legend>Login</legend>
+            
+                    <label for="Username">Username</label>
+                    <input type="text" id="Username"
+                        name="Username" placeholder="Username" required> <br>
+            
+                    <label for="Password">Password</label>
+                    <input type="password" id="Password"
+                        name="Password" placeholder="Password" required>
+            
+            </fieldset>
+
+            <!-- Buttons mit Links -->
+                <a href="register.html"> <button type="submit">Register</button> </a>
+                <button type="submit" formaction="friends.html">Login</button> 
+                <!-- formaction / formnovalidate -->
+                
+        </form>
+    </body>
+</html>
