@@ -2,29 +2,32 @@
 <html>
     <head>
         <title>Register</title>
-        <link rel="stylesheet" href="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <img src="images/user.png" width="150" height="150">
+        <img src="images/user.png" width="150" height="150" class="image">
         <div>
-            <h1>Register yourself</h1>
+            <h1 class="h1register">Register yourself</h1>
         </div>
         <form action="friends.html" method="post">
-            <fieldset>
-                <legend>Register</legend>
+            <fieldset class="fsregister">
+                <legend class="legregister">Register</legend>
 
-                <label for="usernameLabel">Username</label>
-                <input type="text" id="usernameLabel" name="username" placeholder="Username" required><br>
+                <label for="usernameLabel" class="labelregister">Username</label>
+                <input type="text" id="usernameLabel" name="username" placeholder="Username" required class="nameregister"><br>
 
-                <label for="passwordLabel">Password</label>
-                <input type="password" id="passwordLabel" name="password" placeholder="Password" required><br>
+                <label for="passwordLabel" class="labelregister">Password</label>
+                <input type="password" id="passwordLabel" name="password" placeholder="Password" required class="pwregister"><br>
 
-                <label for="confirmLabel">Confirm Password</label>
-                <input type="password" id="confirmLabel" name="confirm" placeholder="Confirm Password" required><br>
+                <label for="confirmLabel" class="labelregister">Confirm Password</label>
+                <input type="password" id="confirmLabel" name="confirm" placeholder="Confirm Password" required class="pwregister"><br>
 
             </fieldset>
-            <button type="submit" formaction="login.html" formnovalidate>cancel</button>
-            <button type="submit">create account</button>
+            <div class=buttondiv>
+                <button type="submit" formaction="login.html" formnovalidate class="button1">cancel</button>
+                <button type="submit" class="button2">create account</button>
+            </div>
+            
         </form>
     </body>
 </html>
