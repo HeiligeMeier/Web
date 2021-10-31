@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Chat</title>
-        <link rel="stylesheet" href="text/css" href="style.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <div>
@@ -13,19 +13,27 @@
             |
             <a href="profile.html">Profile</a>
             |
-            <a href="friends.html">Remove Friend</a>
-
+            <a href="friends.html" class="rmvchat">Remove Friend</a>
+ 
         </div>
-        <p>
-            Tom: Hallo Welt!
-        </p>
-        <p>
-            Jerry: Wie gehts?
-        </p>
+        
+        <div class="horizontal_dotted_line"></div>
+        
+        <fieldset class="fschat">
+            <p>
+                Tom: Hallo Welt!
+            </p>
+            <p>
+                Jerry: Wie gehts?
+            </p>
+        </fieldset>
+
+        <div class="horizontal_dotted_line"></div>
+
         <div>
             <form action="">
-                <input type="text" id="messageLabel" name="message" placeholder="New Message">
-                <button type="submit">Send</button>
+                <input type="text" id="messageLabel" name="message" placeholder="New Message" class="msgchat">
+                <button type="submit" class="buttonchat">Send</button>
             </form>
         </div>
     </body>
