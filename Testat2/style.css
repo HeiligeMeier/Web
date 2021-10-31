@@ -1,3 +1,118 @@
-button {
-    text-decoration: none;
+/* general */
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    background-color: whitesmoke;
+    max-width: 800px;
 }
+
+a {
+    color: blue;
+}
+a:hover {
+    color: blueviolet;
+}
+
+/* ------------------------------------------ */ 
+/* register */
+
+.image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;  
+    border-radius: 50%; 
+}
+
+.h1register {
+    text-align: center;
+}
+
+.legregister {
+    text-align: left;
+}
+
+.fsregister {
+    border-color:lightgrey;
+    border-width: medium;
+    border-style: dotted;
+    width: 650px;
+    margin: auto;
+    background-color: white;
+}
+
+.labelregister {
+    display: inline-block;
+    text-align: right;
+    width: 280px;
+    padding: 10px;
+    
+}
+
+.nameregister, .pwregister {
+    padding: 4px;
+    border-radius: 0%;
+    border-width: 2px;
+    border-color: lightgrey
+}
+
+.buttondiv {
+    text-align: center;
+}
+
+.button1 {
+    background-color: grey;
+    margin: 10px 1px 10px 1px;
+    padding: 10px 15px 10px 15px;
+    border-width: thin;
+    border-color: lightgrey;
+    color: white;
+}
+
+.button2 {
+    background-color: royalblue;
+    padding: 10px 15px 10px 15px;
+    border-width: thin;
+    border-color: lightgrey;
+    color: white;
+}
+
+
+/* ------------------------------------------ */ 
+/* chat */
+
+.fschat {
+    background-color: white;
+    border-radius: 5px;
+    border-color: whitesmoke;
+}
+
+.horizontal_dotted_line {
+    border-bottom: 1px dashed grey;
+    border-width: 1px;
+    margin: 10px;
+    width: 98%;
+}
+
+.msgchat {
+    width: 75%;
+    padding: 8px;
+    border-radius: 0%;
+    border-width: 2px;
+    border-color: lightgrey
+    
+}
+
+.buttonchat {
+    background-color: lightgrey;
+    border-width: thin;
+    border-color: lightgrey;
+    padding: 8px 25px 8px 25px;
+    margin: 0px 0px 0px 30px;
+    width: 17.5%;
+    color: white;
+}
+
+.rmvchat {
+    color: crimson;
+}
+
