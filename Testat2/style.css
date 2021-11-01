@@ -120,7 +120,37 @@ a:hover {
 }
 /*-------------------------------------*/
 /* Profile*/
+#pb{
+    width: 30%;
+    float: left;
+    margin-right: 40px;
+    height: auto;
 
+}
+.content{
+    margin-top: 20px;
+}
+.about{
+    border: 1px dotted blue;
+    display: flow-root;
+    background-color: white;
+    border-color:lightgrey;
+    border-width: medium;
+    border-style: dotted;
+    padding: 10px 20px 10px 20px;
+}
+.frage{
+    font-weight: bold;
+}
+.antwort{
+    padding-left: 50px;
+}
+.box{
+    border: 2px solid red;
+    margin-top: 20px;
+}
+.test{
+display: flow-root;}
 
 
 
@@ -137,7 +167,12 @@ a:hover {
 }
 .field{
     background-color: white;
-    margin-bottom: 7px;;
+    margin: auto;
+    margin-bottom: 17px;
+    border-color:lightgrey;
+    border-width: medium;
+    border-style: dotted;
+    background-color: white;
 }
 #comment{
     width: 100%;
