@@ -1,24 +1,25 @@
 <html>
     <head>
+        <title>Login</title>
         <link rel="stylesheet" href="text/css" href="style.css">    
     </head>
     <body>
         <form action="" method="post">
 
             <!-- Bild und Überschrift -->
-            <img src="images/chat.png" alt="Chat Symbol" width="10%">
-            <h1>Please sign in</h1>
-        
+            <img src="images/chat.png" alt="Chat Symbol" width="150" height="150" class="imageLogin" >
+            <h1 id="h1Login">Please sign in</h1>
+
             <!-- Login-Formular -->
-            <fieldset>
-                <legend>Login</legend>
+            <fieldset class="fieldsetLogin">
+                <legend class="legendlogin">Login</legend>
             
-                    <label for="Username">Username</label>
-                    <input type="text" id="Username"
+                    <label for="usernameLogin" class="labellogin">Username</label>
+                    <input type="text" id="usernamelogin" class="usernamelogin"
                         name="Username" placeholder="Username" required> <br>
             
-                    <label for="Password">Password</label>
-                    <input type="password" id="Password"
+                    <label for="passwordLogin" class="labellogin">Password</label>
+                    <input type="password" id="passwordlogin" class="passwordlogin"
                         name="Password" placeholder="Password" required>
             
             </fieldset>
@@ -26,8 +27,7 @@
                 <!-- Buttons mit Links -->
                 <a href="register.html"> <button type="submit">Register</button> </a>
                 <button type="submit" formaction="friends.html">Login</button> 
-                <!-- formaction / formnovalidate -->
                 
-        </form>
+        </form> 
     </body>
 </html>
