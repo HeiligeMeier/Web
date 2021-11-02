@@ -309,3 +309,18 @@ display: flow-root;}
 fieldset > ul > li > a {
     color: black;
 }
+
+/*-------------------------------------*/
+/* responsive */
+
+@media only screen and (max-width: 800px) {
+    .labelregister {
+        text-align: left;
+        width: 100%;
+        padding: 10px; 
+    }
+    
+    .buttonchat { 
+        margin-left: 0px;
+    }
+}
