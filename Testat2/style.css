@@ -201,27 +201,25 @@ display: flow-root;}
 /*-------------------------------------*/
 /* Login*/
 .usernamelogin, .passwordlogin {
-    padding: 4px;
-    border-radius: 0%;
+    border-color: lightgrey;      
     border-width: 2px;
-    border-color: lightgrey
+    padding: 4px;
 }
 #h1Login {
     text-align: center;
 }
 .imageLogin {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     border-radius: 50%;
 }
 .fieldsetLogin {
     border-color:lightgrey;
+    background-color: white;
     border-width: medium;
     border-style: dotted;
-    width: 650px;
+    width: 520px;
     margin: auto;
-    background-color: white;
 }
 .labellogin {
     display: inline-block;
@@ -229,14 +227,79 @@ display: flow-root;}
     width: 280px;
     padding: 10px;
 }
-.legendlogin {
-    text-align: left;
+.logbutton {
+    text-align: center;
+    padding: 10px 15px 10px 15px;
+    border-width: thin;
+    border-color: lightgrey;
+    color: white;
+    
+    margin: auto;
 }
-.
+.divbutlog {
+    text-align: center;
+    padding-top: 1em;
+}
+#logbuttonreg {
+    background-color: grey;
+}
+#logbuttonlog {
+    background-color: royalblue;
+}
+
 /*-------------------------------------*/
 /* Logout*/
-
-
+.imagelogout {
+    display: block;
+    margin: auto;
+    border-radius: 50%;
+}
+#h1logout, #plogout, .logoutdiv {
+    text-align: center;
+}
 
 /*-------------------------------------*/
 /* friends*/
+.listfriends {
+    list-style-type: none;
+    list-style-position: inside;
+    padding-left: 0px;
+}
+.pfriends {
+    text-align: left;
+}
+.fsfriends {
+    background-color: white;
+    border-color: whitesmoke;
+    border-radius: 5px;
+}
+#addbutton {  
+    color: white;
+    background-color: grey;
+    border-color: lightgrey;
+    border-width: thin;
+    padding: 8px 25px 8px 25px;
+    margin: 0px 0px 0px 30px;
+    width: 17.5%;
+}
+#spanfriends {
+    font-weight: bold;
+}
+#addfriend {
+    width: 75%;
+    padding: 8px;
+    padding-left: 20px;
+    border-radius: 0%;
+    border-width: 2px;
+    border-color: lightgrey
+}
+.listspanfriend {
+    float: right;
+    padding-right: 5px;
+    background-color: cornflowerblue;
+    color: white;
+    padding-left: 4px;
+}
+fieldset > ul > li > a {
+    color: black;
+}

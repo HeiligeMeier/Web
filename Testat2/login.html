@@ -1,7 +1,7 @@
 <html>
     <head>
         <title>Login</title>
-        <link rel="stylesheet" href="text/css" href="style.css">    
+        <link rel="stylesheet" type="text/css" href="style.css">    
     </head>
     <body>
         <form action="" method="post">
@@ -12,22 +12,22 @@
 
             <!-- Login-Formular -->
             <fieldset class="fieldsetLogin">
-                <legend class="legendlogin">Login</legend>
-            
-                    <label for="usernameLogin" class="labellogin">Username</label>
-                    <input type="text" id="usernamelogin" class="usernamelogin"
-                        name="Username" placeholder="Username" required> <br>
-            
-                    <label for="passwordLogin" class="labellogin">Password</label>
-                    <input type="password" id="passwordlogin" class="passwordlogin"
-                        name="Password" placeholder="Password" required>
+                <legend>Login</legend>
+
+                <label for="usernameLogin" class="labellogin">Username</label>
+                <input type="text" id="usernamelogin" class="usernamelogin"
+                    name="Username" placeholder="Username" required> <br>
+        
+                <label for="passwordLogin" class="labellogin">Password</label>
+                <input type="password" id="passwordlogin" class="passwordlogin"
+                    name="Password" placeholder="Password" required>
             
             </fieldset>
-
                 <!-- Buttons mit Links -->
-                <a href="register.html"> <button type="submit">Register</button> </a>
-                <button type="submit" formaction="friends.html">Login</button> 
-                
-        </form> 
+                <div class="divbutlog">
+                    <a href="register.html"> <button type="submit" class="logbutton" id="logbuttonreg">Register</button> </a>
+                    <button type="submit" formaction="friends.html" class="logbutton" id="logbuttonlog">Login</button> 
+                </div>
+            </form>  
     </body>
 </html>
