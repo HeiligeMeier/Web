@@ -118,6 +118,12 @@ a:hover {
 .rmvchat {
     color: crimson;
 }
+
+.timechat {
+    text-align: center;
+    color: lightgray;
+    float: right;
+}
 /*-------------------------------------*/
 /* Profile*/
 #pb{
