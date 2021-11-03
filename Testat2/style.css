@@ -314,7 +314,7 @@ fieldset > ul > li > a {
 /* responsive */
 
 @media only screen and (max-width: 800px) {
-    .labelregister {
+    .labelregister, .fieldsetLogin, .fsfriends, #addfriend, .about {
         text-align: left;
         width: 100%;
         padding: 10px; 
