@@ -18,3 +18,9 @@ xmlhttp.send();
 addfriend.addEventListener('keyup', function() {
     consolge.log(addfriend.value);
 });
+
+// für registrieren roter kasten
+
+// .eingabe:focus-visible {
+//      outline: 1px solid;
+//  }
