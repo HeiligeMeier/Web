@@ -32,8 +32,9 @@
 
         <!-- Freund hinzufügen -->
         <form action="">
-            <input type="text" id="addfriend" onclick="myFunction()"
-                name="AddFriend" placeholder="Add friend to List"> 
+            <!-- onkeyup="keyup(this)" --> 
+            <input type="text" id="addfriend" list="namen" placeholder="Add friend to List"> 
+            <datalist id="namen"></datalist>
             <Button id="addbutton">Add</Button>
         </form>
         <script src="friends.js"></script>
