@@ -14,11 +14,24 @@ xmlhttp.send();
 
 // Datalist
 const names = ['Tom', 'Jerry'];
-const list = document.getElementById('namen');
 
-names.forEach(function(name) {
-    var option = document.createElement('option');
-    option.value = name;
-    list.appendChild(option);
-});
+function initNames(prefix) {
+    const list = document.getElementById('namen');
 
+    names.forEach(function(name) {
+        if (prefix === ' ' || name.startsWith(prefix)) {
+            var option = document.createElement('option');
+            option.value = name;
+            list.appendChild(option);
+        }
+    });
+}
+
+function keyup(input) {
+    const prefix = input.value;
+    initNames(prefix);
+}
+
+const input = document.getElementById('addfriend');
+
+initNames('');
