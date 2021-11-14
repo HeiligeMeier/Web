@@ -58,6 +58,14 @@ a:hover {
     border-color: lightgrey
 }
 
+.nameregister1:focus-visible, .pwregister1:focus-visible {
+    outline: 1px solid lightskyblue;
+}
+
+.nameregister2:focus-visible, .pwregister2:focus-visible {
+    outline: 1px solid red;
+}
+
 .buttondiv {
     text-align: center;
 }
