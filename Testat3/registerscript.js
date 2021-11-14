@@ -20,54 +20,19 @@ xmlhttp.send();
 var username = document.getElementById("usernameLabel");
 var password = document.getElementById("passwordLabel");
 var confirmpw = document.getElementById("confirmLabel");
-document.getElementById("createButton").addEventListener("submit", validateForm)
-
-
-function validateForm(event) {
-    //Check Username
-    if(!validateUsername) {
-        username.classList.remove("nameregister1");
-        username.classList.add("nameregister2");
-    } else {
-        username.classList.remove("nameregister2");
-        username.classList.add("nameregister1");
-    }
-    //Check Password
-    if (!validatePassword) {
-        password.classList.remove("pwregister1");
-        password.classList.add("pwregister2");
-    } else {
-        password.classList.remove("pwregister2");
-        password.classList.add("pwregister1");
-    }
-    //Check Confirm Password
-    if (!validateConfirm()) {
-        confirmpw.classList.remove("pwregister1");
-        confirmpw.classList.add("pwregister2");
-    } else {
-        confirmpw.classList.remove("pwregister2");
-        confirmpw.classList.add("pwregister1");
-    }
-    //Check if Username is taken
-    if (!validateIsUsed()) {
-        username.classList.remove("nameregister1");
-        username.classList.add("nameregister2");
-    }
-    
-    if(!validateUsername || !validatePassword || !validateConfirm || !validateIsUsed) {
-        event.preventDefault();
-        alert('Something went wrong, check your inputs.');
-        return false;
-    }
-    return true;
-}
+var form = document.getElementById("formsubmit")
+var create = document.getElementById("createButton");
+form.addEventListener("submit", validateForm);
+//username.addEventListener("click", validateForm);
 
 
 function validateUsername() {
     var val = username.value;
     if(val.length < 3) {
+        console.log("false")
         return false;
     } else {
+        console.log("true")
         return true;
     }
 }
@@ -82,7 +47,7 @@ function validatePassword() {
 }
 
 function validateConfirm() {
-    if (password.value !== confirm.value) {
+    if (password.value !== confirmpw.value) {
         return false;
     } else {
         return true;
@@ -107,5 +72,46 @@ function validateIsUsed() {
     xmlhttp.send();
     return state;
 }
+
+function validateForm(event) {
+    //Check Username
+    if(!validateUsername()) {
+        username.classList.remove("nameregister1");
+        username.classList.add("nameregister2");
+    } else {
+        username.classList.remove("nameregister2");
+        username.classList.add("nameregister1");
+    }
+    //Check Password
+    if (!validatePassword()) {
+        password.classList.remove("pwregister1");
+        password.classList.add("pwregister2");
+    } else {
+        password.classList.remove("pwregister2");
+        password.classList.add("pwregister1");
+    }
+    //Check Confirm Password
+    if (!validateConfirm()) {
+        confirmpw.classList.remove("pwregister1");
+        confirmpw.classList.add("pwregister2");
+    } else {
+        confirmpw.classList.remove("pwregister2");
+        confirmpw.classList.add("pwregister1");
+    }
+    //Check if Username is taken
+    /*if (!validateIsUsed()) {
+        username.classList.remove("nameregister1");
+        username.classList.add("nameregister2");
+    }
+    */
+    if(!validateUsername() || !validatePassword() || !validateConfirm() /*|| !validateIsUsed*/) {
+        event.preventDefault();
+        alert('Something went wrong, check your inputs.');
+        return false;
+    }
+    return true;
+}
+
+
 
 //Element.classList
