@@ -31,11 +31,11 @@
         <div class="horizontal_dotted_line"></div>
 
         <!-- Freund hinzufügen -->
-        <form action="">
+        <form action="" onsubmit="return validateForm();">
             <!-- onkeyup="keyup(this)" --> 
             <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" onkeyup="keyup(this)"> 
-            <datalist id="namen"></div></datalist>
-            <Button id="addbutton">Add</Button>
+            <datalist id="namen"></datalist>
+            <Button id="addbutton" onclick="click(this)">Add</Button>
         </form>
         <script src="friends.js"></script>
     </body>
