@@ -19,31 +19,27 @@
         
         <div class="horizontal_dotted_line"></div>
         
-        <fieldset class="fschat">
-            <p>
-                Tom: Hallo Welt!
-                <span class="timechat">19:43:01</span>
-            </p>
+        <fieldset id="msg-form" class="fschat">
             
-            <p>
-                Jerry: Wie gehts?
-                <span class="timechat">19:57:20</span>
-            </p>
             
         </fieldset>
 
         <div class="horizontal_dotted_line"></div>
 
         <div>
-            <form action="">
+            <form>
                 <input type="text" id="messageLabel" name="message" placeholder="New Message" class="msgchat">
-                <button type="submit" class="buttonchat">Send</button>
+                <button onclick=sendMsg() type="button" class="buttonchat">Send</button>
             </form>
         </div>
         <script>
-            window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiSmVycnkiLCJpYXQiOjE2MzY4MDI2OTl9.XsvLUohTcJBS7iv2YsdwzaIVBvj0Kb41XI4MuzssMxE"
-            window.chatCollectionId = "4f52c505-5f3c-4354-8365-b878a83c3896"
-            window.chatServer = "https://online-lectures-cs.thi.de/chat"
+            window.prevMsgLen = 0;
+            window.msgIn= document.getElementById("messageLabel");
+            window.msgForm= document.getElementById("msg-form");
+
+            window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2ODAyNjk5fQ.8AAINKyShLmpNic_zKYaBmmffM3LqDEkaztRVl9L9CQ";
+            window.chatCollectionId = "4f52c505-5f3c-4354-8365-b878a83c3896";
+            window.baseURL = "https://online-lectures-cs.thi.de/chat";
         </script>
         <script src="chat.js"></script>
     </body>

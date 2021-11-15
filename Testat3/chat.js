@@ -1,37 +1,73 @@
 //Collection ID: 3d1a2d71-3f08-492f-8cf3-e40eed2b1d03
-var TEST1 = new XMLHttpRequest();
-TEST1.onreadystatechange = function () {
-    if (TEST1.readyState == 4 && TEST1.status == 200) {
-        let data = JSON.parse(TEST1.responseText);
-        console.log(data);
+/*var previousMessageLength=0;
+//var abc="";
+//getEingabe();
+var abc = function(){
+    var eingtext = document.getElementById("messageLabel");
+    let message= eingtext.innerText;
+    return message;
+};
+*/
+function appendMsg(sender, msg, time){
+    const ts = new Date(time);
+    window.msgForm.innerHTML += `<p> ${sender}:
+    ${msg} <span style="float:right">${ts.toLocaleTimeString()}</span></p>`
+}
+
+setInterval(() => {
+    const xmlhttp = new XMLHttpRequest();
+//console.log(TEST1.responseText);
+xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        const res = JSON.parse(xmlhttp.responseText);
+        console.log(res);
+        const msgLen = res.length;
+        for(var i=window.prevMsgLen;i <msgLen;i++){
+        var sender = res[i].from;
+        var msg = res[i].msg;
+        var time = res[i].time;
+        if(msgLen > window.prevMsgLen){
+            appendMsg(sender, msg,time);
+
+        }  
+        window.prevMsgLen=msgLen; 
+    }
+   /*
+        
+        //for-schleife über result startet bei window.msglenth bis reslength
+        //messLength = res.length  
+        console.log(data);*/
     }
 };
-TEST1.open("GET", window.chatServer + "/" + window.chatCollectionId + "/user", true);
+xmlhttp.open("GET", window.baseURL + "/" + chatCollectionId +"/message/Jerry",true);
 // Add token, e. g., from Tom
-TEST1.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
-TEST1.send();
+xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
+xmlhttp.send();
+},3000);
 
-window.setInterval(function(){
-    console.log("Hallo Welt!");
-   
-},1000);
 //------------------------------------------------------------------------//
-/*
+
+function sendMsg(){
 let xmlhttp = new XMLHttpRequest();
 xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 204) {
         console.log("done...");
     }
 };
-xmlhttp.open("POST", "https://online-lectures-cs.thi.de/chat/3d1a2d71-3f08-492f-8cf3-e40eed2b1d03/message", true);
+xmlhttp.open("POST", window.baseURL + "/" + chatCollectionId +"/message", true);
 xmlhttp.setRequestHeader('Content-type', 'application/json');
 // Add token, e. g., from Tom
-xmlhttp.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2ODAxNjczfQ.U_QyqR3_1oZs2V-STfbF13aH7GFST8GePdYlyZRM3MA');
+xmlhttp.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2ODAyNjk5fQ.8AAINKyShLmpNic_zKYaBmmffM3LqDEkaztRVl9L9CQ');
 // Create request data with message and receiver
 let data = {
-    message: "Hello?!",
-    to: "Jerry"
+   "message": window.msgIn.value,
+    "to": "Jerry"
 };
 let jsonString = JSON.stringify(data); // Serialize as JSON
 xmlhttp.send(jsonString); // Send JSON-data to server
-*/
+console.log(jsonString);
+window.msgIn.value="";
+
+//document.getElementById("1").innerText = data.message;
+
+}
