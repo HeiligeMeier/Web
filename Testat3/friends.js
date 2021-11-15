@@ -5,7 +5,14 @@ function getUsernames(names) {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
             // console.log(data);
-            names = data;
+            arrayString = JSON.stringify(data);
+            splitArray = arrayString.split('"');
+            var usernames = [];
+            for (var i = 1; i < splitArray.length; i += 2) {
+                usernames.push(splitArray[i]);    
+            }
+            names = usernames;   
+            console.log(names);
         }
     };
     // Collection id und Bearer muss angepasst werden 
@@ -13,14 +20,17 @@ function getUsernames(names) {
     // Add token, e. g., from Tom
     xmlhttp.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2NTM4MDQyfQ.qg4H3u18X2wuExSWQ_U1DkmVZnqswj9Z4plNbn5GXlg');
     xmlhttp.send();
-    return ["Tom", "Jerry"];
+    // return ["Tom", "Jerry"];
+    return names;
 }
 
 // Konsanten
 const nameList = getUsernames();
+console.log(nameList);
 const list = document.getElementById('namen');
 const eingabe = document.getElementById('addfriend');
 
+console.log();
 
 // ListeAktualisierung
 function initNames(prefix) {
@@ -44,8 +54,7 @@ function keyup(input) {
 function validateForm() {
     var i = 0;
     while(i < nameList.length) {
-        if (eingabe.value == names[i]) {
-            // alert("User added!");
+        if (eingabe.value == nameList[i]) {
             return true;
         }
         i++;
