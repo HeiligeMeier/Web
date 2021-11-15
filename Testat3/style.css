@@ -59,9 +59,7 @@ a:hover {
     
 }
 
-.nameregister:focus-visible, .pwregister:focus-visible {
-    outline: 1px solid gray;
-}
+
 
 .nameregister1, .pwregister1 {
     outline: 1px solid lightskyblue;
