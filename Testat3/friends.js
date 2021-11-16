@@ -1,4 +1,4 @@
-function getUsernames(names) {
+function getUsernames() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
@@ -10,7 +10,8 @@ function getUsernames(names) {
             for (var i = 1; i < splitArray.length; i += 2) {
                 usernames.push(splitArray[i]);
             }
-            names = usernames;
+            // names = usernames;
+            // return names;
         }
     };
     xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/870f0156-7cdc-4ce8-885d-b4f05ee6a49e/user", true);
@@ -18,12 +19,13 @@ function getUsernames(names) {
     xmlhttp.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2NTM4MDQyfQ.qg4H3u18X2wuExSWQ_U1DkmVZnqswj9Z4plNbn5GXlg');
     xmlhttp.send();
 
-    // return names gibt undefined? wieso
+    // return names gibt undefined? wieso (äußere Function kennt )
     // in Zeile 15 gibt es ein Array zurück
+    // return names;
     return ["Tom", "Jerry"];
 }
 
-// Konsanten
+// Deklaration
 const nameList = getUsernames();
 console.log(nameList);
 const list = document.getElementById('namen');
@@ -31,13 +33,23 @@ const eingabe = document.getElementById('addfriend');
 
 // ListeAktualisierung
 function initNames(prefix) {
-    nameList.forEach(function(name) {
-        if (prefix === ' ' || name.startsWith(prefix)) {
+    if (nameList.length != getUsernames().length) {
+        for (var i = getUsernames().length; i > nameList.length; i--) {
             var option = document.createElement('option');
-            option.value = name;
+            // geht das?
+            option.value = getUsernames()[i];
             list.appendChild(option);
         }
-    });
+    } else {
+        nameList.forEach(function(name) {
+            if (prefix === ' ' || name.startsWith(prefix)) {
+                var option = document.createElement('option');
+                option.value = name;
+                list.appendChild(option);
+            }
+        });
+    }
+    
 }
 
 // Aktualisierungskontrolle
@@ -48,6 +60,7 @@ function keyup(input) {
     }
 }
 
+// Kontrolle ob Username vorhanden ist
 function validateForm() {
     var i = 0;
     while(i < nameList.length) {
