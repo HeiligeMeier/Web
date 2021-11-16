@@ -1,34 +1,39 @@
-function getUsernames() {
+window.chatCollectionId = '245e5db0-d33f-41e8-8aef-33e5d1caf9d1';
+        window.chatServer = "https://online-lectures-cs.thi.de/chat";
+        window.chatToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM3MDkxNzY4fQ.s68jjWZCECuv9MxYqHDinIPxv10jmNtb_h1ZYh78U_A';
+
+function getUsernames(callback) {
     var usernames = [];
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
+    xmlhttp.onreadystatechange = function readyState() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var data = JSON.parse(xmlhttp.responseText);
- 
-        
+            // callback(xmlhttp.responseText);
+            let data = JSON.parse(xmlhttp.responseText);
+            usernames = data;
+            console.log(usernames);
+            /*
             arrayString = JSON.stringify(data);
             splitArray = arrayString.split('"');
             for (var i = 1; i < splitArray.length; i += 2) {
                 usernames.push(splitArray[i]);
             }
-            
-            
-            
-            console.log(usernames);
+            */
         }
     };
-    xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/870f0156-7cdc-4ce8-885d-b4f05ee6a49e/user", true);
+    xmlhttp.open("GET", window.chatServer + "/" + window.chatCollectionId + "/user", true);
     // Add token, e. g., from Tom
-    xmlhttp.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2NTM4MDQyfQ.qg4H3u18X2wuExSWQ_U1DkmVZnqswj9Z4plNbn5GXlg');
+    xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
     xmlhttp.send();
-
-    // return usernames gibt undefined? wieso (äußere Function kennt )
-    // in Zeile 15 gibt es ein Array zurück
-    // return["Tom", "Jerry"] ;
-
-    console.log(usernames);
-    return usernames;
+    return ["Tom", "Jerry"];
 }
+
+/*
+getUsernames((text) => {
+    let data = JSON.parse(text);
+    console.log(data);
+    document.getElementById('namen').innerHTML = text;
+});
+*/
 
 // Deklaration
 const nameList = getUsernames();
