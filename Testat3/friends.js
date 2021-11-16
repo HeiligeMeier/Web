@@ -1,17 +1,20 @@
 function getUsernames() {
+    var usernames = [];
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
-            // identisch zu data?
+ 
+            /*
             arrayString = JSON.stringify(data);
             splitArray = arrayString.split('"');
-            var usernames = [];
             for (var i = 1; i < splitArray.length; i += 2) {
                 usernames.push(splitArray[i]);
             }
-            // names = usernames;
-            // return names;
+            */
+            
+            usernames = data;
+            // console.log(usernames);
         }
     };
     xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/870f0156-7cdc-4ce8-885d-b4f05ee6a49e/user", true);
@@ -19,15 +22,16 @@ function getUsernames() {
     xmlhttp.setRequestHeader('Authorization', 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2NTM4MDQyfQ.qg4H3u18X2wuExSWQ_U1DkmVZnqswj9Z4plNbn5GXlg');
     xmlhttp.send();
 
-    // return names gibt undefined? wieso (äußere Function kennt )
+    // return usernames gibt undefined? wieso (äußere Function kennt )
     // in Zeile 15 gibt es ein Array zurück
-    // return names;
-    return ["Tom", "Jerry"];
+    return["Tom", "Jerry"] ;
+
+    // console.log(usernames);
+    //return usernames;
 }
 
 // Deklaration
 const nameList = getUsernames();
-console.log(nameList);
 const list = document.getElementById('namen');
 const eingabe = document.getElementById('addfriend');
 
@@ -40,16 +44,15 @@ function initNames(prefix) {
             option.value = getUsernames()[i];
             list.appendChild(option);
         }
-    } else {
+    } else { 
         nameList.forEach(function(name) {
             if (prefix === ' ' || name.startsWith(prefix)) {
                 var option = document.createElement('option');
                 option.value = name;
                 list.appendChild(option);
             }
-        });
+        });   
     }
-    
 }
 
 // Aktualisierungskontrolle
