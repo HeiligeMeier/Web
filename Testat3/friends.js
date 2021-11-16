@@ -5,16 +5,16 @@ function getUsernames() {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var data = JSON.parse(xmlhttp.responseText);
  
-            /*
+        
             arrayString = JSON.stringify(data);
             splitArray = arrayString.split('"');
             for (var i = 1; i < splitArray.length; i += 2) {
                 usernames.push(splitArray[i]);
             }
-            */
             
-            usernames = data;
-            // console.log(usernames);
+            
+            
+            console.log(usernames);
         }
     };
     xmlhttp.open("GET", "https://online-lectures-cs.thi.de/chat/870f0156-7cdc-4ce8-885d-b4f05ee6a49e/user", true);
@@ -24,10 +24,10 @@ function getUsernames() {
 
     // return usernames gibt undefined? wieso (äußere Function kennt )
     // in Zeile 15 gibt es ein Array zurück
-    return["Tom", "Jerry"] ;
+    // return["Tom", "Jerry"] ;
 
-    // console.log(usernames);
-    //return usernames;
+    console.log(usernames);
+    return usernames;
 }
 
 // Deklaration
