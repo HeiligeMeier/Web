@@ -23,15 +23,17 @@ xmlhttp.onreadystatechange = function () {
         console.log(res);
         const msgLen = res.length;
         for(var i=window.prevMsgLen;i <msgLen;i++){
-        var sender = res[i].from;
+        
+        if(msgLen > window.prevMsgLen){
+            var sender = res[i].from;
         var msg = res[i].msg;
         var time = res[i].time;
-        if(msgLen > window.prevMsgLen){
             appendMsg(sender, msg,time);
 
         }  
-        window.prevMsgLen=msgLen; 
+         
     }
+    window.prevMsgLen=msgLen;
    /*
         
         //for-schleife über result startet bei window.msglenth bis reslength
@@ -43,7 +45,7 @@ xmlhttp.open("GET", window.baseURL + "/" + chatCollectionId +"/message/Jerry",tr
 // Add token, e. g., from Tom
 xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
 xmlhttp.send();
-},3000);
+},1000);
 
 //------------------------------------------------------------------------//
 
