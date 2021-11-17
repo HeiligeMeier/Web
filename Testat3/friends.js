@@ -42,19 +42,18 @@ function getUsernames() {
 }
 */
 
-const list = document.getElementById('namen');
 
-// Sinn?
+// Deklaration
+const eingabe = document.getElementById('addfriend');
+const list = document.getElementById('namen');
+var nameList = getUsernames();
+
+/* Sinn?
 getUsernames((text) => {
     let data = JSON.parse(text);
     console.log(data);
 },1000);
-
-var nameList = getUsernames();
-console.log(nameList);
-
-// Deklaration
-const eingabe = document.getElementById('addfriend');
+*/
 
 // ListeAktualisierung
 function initNames(prefix) {
