@@ -7,10 +7,6 @@ const eingabe = document.getElementById('addfriend');
 const list = document.getElementById('namen');
 var nameList = [];
 
-function Sleep(milliseconds) {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
-
 function getUsernames() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function readyState() {
@@ -58,7 +54,6 @@ function keyup(input) {
         initNames(prefix);
     }
 
-
 // Kontrolle ob Username vorhanden ist
 function validateForm() {
     var i = 0;
@@ -71,7 +66,5 @@ function validateForm() {
     alert("Username invalid!");
     return false;
 }
-
-
 
 initNames(''); 
