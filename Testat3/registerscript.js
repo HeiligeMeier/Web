@@ -28,10 +28,10 @@ var confirmpw = document.getElementById("confirmLabel");
 var form = document.getElementById("formsubmit")
 var create = document.getElementById("createButton");
 form.addEventListener("submit", validateForm);
-username.addEventListener("click", validateUsername);
-username.addEventListener("click", validateIsUsed);
-password.addEventListener("click", validatePassword);
-confirmpw.addEventListener("click", validateConfirm);
+username.addEventListener("keyup", validateUsername);
+username.addEventListener("keyup", validateIsUsed);
+password.addEventListener("keyup", validatePassword);
+confirmpw.addEventListener("keyup", validateConfirm);
 
 
 function validateUsername() {

@@ -99,6 +99,8 @@ a:hover {
     background-color: white;
     border-radius: 5px;
     border-color: whitesmoke;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .horizontal_dotted_line {

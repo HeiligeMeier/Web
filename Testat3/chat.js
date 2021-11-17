@@ -20,12 +20,12 @@ setInterval(() => {
 xmlhttp.onreadystatechange = function () {
     if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
         const res = JSON.parse(xmlhttp.responseText);
-        console.log(res);
+        //console.log(res);
         const msgLen = res.length;
         for(var i=window.prevMsgLen;i <msgLen;i++){
         
         if(msgLen > window.prevMsgLen){
-            var sender = res[i].from;
+        var sender = res[i].from;
         var msg = res[i].msg;
         var time = res[i].time;
             appendMsg(sender, msg,time);
