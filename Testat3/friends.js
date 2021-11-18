@@ -7,6 +7,7 @@ const eingabe = document.getElementById('addfriend');
 const list = document.getElementById('namen');
 var nameList = [];
 
+// Serveraufruf
 function getUsernames() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function readyState() {
@@ -27,9 +28,9 @@ function getUsernames() {
     // Add token, e. g., from Tom
     xmlhttp.setRequestHeader('Authorization', 'Bearer ' + window.chatToken);
     xmlhttp.send();
-    
 }
 
+// Aufruf, weil Asynchroner Serveraufruf
 window.addEventListener('load', function() {
     getUsernames();
 });
@@ -50,7 +51,6 @@ function initNames(prefix) {
 // Aktualisierungskontrolle
 function keyup(input) {
     const prefix = input.value; 
-    // if (nameList.length != getUsernames().length) {
         initNames(prefix);
     }
 
