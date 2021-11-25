@@ -1,0 +1,40 @@
+<title>Chat</title>
+
+<!-- Vorgegeben -->
+
+<h1>ChatComponent works!</h1>
+
+<div #messagesDiv>
+    <!-- hier kommen die Nachrichten rein -->
+    Nachricht 1
+</div>
+
+<!-- Body -->
+
+<div>
+    <h1>Chat with Tom</h1>
+</div>
+<div>
+    <a href="friends.html">&lt Back</a>
+    |
+    <a href="profile.html">Profile</a>
+    |
+    <a href="friends.html" class="rmvchat">Remove Friend</a>
+
+</div>
+
+<div class="horizontal_dotted_line"></div>
+
+<fieldset  id="msg-form" class="fschat">
+    
+    
+</fieldset>
+
+<div class="horizontal_dotted_line"></div>
+
+<div>
+    <form>
+        <input type="text" id="messageLabel" name="message" placeholder="New Message" class="msgchat">
+        <button onclick=sendMsg() type="button" class="buttonchat">Send</button>
+    </form>
+</div>
