@@ -10,10 +10,10 @@
         <div class="basedata"><label for="lastname">Last Name</label> <input class="input" id="lastname" type="text" placeholder="Your surname"></div>
         <div class="basedata">
         Coffee or Tea? 
-    <select class="input" id="select">
-        <option>Coffee</option>
-        <option>Tea</option>
-        <option selected>Neither nor</option>
+    <select [(ngModel)]="coffeeOrTea" class="input" id="select">
+        <option [ngValue]="1" [selected]="coffeeOrTea == '1'">Coffee</option>
+        <option [ngValue]="2" [selected]="coffeeOrTea == '2'">Tea</option>
+        <option [ngValue]="3" [selected]="coffeeOrTea == '3'">Neither nor</option>
     </select></div>
     </div>
     </fieldset>
@@ -21,7 +21,7 @@
     <fieldset class="field" id="tsay">
         <legend>Tell Something About You</legend>
         <div>
-            <textarea id="comment" placeholder="Leave a comment here"></textarea>
+            <textarea name="about" #about="ngModel" [(ngModel)]="text" row="5" id="comment" placeholder="Leave a comment here"></textarea>
         </div>
     </fieldset>
     
