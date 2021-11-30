@@ -4,26 +4,32 @@
 <form action="" method="post">
 
 <!-- Bild und Überschrift -->
-<img src="src\app\images\chat.png" alt=" Image" width="150" height="150" class="imageLogin" >
+<img src="..\..\..\assets\images\chat.png" alt=" Image" width="150" height="150" class="imageLogin" >
 <!-- 3fcc0a3ea84d9c18813a28ee0af53dbb68e65194 -->
 <h1 id="h1Login">Please sign in</h1>
+
+<div [hidden]="usernamevalid || passwordvalid" class="login-error">
+    Authentification failed!
+</div>
 
 <!-- Login-Formular -->
 <fieldset class="fieldsetLogin">
     <legend>Login</legend>
 
     <label for="usernameLogin" class="labellogin">Username</label>
-    <input type="text" id="usernamelogin" class="usernamelogin"
-        name="Username" placeholder="Username" > <br>
+    <input type="text" id="usernamelogin" class="usernamelogin" (keyup)="usernamecheck()"
+        name="username" placeholder="Username" [(ngModel)]="username" required> <br>
+    <div [hidden]="usernamepristine || usernamevalid" class="login-error"></div>
 
     <label for="passwordLogin" class="labellogin">Password</label>
-    <input type="password" id="passwordlogin" class="passwordlogin"
-        name="Password" placeholder="Password" >
+    <input type="password" id="passwordlogin" class="passwordlogin" (keyup)="passwordcheck()"
+        name="password" placeholder="Password" [(ngModel)]="password" required>
+    <div [hidden]="passwordpristine || passwordvalid" class="login-error"></div>
 
 </fieldset>
     <!-- Buttons mit Links -->
     <div class="divbutlog">
         <a href="register.html"> <button type="button" class="logbutton" formnovalidate id="logbuttonreg">Register</button> </a>
-        <button type="submit" formaction="friends.html" class="logbutton" id="logbuttonlog">Login</button> 
+        <button type="submit" formaction="friends.html" class="logbutton" id="logbuttonlog" (onsubmit)="buttoncheck()">Login</button> 
     </div>
 </form>

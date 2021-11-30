@@ -267,6 +267,9 @@ display: flow-root;}
 #logbuttonlog {
     background-color: royalblue;
 }
+.login-error {
+    color: red;
+}
 
 /*-------------------------------------*/
 /* Logout*/
