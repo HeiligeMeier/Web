@@ -2,10 +2,8 @@
 
 <!-- Vorgegeben -->
 
-<div #messagesDiv>
-    <!-- hier kommen die Nachrichten rein -->
-    Nachricht 1
-</div>
+
+
 
 <!-- Body -->
 
@@ -13,26 +11,28 @@
     <h1>Chat with Tom</h1>
 </div>
 <div>
-    <a href="friends.html">&lt Back</a>
+    <a (click)="goBack()">Back</a>
     |
-    <a href="profile.html">Profile</a>
+    <a (click)="toProfile()">Profile</a>
     |
-    <a href="friends.html" class="rmvchat">Remove Friend</a>
+    <a (click)="friendRemove()" class="rmvchat">Remove Friend</a>
 
 </div>
 
 <div class="horizontal_dotted_line"></div>
 
-<fieldset  id="msg-form" class="fschat">
-    
-    
+<fieldset class="fschat">
+    <div #messagesDiv>
+        <!-- hier kommen die Nachrichten rein -->
+        Nachricht 1 <br>
+    </div>
 </fieldset>
 
 <div class="horizontal_dotted_line"></div>
 
 <div>
-    <form>
-        <input type="text" id="messageLabel" name="message" placeholder="New Message" class="msgchat">
-        <button onclick=sendMsg() type="button" class="buttonchat">Send</button>
+    <form #chatForm="ngForm">
+        <input type="text" name="message" placeholder="New Message"  [(ngModel)]="message" class="msgchat">
+        <button type="button" (click)="sendMsg()" class="buttonchat">Send</button>
     </form>
 </div>
