@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+import { Message } from 'src/app/models/Message';
+import { User } from 'src/app/models/User';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,8 +15,22 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
-     public constructor() { 
+    public user: string;
+    public partner: string;
+    public message: string;
+    public prevmsg: string[];
+    public prevauth: string[];
+    public prevtime: number[];
+    
+    
+    public constructor(private backend: BackendService, private router: Router) { 
         this.myScrollContainer = new ElementRef(null);
+        this.user="";
+        this.partner="";
+        this.message="";
+        this.prevmsg=[];
+        this.prevauth=[];
+        this.prevtime=[];
     }
 
     public ngAfterViewChecked() {        
@@ -35,4 +53,65 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     }
 
+    public setUser(): void {
+        this.backend.loadCurrentUser().then((val: User | null) => {
+            if(val==null) {
+                this.user="";
+                console.log("Not signed in.");
+            } else {
+                this.user = val.username;
+                console.log(this.user);
+            }
+        });
+    }
+
+    public setPartner(): void {
+        
+    }
+
+    public loadMsg(): void {
+        this.backend.listMessages(this.partner).then((msgarray: Message[]) => {
+            for(let i = 0; i < msgarray.length; i++) {
+                this.prevmsg[i] = msgarray[i].msg;
+                this.prevauth[i] = msgarray[i].from;
+                this.prevtime[i] = msgarray[i].time;
+            }
+        });
+    }
+
+    public sendMsg(): void {
+        this.backend.sendMessage(this.user, this.message).then((ok: boolean) => {
+            if(ok) {
+                console.log("Message sent.");
+            } else {
+                console.log("Something went wrong.");
+            }
+        });
+    }
+
+    public goBack(): void {
+        this.router.navigate(['friends']);
+    }
+
+    public toProfile(): void {
+        this.router.navigate(['profile']);
+    }
+
+    public friendRemove(): void {
+        let eingabe: boolean;
+        eingabe = window.confirm("Do you want to remove" + this.partner + "as your friend?");
+        if(eingabe) {
+            this.backend.removeFriend(this.partner).then((ok: boolean) => {
+                if(ok) {
+                    console.log("Friend removed.");
+                    this.router.navigate(['friends']);
+                } else {
+                    console.log("Something went wrong.");
+                }
+            });
+        }
+        
+    }
+
 }
+
