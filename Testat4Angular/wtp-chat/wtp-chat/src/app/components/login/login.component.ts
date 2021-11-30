@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
     selector: 'app-login',
@@ -11,12 +13,14 @@ export class LoginComponent implements OnInit {
     public usernamevalid: boolean = false;
     public passwordvalid: boolean = false;
 
-    public constructor() {
+    constructor(backend: BackendService, http: HttpClient) {
     }
 
     public ngOnInit(): void {
     }
-    // accounts ist ein Array für registrierte Nutzer
+    
+    
+
     public usernamecheck(): void {
         /*
         for (let i = 0; i < accounts.length(); i++)
