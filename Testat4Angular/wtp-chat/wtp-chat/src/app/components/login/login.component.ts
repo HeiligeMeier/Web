@@ -17,26 +17,31 @@ export class LoginComponent implements OnInit {
     public ngOnInit(): void {
     }
     // accounts ist ein Array für registrierte Nutzer
-    /*
     public usernamecheck(): void {
+        /*
         for (let i = 0; i < accounts.length(); i++)
         if (usernamelogin.value == accounts[i]) {
             this.usernamevalid = true;
         }
+        */
     }
 
     public passwordcheck(): void {
+        /*
         if () {
             this.passwordvalid = true;
         }
+        */
     }
 
     public buttoncheck(): boolean {
+        /*
         if() {
             return true;
         }
         return false;
+    */
+    return true;
     }
 
-    */
 }
