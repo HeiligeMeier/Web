@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Message } from 'src/app/models/Message';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
+import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
   selector: 'app-chat',
@@ -23,7 +24,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     public prevtime: number[];
     
     
-    public constructor(private backend: BackendService, private router: Router) { 
+    public constructor(private backend: BackendService, private router: Router, private interval: IntervalService) { 
         this.myScrollContainer = new ElementRef(null);
         this.user="";
         this.partner="";
@@ -114,4 +115,3 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
 }
-
