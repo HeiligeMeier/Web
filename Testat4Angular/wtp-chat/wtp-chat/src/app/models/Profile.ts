@@ -1,3 +1,4 @@
+
 export class Profile {
     public firstName: string;
     public lastName: string;
@@ -13,4 +14,6 @@ export class Profile {
         this.description = description;
         this.layout = chatLayout;
     }
+
+    
 }
