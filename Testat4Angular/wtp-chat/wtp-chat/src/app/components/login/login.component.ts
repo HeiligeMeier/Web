@@ -9,33 +9,34 @@ import { BackendService } from 'src/app/services/backend.service';
     styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-    public username: string = '';
-    public password: string = '';
-    public usernamevalid: boolean = false;
-    public passwordvalid: boolean = false;
+    public username: string;
+    public password: string;
+    public usernamevalid: boolean;
+    public passwordvalid: boolean;
+    public pwpristine: boolean;
+    public usernamepristine: boolean;
 
-    constructor(backend: BackendService, http: HttpClient, router: Router) {
+    public constructor(private backend: BackendService, private http: HttpClient, private router: Router) {
+        this.username = "";
+        this.password = "";
+        this.usernamevalid = false;
+        this.passwordvalid = false;
+        this.usernamepristine = true;
+        this.pwpristine = true;
     }
 
     public ngOnInit(): void {
     }
 
-    /*
-    this.backendService.loadFriends()
-    .then(() => {
-        for (let f of friends) {
-            ... Friends bearbeiten
-        }
-    });
-    */
-    /*
+    
     public login(): void {
-        if(this.password == '')
+        if(this.password == '') {
             this.password = '';
+        }
             this.backend.login(this.username, this.password)
-            .then(() => {
+            .then((ok: boolean) => {
                 if(ok) {
-                    console.log();
+                    console.log("Test");
                     this.router.navigate(['/friends']);
                 } else {
                     this.usernamevalid = false;
@@ -43,23 +44,23 @@ export class LoginComponent implements OnInit {
                 }
             });
     }
-    */
-   /*
+
+
     public usernamecheck(): void {
-        for (let i = 0; i < accounts.length(); i++)
-        if (usernamelogin.value == accounts[i]) {
+        this.usernamepristine = false;
+        /*  if () {
             this.usernamevalid = true;
         }
+        */
     }
-    */
-
-   /*
+    
     public passwordcheck(): void {
-        if () {
-            this.passwordvalid = true;
-        }
+       this.pwpristine = false;
+       /* if () {
+           this.passwordvalid = true;
+       }
+        */
     }
-    */
 
     public buttoncheck(): boolean {
         /*

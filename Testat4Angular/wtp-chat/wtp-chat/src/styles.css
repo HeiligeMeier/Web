@@ -278,6 +278,7 @@ display: flow-root;}
 }
 .login-error {
     color: red;
+    text-align: center;
 }
 
 /*-------------------------------------*/

@@ -8,11 +8,11 @@
 <!-- 3fcc0a3ea84d9c18813a28ee0af53dbb68e65194 -->
 <h1 id="h1Login">Please sign in</h1>
 
-<!--
-<div [hidden]="usernamevalid || passwordvalid" class="login-error">
+
+<div [hidden]="usernamepristine || pwpristine || usernamevalid || passwordvalid" class="login-error">
     Authentification failed!
 </div>
--->
+
 
 <!-- Login-Formular -->
 <fieldset class="fieldsetLogin">
@@ -20,17 +20,17 @@
     <!-- macht keyup sinn? wird ja blos bei button klick getestet -->
 
     <label for="usernameLogin" class="labellogin">Username</label>
-    <input type="text" id="usernamelogin" class="usernamelogin" (keyup)="usernamecheck()"
+    <input type="text" id="usernamelogin" class="usernamelogin" keyup="usernamecheck()"
         name="username" placeholder="Username" [(ngModel)]="username" required> <br>
 
     <label for="passwordLogin" class="labellogin">Password</label>
-    <input type="password" id="passwordlogin" class="passwordlogin" (keyup)="passwordcheck()"
+    <input type="password" id="passwordlogin" class="passwordlogin" keyup="passwordcheck()"
         name="password" placeholder="Password" [(ngModel)]="password" required>
 
 </fieldset>
     <!-- Buttons mit Links -->
     <div class="divbutlog">
         <a [routerLink]="['/register']"> <button type="button" class="logbutton" formnovalidate id="logbuttonreg">Register</button> </a>
-        <button type="submit" formaction="friends.html" class="logbutton" id="logbuttonlog" (onsubmit)="buttoncheck()">Login</button> 
+        <button type="submit" class="logbutton" id="logbuttonlog" (onsubmit)="buttoncheck()">Login</button> 
     </div>
 </form>
