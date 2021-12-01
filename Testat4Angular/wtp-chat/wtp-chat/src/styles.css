@@ -17,6 +17,10 @@ a:hover {
     color: blueviolet;
 }
 
+button:disabled {
+    background-color: lightgray;
+}
+
 /* ------------------------------------------ */ 
 /* register */
 
@@ -90,6 +94,11 @@ a:hover {
     border-width: thin;
     border-color: lightgrey;
     color: white;
+}
+
+.error-msg {
+    text-align: center;
+    color: red;
 }
 
 
