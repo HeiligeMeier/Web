@@ -69,15 +69,6 @@ export class BackendService {
         .catch(() => Promise.resolve(null));
     }
 
-    /*
-    this.backendService.loadFriends()
-    .then(() => {
-        for (let f of friends) {
-            ... Friends bearbeiten
-        }
-    });
-    */
-
     public loadFriends(): Promise<Array<Friend>> {
         return this.httpClient.get(
             this.restServerURL + 'friend', 
