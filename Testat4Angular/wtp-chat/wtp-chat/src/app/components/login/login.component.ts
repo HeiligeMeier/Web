@@ -18,8 +18,16 @@ export class LoginComponent implements OnInit {
 
     public ngOnInit(): void {
     }
-    
-    
+    /*
+    public accounts(): void {
+        this.backend.loadFriends()
+        .then(() => {
+            for (let f of friends) {
+                ... Friends bearbeiten
+            }
+        });
+    }
+    */
 
     public usernamecheck(): void {
         /*

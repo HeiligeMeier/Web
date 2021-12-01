@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -11,5 +12,9 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+/* router: Router in constructor: (klappt nicht)
+  public abbrechen(): void {
+    this.router.navigate(['/login']);
+  }
+*/
 }
