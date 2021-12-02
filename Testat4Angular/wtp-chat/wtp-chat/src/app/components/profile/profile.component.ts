@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
     }
 
     public backToChat(){
-        this.router.navigate(["chat"]);
+        this.router.navigate(['/chat']);
     }
 
     public friendRemove(): void {
