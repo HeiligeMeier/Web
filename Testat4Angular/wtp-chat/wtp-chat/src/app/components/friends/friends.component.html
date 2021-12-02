@@ -31,9 +31,9 @@
 <div class="horizontal_dotted_line"></div>
 
 <!-- Freund hinzufügen -->
-<form action="profile.html" onsubmit="return validateForm();">
+<form action="profile.html" (submit)="onSubmit()">
     <!-- onkeyup="keyup(this)" --> 
-    <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" onkeyup="keyup(this)"> 
+    <input type="text" id="addfriend" list="namen" [(ngModel)]="addNewFriend" placeholder="Add friend to List" onkeyup="keyup(this)"> 
     <datalist id="namen"></datalist>
     <Button id="addbutton">Add</Button>
 </form>
