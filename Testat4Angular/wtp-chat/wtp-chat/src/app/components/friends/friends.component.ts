@@ -12,7 +12,7 @@ import { BackendService } from 'src/app/services/backend.service';
 export class FriendsComponent implements OnInit {
     public friends: Friend[] = [];
     public addList: User[] = [];
-    public username: string;
+    public currentUser: string ="";
     public friendrequest: boolean = false;
     public erg: Boolean = false;
     public unknownUser: boolean = true;
@@ -20,7 +20,6 @@ export class FriendsComponent implements OnInit {
     public addNewFriend: string = "";
 
     public constructor(private router: Router, private backend: BackendService) {
-        this.username ="";
     }
 
     public ngOnInit(): void {

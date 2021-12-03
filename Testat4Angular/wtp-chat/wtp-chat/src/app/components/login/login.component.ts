@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Message } from 'src/app/models/Message';
 import { BackendService } from 'src/app/services/backend.service';
 
 @Component({
