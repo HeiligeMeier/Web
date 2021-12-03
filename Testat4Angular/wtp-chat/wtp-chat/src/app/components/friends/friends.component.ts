@@ -52,4 +52,8 @@ export class FriendsComponent implements OnInit {
 
         */
     }
+
+    public toSettings(){
+        this.router.navigate(['/settings']);
+    }
 }
