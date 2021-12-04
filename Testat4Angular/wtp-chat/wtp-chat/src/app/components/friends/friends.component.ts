@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Friend } from 'src/app/models/Friend';
@@ -18,11 +19,16 @@ export class FriendsComponent implements OnInit {
     public unknownUser: boolean = true;
     // addNewFriend input value
     public addNewFriend: string = "";
+    // unreadmessages?
 
-    public constructor(private router: Router, private backend: BackendService) {
+    public constructor(private http: HttpClient, private router: Router, private backend: BackendService) {
     }
 
     public ngOnInit(): void {
+        // lädt aktiven nutzer?
+        this.loadCurrentUser();
+        // Freundesliste
+        this.friendlist(this.friends);
     }
 
     public loadCurrentUser(): void {
@@ -39,6 +45,22 @@ export class FriendsComponent implements OnInit {
         });
         return this.erg;
     }
+// Friend gibt unreadmessages aus,
+    public friendlist(getFriends: Friend[]): void  {
+        this.backend.loadFriends()
+        .then(() => {
+
+        });
+    }
+
+    public routing() {
+        let url = "/chat" +
+        this.router.navigate(['/friends']);
+    }
+
+
+
+
     public onSubmit(): void {
         /*
         if (this.userExists() == true) {

@@ -8,24 +8,40 @@
 <div class="horizontal_dotted_line"></div> 
 <br>
 <div>
-    <!-- Freundesliste a-->
+    <!-- Freundesliste -->
+    <!-- Testat 3 Stand 
     <fieldset class="fsfriends">
         <ul class="listfriends">
             <p class="pfriends" id="p1friends"> <li> <a id="afr" href="chat.html">Tom  
-                <span class="listspanfriend" id="listspan1friend">3</span></a> </li> </p>
+                <span *ngif="unreadmessages != 0" class="listspanfriend" id="listspan1friend">3</span></a> </li> </p>
             <p class="pfriends" id="p2friends"> <li> <a id="afr" href="chat.html">Marvin 
-                <span class="listspanfriend" id="listspan2friend">1</span></a> </li> </p>
-            <p class="pfriends" id="p3friends"><li> <a id="afr" href="chat.html">Tick</a> </li></p>
-            <p class="pfriends" id="p4friends"><li> <a id="afr" href="chat.html">Trick</a> </li></p>
+                <span [hidden]="" class="listspanfriend" id="listspan2friend">1</span></a> </li> </p>
+            <p class="pfriends" id="p3friends"><li> <a id="afr" href="chat.html">Tick</a>
+                <span [hidden]="" class="listspanfriend" id="listspan1friend">4</span> </li></p>
+            <p class="pfriends" id="p4friends"><li> <a id="afr" href="chat.html">Trick</a>
+                <span [hidden]="" class="listspanfriend" id="listspan1friend">2</span> </li></p>
         </ul>    
     </fieldset>
+    -->
+
+    <!-- Testat4 -->
+    <fieldset class="fsfriends">
+        <ul class="listfriends">
+            <p *ngfor="let friend for User.friend" class="pfriends"> <li> <a click="routing()">
+                <!-- Friend.username? --> {{ friend.username }} <span class="listspanfriend">
+                {{ friend.unreadmessages }} </span> </a> </li> </p>
+
+        </ul>
+    </fieldset> 
 </div>
 <br>
 <div class="horizontal_dotted_line"></div>
 
+
 <!-- Freundesanfragen -->
 <h2>New Requests</h2> 
 <ol style="list-style-type:decimal">
+    <!-- a in li wegmachen? -->
     <li><a href="" id="lifriends">Friend request from <span id="spanfriends">Track</span></a></li>
 </ol>    
 <div class="horizontal_dotted_line"></div>

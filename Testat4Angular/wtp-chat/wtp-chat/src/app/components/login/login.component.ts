@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
             this.backend.login(this.username, this.password)
             .then((ok: boolean) => {
                 if(ok) {
-                    console.log("Test");
+                    console.log("Login Successful!");
                     this.router.navigate(['/friends']);
                 } else {
                     this.passwordvalid = false;
