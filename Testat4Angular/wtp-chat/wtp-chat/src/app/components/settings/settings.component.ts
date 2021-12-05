@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Profile } from 'src/app/models/Profile';
@@ -19,28 +20,25 @@ export class SettingsComponent implements OnInit {
     public firstname:string="";
     public lastname:string="";
     public backend:BackendService;
-   // public context:ContextService;
+   
     public profil:Profile;
-    public router:Router;
+    /* public context:ContextService;
+    public router:Router;*/
 
-    public constructor(profile:Profile, router:Router, backend:BackendService) {
-        this.backend=backend;
-        //this.context=context;
-        this.router=router;
-        this.profil=profile;
+    public constructor(private http: HttpClient, profile:Profile, router:Router, backend:BackendService) {
+       this.backend=backend;
+       this.profil=profile;
         
         
     }
 
     public ngOnInit():void {
-        this.backend.loadCurrentUser().then((user:any)=>
-        {
-            if(user==null){
-                this.router.navigate(['/login']);
-            }else{
-                
-            }
-        });
+        this.loadCurrentUser();
+        
+    }
+
+    public loadCurrentUser(): void {
+        this.backend.loadCurrentUser();
     }
 
     public submitSettings(){
