@@ -22,9 +22,9 @@ export class FriendsComponent implements OnInit {
     public um: Map<String, number> = new Map<string, number>();
     
     public TestAnfrage = new Friend("Timo", "", 0);
-    public TestFreund = new Friend("Karen", "accepted", 0);
-    public TestFreund1 = new Friend("Celina", "accepted", 0);
-    public TestFreund2 = new Friend("Hans-Jürgen", "accepted", 0);
+    public TestFreund = new Friend("Karen", "accepted", 1);
+    public TestFreund1 = new Friend("Celina", "accepted", 4);
+    public TestFreund2 = new Friend("Hans-Jürgen", "accepted", 8);
 
     // Konstruktor
     public constructor(private backend: BackendService, private interval: IntervalService) {
