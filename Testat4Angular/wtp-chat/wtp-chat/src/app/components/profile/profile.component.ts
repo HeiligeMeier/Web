@@ -11,10 +11,8 @@ import { BackendService } from 'src/app/services/backend.service';
 export class ProfileComponent implements OnInit {
     profil: Profile;
     public partner:string;
-    public constructor(
-        private backend: BackendService,
-        private router:Router, 
-        private profile: Profile) { 
+
+    public constructor(private backend: BackendService, private router:Router, private profile: Profile) { 
        
              this.profil=profile;
              this.partner="";
