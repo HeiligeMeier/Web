@@ -313,7 +313,7 @@ display: flow-root;}
     border-color: lightgrey;
     border-width: thin;
     padding: 8px 25px 8px 25px;
-    margin: 0px 0px 0px 30px;
+    margin: 0px 0px 0px 10px;
     width: 17.5%;
 }
 #spanfriends {
@@ -337,6 +337,7 @@ display: flow-root;}
 fieldset > ul > li > a {
     color: black;
 }
+
 
 /*-------------------------------------*/
 /* responsive */

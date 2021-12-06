@@ -1,48 +1,50 @@
 <title>Friends</title>
 
 <!-- Body -->
-
 <h1> {{ currentUser }} </h1>
 <a [routerLink]="['/logout']"> &lt; Logout</a> |
-<<<<<<< HEAD
 <a [routerLink]="['/settings']"> Settings</a> <br>
-=======
-<a [routerLink]="['/profile']"> Settings</a> <br>
->>>>>>> 42bb13fdfcf8ef0df7daa5f2baf36604f1a43cb2
-<div class="horizontal_dotted_line"></div> 
-<br>
+<div class="horizontal_dotted_line"></div> <br>
 <div>
     <!-- Freundesliste -->
-
     <fieldset class="fsfriends">
         <ul class="listfriends">
-            <!-- Freundesliste -->
-            <p *ngFor="let friend of friendsArray" class="pfriends"> <li > {{ friend.username }} <a [routerLink]="['/chat']">
-                 <span class="listspanfriend">
-                {{ friend.unreadMessages }} </span> </a> </li> </p>
+
+            <p *ngFor="let friend of friendsArray" class="pfriends">
+                <li> <a [routerLink]="['/chat']"> {{ friend.username }}
+                        <span class="listspanfriend">
+                            {{ friend.unreadMessages }} </span> </a> </li>
+            </p>
             <!-- hinzugefügte Freunde-->
-          <!--  <div *ngIf="unknownUser == true" > -->
-                <p *ngFor="let friend for friendsArray" class="pfriends"> <li> <a click="routing()"> 
-                    {{ friend.username }} <span class="listspanfriend">
-                    {{ friend.unreadMessages }} </span> </a> </li> </p>
-          <!--  </div> -->
+            <p *ngFor="let friend for friendsArray" class="pfriends">
+                <li> <a [routerLink]="['/chat']">
+                        {{ friend.username }} <span class="listspanfriend">
+                            {{ friend.unreadMessages }} </span> </a> </li>
+            </p>
         </ul>
-    </fieldset> 
+    </fieldset>
 </div>
 <br>
 <div class="horizontal_dotted_line"></div>
 
 <!-- Freundesanfragen -->
-<h2>New Requests</h2> 
+<h2>New Requests</h2>
+
 <ol style="list-style-type:decimal">
-    <!-- a in li wegmachen? -->
-    <li><a id="lifriends">Friend request from <span id="spanfriends">Track</span></a></li>
-</ol>    
+    <!-- ersetzen durch Anfragen-->
+    <li *ngFor="let friend of requestList"> <a [hidden]="addedDeclined == true" id="lifriends">Friend request from <span
+                id="spanfriends"> {{ friend.username }} </span> </a>
+        <button class="acceptDeclineButton" type="submit" click="acceptFriend()"> Accept </button>
+        <button class="acceptDeclineButton" type="submit" click="declineFriend()"> Decline </button>
+    </li>
+</ol>
 <div class="horizontal_dotted_line"></div>
 
 <!-- Freund hinzufügen -->
 <form action="">
-    <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" onkeyup="keyup(this)"> 
-    <datalist id="namen"></datalist>
-    <Button id="addbutton" (submit)="onSubmit()">Add</Button>
+    <div>
+        <input type="text" id="addfriend" list="namen" placeholder="Add friend to List">
+        <datalist id="namen"></datalist>
+        <Button id="addbutton" onsubmit="addFriendButton()">Add</Button>
+    </div>
 </form>
