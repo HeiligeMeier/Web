@@ -13,7 +13,7 @@ import { ContextService } from 'src/app/services/context.service';
     templateUrl: './settings.component.html',
     styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent implements OnInit {
+export class SettingsComponent  {
     public coffeeOrTea: string = "";
     public aboutText: string ="";
     public chatLayout: string="";
@@ -25,9 +25,9 @@ export class SettingsComponent implements OnInit {
     /* public context:ContextService;
     public router:Router;*/
 
-    public constructor(private http: HttpClient, profile:Profile, router:Router, backend:BackendService) {
+    public constructor(private http: HttpClient, router:Router, backend:BackendService) {
        this.backend=backend;
-       this.profil=profile;
+       this.profil=new Profile(this.firstname,this.lastname,this.coffeeOrTea,this.aboutText,this.chatLayout);
         
         
     }

@@ -10,7 +10,7 @@
         <div class="basedata"><label for="lastname">Last Name</label> <input [(ngModel)]="lastname" class="input" id="lastname" type="text" placeholder="Your surname"></div>
         <div class="basedata">
         Coffee or Tea? 
-    <select [(ngModel)]="coffeeOrTea" class="input" id="select">
+    <select [(ngModel)]="coffeeOrTea" class="input" id="select" name="CoT">
         <option [ngValue]="1" [selected]="coffeeOrTea == '1'">Coffee</option>
         <option [ngValue]="2" [selected]="coffeeOrTea == '2'">Tea</option>
         <option [ngValue]="3" [selected]="coffeeOrTea == '3'">Neither nor</option>
@@ -36,6 +36,6 @@
     <a href="friends.html">
         <button class="cancel" type="button">Cancel</button>
     </a>
-    <button onclick="submitSettings()" class="save" type="submit">Save</button>
+    <button onclick="submitSettings()" class="save" type="button">Save</button>
 
 </form>
