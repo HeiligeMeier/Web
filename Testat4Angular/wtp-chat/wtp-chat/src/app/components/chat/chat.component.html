@@ -22,9 +22,9 @@
 <div class="horizontal_dotted_line"></div>
 
 <fieldset class="fschat">
-    <div #messagesDiv>
+    <div #messagesDiv *ngFor="let msgs of msglist">
         <!-- hier kommen die Nachrichten rein -->
-        Nachricht 1 <br>
+        <span>{{ msgs.from }}: </span> <br *ngIf="isTwolined"><span>{{ msgs.msg }}</span> <span class="timechat">{{ msgs.time | date:'short' }}</span>
     </div>
 </fieldset>
 
