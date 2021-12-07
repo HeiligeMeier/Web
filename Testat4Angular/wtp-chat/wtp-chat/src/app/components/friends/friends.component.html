@@ -11,13 +11,13 @@
         <ul class="listfriends">
 
             <p *ngFor="let friend of friendsArray" class="pfriends">
-                <li> <a [routerLink]="['/chat']"> {{ friend.username }}
+                <li> <a [routerLink]="['/chat']" (click)="chat(friend.username)"> {{ friend.username }}
                         <span class="listspanfriend">
                             {{ friend.unreadMessages }} </span> </a> </li>
             </p>
             <!-- hinzugefügte Freunde-->
             <p *ngFor="let friend for friendsArray" class="pfriends">
-                <li> <a [routerLink]="['/chat']">
+                <li> <a [routerLink]="['/chat']" (click)="chat(friend.username)">
                         {{ friend.username }} <span class="listspanfriend">
                             {{ friend.unreadMessages }} </span> </a> </li>
             </p>
