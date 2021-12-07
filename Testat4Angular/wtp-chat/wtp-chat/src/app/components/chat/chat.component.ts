@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Message } from 'src/app/models/Message';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
+import { ContextService } from 'src/app/services/context.service';
 import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
@@ -12,26 +13,26 @@ import { IntervalService } from 'src/app/services/interval.service';
   styleUrls: ['./chat.component.css']
 })
 
-export class ChatComponent implements OnInit, AfterViewChecked {
+export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     // DIV für Nachrichten (s. Template) als Kind-Element für Aufrufe (s. scrollToBottom()) nutzen
     @ViewChild('messagesDiv') private myScrollContainer: ElementRef;
 
     public user: string;
     public partner: string;
     public message: string;
-    public prevmsg: string[];
-    public prevauth: string[];
-    public prevtime: number[];
+    public msglist: Message[];
+    public isTwolined: boolean;
+    public compname: string;
     
     
-    public constructor(private backend: BackendService, private router: Router, private interval: IntervalService) { 
+    public constructor(private backend: BackendService, private router: Router, private interval: IntervalService, private context: ContextService) { 
         this.myScrollContainer = new ElementRef(null);
         this.user="";
         this.partner="";
         this.message="";
-        this.prevmsg=[];
-        this.prevauth=[];
-        this.prevtime=[];
+        this.msglist =[];
+        this.isTwolined=false;
+        this.compname = "chat"
     }
 
     public ngAfterViewChecked() {        
@@ -51,7 +52,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     public ngOnInit(): void {
         this.scrollToBottom();
+        this.setUser();
+        this.setPartner();
+        this.interval.setInterval(this.compname, () => {
+            this.loadMsg();
+        });
 
+    }
+
+    public ngOnDestroy(): void {
+        this.interval.clearIntervals();
     }
 
     public setUser(): void {
@@ -67,15 +77,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
     }
 
     public setPartner(): void {
-        
+        this.partner = this.context.currentChatUsername
     }
 
     public loadMsg(): void {
         this.backend.listMessages(this.partner).then((msgarray: Message[]) => {
             for(let i = 0; i < msgarray.length; i++) {
-                this.prevmsg[i] = msgarray[i].msg;
-                this.prevauth[i] = msgarray[i].from;
-                this.prevtime[i] = msgarray[i].time;
+                this.msglist[i] = msgarray[i];
             }
         });
     }
@@ -100,7 +108,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
 
     public friendRemove(): void {
         let eingabe: boolean;
-        eingabe = window.confirm("Do you want to remove" + this.partner + "as your friend?");
+        eingabe = window.confirm("Do you want to remove " + this.partner + "as your friend?");
         if(eingabe) {
             this.backend.removeFriend(this.partner).then((ok: boolean) => {
                 if(ok) {
@@ -112,6 +120,16 @@ export class ChatComponent implements OnInit, AfterViewChecked {
             });
         }
         
+    }
+
+    public twolined(): void {
+        if(this.context.currentChatLayout == "onelined") {
+            this.isTwolined = false;
+        } else if (this.context.currentChatLayout == "twolined") {
+            this.isTwolined = true;
+        } else {
+            console.log("Couldn't load setting")
+        }
     }
 
 }
