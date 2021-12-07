@@ -27,7 +27,7 @@ export class FriendsComponent implements OnInit {
     public TestFreund2 = new Friend("Hans-Jürgen", "accepted", 8);
 
     // Konstruktor
-    public constructor(private backend: BackendService, private interval: IntervalService) {
+    public constructor(private backend: BackendService, private interval: IntervalService, private context: ContextService) {
         // Zur Darstellung
         this.requestList.push(this.TestAnfrage);
         this.friendsArray.push(this.TestFreund);
@@ -136,6 +136,14 @@ export class FriendsComponent implements OnInit {
                 }
             });
     }
+  
+      //fuer chat
+    public chat(username: string) {
+        this.context.currentChatUsername = username;
+    }
+
+    
+}
 
     /*
     // Intervalservice for continous function use 
