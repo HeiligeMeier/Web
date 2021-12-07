@@ -2,9 +2,9 @@
 
 
 <h1>Profile of Tom</h1>
-<a onclick="backToChat()" href="chat.html"> &lt Back to Chat </a>
+<a [routerLink]="['/chat']"> &lt Back to Chat </a>
 <span>|</span>
-<a onclick="friendRemove()" class="rmvchat" href="friends.html">Remove Friend</a><br>
+<a (click)='friendRemove()' class="rmvchat" >Remove Friend</a><br>
 <div class="content">
 <img id="pb" src="..\..\..\assets\images\profile.png">
 <p class="about">

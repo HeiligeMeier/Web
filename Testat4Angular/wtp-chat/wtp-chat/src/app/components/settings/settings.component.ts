@@ -33,7 +33,8 @@ export class SettingsComponent  {
     }
 
     public ngOnInit():void {
-        this.loadCurrentUser();
+        //this.loadCurrentUser();
+        
         
     }
 

@@ -6,8 +6,8 @@
     <fieldset class="field">
         <legend>Base Data</legend>  
     <div>
-        <div class="basedata"><label for="name"> First Name</label>  <input [(ngModel)]="firstname" class="input" id="name" type="text" placeholder="Your name"></div>
-        <div class="basedata"><label for="lastname">Last Name</label> <input [(ngModel)]="lastname" class="input" id="lastname" type="text" placeholder="Your surname"></div>
+        <div class="basedata"><label for="name"> First Name</label>  <input [(ngModel)]="firstname" class="input" id="name" type="text" name="first" placeholder="Your name"></div>
+        <div class="basedata"><label for="lastname">Last Name</label> <input [(ngModel)]="lastname" class="input" id="lastname" type="text" name="last" placeholder="Your surname"></div>
         <div class="basedata">
         Coffee or Tea? 
     <select [(ngModel)]="coffeeOrTea" class="input" id="select" name="CoT">
@@ -27,15 +27,17 @@
     
     <fieldset class="field">
         <legend>Prefered Chat Layout</legend>
-    <div name="chatL" #chatL="ngModel" [(ngModel)]="chatLayout">
-        <input  type="radio" name="chatL" id="opt1"><label for="opt1">Username and message in one line</label>
+    <div>
+        
+        <input  type="radio" value="1" name="chatL" [ngModel]="chatLayout" id="opt1"><label for="opt1">Username and message in one line</label>
         <br>
-        <input  type="radio" name="chatL" id="opt2"><label for="opt2">Username and message in separated lines</label>
+        <input  type="radio" value="2" name="chatL" [ngModel]="chatLayout" id="opt2"><label for="opt2">Username and message in separated lines</label>
+        
     </div>
     </fieldset>
-    <a href="friends.html">
+    <a [routerLink]="['/friends']">
         <button class="cancel" type="button">Cancel</button>
     </a>
-    <button onclick="submitSettings()" class="save" type="button">Save</button>
+    <button (click)="submitSettings()" class="save" type="button">Save</button>
 
 </form>
