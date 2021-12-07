@@ -25,7 +25,7 @@ export class SettingsComponent  {
     /* public context:ContextService;
     public router:Router;*/
 
-    public constructor(private http: HttpClient, router:Router, backend:BackendService) {
+    public constructor(private http: HttpClient, router:Router, backend:BackendService, private context: ContextService) {
        this.backend=backend;
        this.profil=new Profile(this.firstname,this.lastname,this.coffeeOrTea,this.aboutText,this.chatLayout);
         
@@ -50,4 +50,15 @@ export class SettingsComponent  {
         this.profil.layout=this.chatLayout;
         this.backend.saveCurrentUserProfile(this.profil);
     }
+  
+    public setLayoutOnelined(): void {
+        this.chatLayout = "onelined";
+        this.context.currentChatLayout = this.chatLayout;
+    }
+
+    public setLayoutTwolined(): void {
+        this.chatLayout = "twolined";
+        this.context.currentChatLayout = this.chatLayout;
+    }
+}
 }
