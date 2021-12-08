@@ -43,7 +43,7 @@
 <!-- Freund hinzufügen -->
 <form action="">
     <div>
-        <input type="text" id="addfriend" list="namen" placeholder="Add friend to List">
+        <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" [(ngModel)]="inputUsername">
         <datalist id="namen"></datalist>
         <Button id="addbutton" (click)="addFriendButton()">Add</Button>
     </div>
