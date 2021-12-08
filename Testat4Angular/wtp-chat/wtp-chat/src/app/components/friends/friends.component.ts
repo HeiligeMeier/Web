@@ -45,8 +45,8 @@ export class FriendsComponent implements OnInit {
 
     // loading the logged in User
     public loadCurrentUser(): void {
-        let usedUser = this.backend.loadCurrentUser();
-        usedUser.then((value: User | null) => {
+        this.backend.loadCurrentUser()
+        .then((value: User | null) => {
             if (value != null) {
                 this.currentUser = value.username + "'s Friend";
             } else {
