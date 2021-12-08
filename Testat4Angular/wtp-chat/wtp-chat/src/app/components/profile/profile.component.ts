@@ -45,15 +45,19 @@ export class ProfileComponent implements OnInit {
     }
 
     public loadCurrentUser(): void {
-        this.backend.loadUser(this.context.currentChatUsername).then((user: any) => {
-        if (user == null) {
-            this.router.navigate(['/login']);
-        } else {
-            this.profil.firstName = user.firstName;
-            alert(this.profil.firstName);
-        }   
-            })
+        this.backend
+        .loadCurrentUser()
+        .then((user: any) => {
+            
+            this.profil.firstName = user.firstName ? user.firstName : '';
+            this.profil.lastName = user.lastName ? user.lastName : '';
+            this.profil.description = user.description ? user.description : '';
+            this.profil.coffeeOrTea = user.coffeeOrTea ? user.coffeeOrTea : 1; // statt "1"
+            this.profil.layout = user.layout ? user.layout : '1';
+        })}
     }
+    
+    
 
 
-}
+
