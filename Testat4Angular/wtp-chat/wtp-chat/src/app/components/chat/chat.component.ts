@@ -35,7 +35,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.msglist =[];
         this.isTwolined=false;
         this.compname = "chat"
-        this.profile = new Profile("", "", "", "", "twolined");
+        this.profile = new Profile("", "", "", "", "onelined");
     }
 
     public ngAfterViewChecked() {        
