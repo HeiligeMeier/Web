@@ -7,6 +7,7 @@ export class ContextService {
 
     public loggedInUsername: string = '';
     public currentChatUsername: string = ''; 
+    public currentChatLayout: string = '';
 
     public constructor() { 
         console.log('*** context created ***');
