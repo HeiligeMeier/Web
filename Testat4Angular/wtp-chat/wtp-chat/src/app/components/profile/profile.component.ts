@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 //import { userInfo } from 'os';
 import { Profile } from 'src/app/models/Profile';
 import { BackendService } from 'src/app/services/backend.service';
+import { ContextService } from 'src/app/services/context.service';
 
 @Component({
     selector: 'app-profile',
@@ -13,13 +14,14 @@ export class ProfileComponent implements OnInit {
     profil: Profile;
     public partner:string;
 
-    public constructor(private backend: BackendService, private router:Router) { 
+    public constructor(private context:ContextService, private backend: BackendService, private router:Router) { 
             this.profil=new Profile("test","test","coffee","testdesc","oneline");
              
              this.partner="";
     }
 
     public ngOnInit(): void {
+        this.loadCurrentUser();
     }
 
     public backToChat(){
@@ -40,6 +42,17 @@ export class ProfileComponent implements OnInit {
             });
         }
         
+    }
+
+    public loadCurrentUser(): void {
+        this.backend.loadUser(this.context.currentChatUsername).then((user: any) => {
+        if (user == null) {
+            this.router.navigate(['/login']);
+        } else {
+            this.profil.firstName = user.firstName;
+            alert(this.profil.firstName);
+        }   
+            })
     }
 
 
