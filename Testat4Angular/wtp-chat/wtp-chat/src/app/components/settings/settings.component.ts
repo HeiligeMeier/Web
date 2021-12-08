@@ -22,24 +22,37 @@ export class SettingsComponent  {
     public backend:BackendService;
    
     public profil:Profile;
-    /* public context:ContextService;
-    public router:Router;*/
+    // public context:ContextService;
+    public router:Router;
 
     public constructor(private http: HttpClient, router:Router, backend:BackendService, private context: ContextService) {
        this.backend=backend;
        this.profil=new Profile(this.firstname,this.lastname,this.coffeeOrTea,this.aboutText,this.chatLayout);
-        
+       this.router=router; 
         
     }
 
     public ngOnInit():void {
-        this.loadCurrentUser();
+       this.loadCurrentUser();
         
         
     }
 
     public loadCurrentUser(): void {
-        this.backend.loadCurrentUser();
+        this.backend.loadUser(this.context.loggedInUsername).then((user: any) => {
+        if (user == null) {
+            this.router.navigate(['/login']);
+        } else {
+            this.profil.firstName = user.firstName;
+            alert(this.profil.firstName);
+        }   
+            })
+    }
+    
+    
+
+    public settings(username:string){
+        this.context.loggedInUsername =username;
     }
 
     public submitSettings(){
@@ -61,4 +74,5 @@ export class SettingsComponent  {
         this.context.currentChatLayout = this.chatLayout;
     }
 }
+
 
