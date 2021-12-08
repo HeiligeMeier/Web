@@ -324,19 +324,3 @@ fieldset > ul > li > a {
     color: black;
 }
 /* Datalist */
-
-
-/*-------------------------------------*/
-/* responsive */
-
-@media only screen and (max-width: 800px) {
-    .labelregister, .fieldsetLogin, .fsfriends, #addfriend, .about {
-        text-align: left;
-        width: 100%;
-        padding: 10px; 
-    }
-    
-    .buttonchat { 
-        margin-left: 0px;
-    }
-}
