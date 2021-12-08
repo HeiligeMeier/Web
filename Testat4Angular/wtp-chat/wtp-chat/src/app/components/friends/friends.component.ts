@@ -155,13 +155,9 @@ export class FriendsComponent implements OnInit {
     public chat(username: string) {
         this.context.currentChatUsername = username;
     }
-
-    
 }
 
     /*
-    // Intervalservice for continous function use 
-    
     private createInterval(): void {
         this.interval.setInterval(Component, function(): void => {
             this.getFriendlist();
