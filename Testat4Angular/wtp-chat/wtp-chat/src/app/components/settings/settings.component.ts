@@ -61,4 +61,4 @@ export class SettingsComponent  {
         this.context.currentChatLayout = this.chatLayout;
     }
 }
-}
+

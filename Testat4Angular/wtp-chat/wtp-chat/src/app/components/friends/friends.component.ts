@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Friend } from 'src/app/models/Friend';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
+import { ContextService } from 'src/app/services/context.service';
 import { IntervalService } from 'src/app/services/interval.service';
 
 @Component({
@@ -154,4 +155,4 @@ export class FriendsComponent implements OnInit {
         });
     }
     */
-}
+
