@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AfterViewChecked, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Message } from 'src/app/models/Message';
+import { Profile } from 'src/app/models/Profile';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
 import { ContextService } from 'src/app/services/context.service';
@@ -23,6 +24,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     public msglist: Message[];
     public isTwolined: boolean;
     public compname: string;
+    public profile: Profile;
     
     
     public constructor(private backend: BackendService, private router: Router, private interval: IntervalService, private context: ContextService) { 
@@ -33,6 +35,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.msglist =[];
         this.isTwolined=false;
         this.compname = "chat"
+        this.profile = new Profile("", "", "", "", "onelined");
     }
 
     public ngAfterViewChecked() {        
@@ -53,7 +56,9 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     public ngOnInit(): void {
         this.scrollToBottom();
         this.setUser();
+        this.setUserAgain();
         this.setPartner();
+        this.twolined();
         this.interval.setInterval(this.compname, () => {
             this.loadMsg();
         });
@@ -76,6 +81,21 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
         });
     }
 
+    public setUserAgain(): void {
+        this.backend.loadUser(this.context.loggedInUsername).then((user: any) => {
+            if (user == null) {
+                this.router.navigate(['/login']);
+            } else {
+                this.profile.firstName = user.firstName ? user.firstName : '';
+                this.profile.lastName = user.lastName ? user.lastName : '';
+                this.profile.description = user.description ? user.description: '';
+                this.profile.coffeeOrTea = user.coffeeOrTea ? user.coffeeOrTea: '';
+                this.profile.layout = user.layout ? user.layout: '';
+            }
+
+        });
+    }
+
     public setPartner(): void {
         this.partner = this.context.currentChatUsername
     }
@@ -83,13 +103,15 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     public loadMsg(): void {
         this.backend.listMessages(this.partner).then((msgarray: Message[]) => {
             for(let i = 0; i < msgarray.length; i++) {
+                console.log("loaded");
                 this.msglist[i] = msgarray[i];
+                
             }
         });
     }
 
     public sendMsg(): void {
-        this.backend.sendMessage(this.user, this.message).then((ok: boolean) => {
+        this.backend.sendMessage(this.partner, this.message).then((ok: boolean) => {
             if(ok) {
                 console.log("Message sent.");
             } else {
@@ -108,7 +130,7 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
 
     public friendRemove(): void {
         let eingabe: boolean;
-        eingabe = window.confirm("Do you want to remove " + this.partner + "as your friend?");
+        eingabe = window.confirm("Do you want to remove " + this.partner + " as your friend?");
         if(eingabe) {
             this.backend.removeFriend(this.partner).then((ok: boolean) => {
                 if(ok) {
@@ -123,6 +145,16 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
     }
 
     public twolined(): void {
+        if(this.profile.layout == "onelined" || this.profile.layout == '') {
+            this.isTwolined = false;
+        } else if (this.profile.layout == "twolined") {
+            this.isTwolined = true;
+        } else {
+            console.log("Couldn't load setting")
+        }
+    }
+    
+    public twolinedAlt(): void {
         if(this.context.currentChatLayout == "onelined") {
             this.isTwolined = false;
         } else if (this.context.currentChatLayout == "twolined") {
@@ -130,6 +162,10 @@ export class ChatComponent implements OnInit, AfterViewChecked, OnDestroy {
         } else {
             console.log("Couldn't load setting")
         }
+
+        
     }
+
+    
 
 }
