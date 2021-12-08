@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+    </head>
+    <body>
+        <img src="images/user.png" width="150" height="150" class="image">
+        <div>
+            <h1 class="h1register">Register yourself</h1>
+        </div>
+        <form action="friends.html" id="formsubmit" method="post">
+            <fieldset class="fsregister">
+                <legend class="legregister">Register</legend>
+
+                <label for="usernameLabel" class="labelregister">Username</label>
+                <input type="text" id="usernameLabel" name="username" placeholder="Username" required class="nameregister"><br>
+
+                <label for="passwordLabel" class="labelregister">Password</label>
+                <input type="password" id="passwordLabel" name="password" placeholder="Password" required class="pwregister"><br>
+
+                <label for="confirmLabel" class="labelregister">Confirm Password</label>
+                <input type="password" id="confirmLabel" name="confirm" placeholder="Confirm Password" required class="pwregister"><br>
+
+            </fieldset>
+            <div class=buttondiv>
+                <button type="submit" class="button2" id="createButton">create account</button>  
+            </div>
+        </form>
+        <div class="buttondiv">
+            <a href="login.html"><button class="button1" formnovalidate>cancel</button></a>
+        </div>
+        <script src="registerscript.js"></script>
+    </body>
+</html>
