@@ -89,12 +89,18 @@ export class FriendsComponent implements OnInit {
     // AcceptButtonHandler
     public acceptFriend() {
         console.log("Test");
-        this.backend.acceptFriendRequest(this.friendRequestUser)
+        this.backend.acceptFriendRequest(this.currentUser)
             .then((ok: Boolean) => {
                 if (ok) {
-                    let list = new Friend(this.friendRequestUser, "accepted", 0);
+                    for (let i = 0; i < this.requestList.length; i++){
+                        let list = new Friend(this.requestList[i].username, this.requestList[i].status, this.requestList[i].unreadMessages);
+                        this.friendsArray.push(list);
+                        this.requestList.splice(this.requestList.length-1, 1);
+                    }
+                    /* let list = new Friend(this.friendRequestUser, "accepted", 0);
                     this.friendsArray.push(list);
-                    this.addedDeclined = true;
+                    this.addedDeclined = true; 
+                    */
                     console.log("Accepted Friend!");
                 } else {
                     // this.addedDeclined = true;
@@ -109,7 +115,11 @@ export class FriendsComponent implements OnInit {
         this.backend.dismissFriendRequest(this.friendRequestUser)
             .then((ok: Boolean) => {
                 if (ok) {
-                    this.addedDeclined = true;
+                    for (let i = 0; i < this.requestList.length; i++){
+                        this.requestList.splice(this.requestList.length-1, 1);
+                    }
+                    
+                    // this.addedDeclined = true;
                     console.log("Declined Friend!");
                 } else {
                     // this.addedDeclined = true;
