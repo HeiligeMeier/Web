@@ -21,19 +21,22 @@ export class FriendsComponent implements OnInit {
     public requestList: Array<Friend> = [];
     public addedDeclined: Boolean = false;
     public um: Map<String, number> = new Map<string, number>();
-    
+    /*
     public TestAnfrage = new Friend("Timo", "", 0);
     public TestFreund = new Friend("Karen", "accepted", 1);
     public TestFreund1 = new Friend("Celina", "accepted", 4);
     public TestFreund2 = new Friend("Hans-Jürgen", "accepted", 8);
+    */
 
     // Konstruktor
     public constructor(private backend: BackendService, private interval: IntervalService, private context: ContextService) {
         // Zur Darstellung
+        /*
         this.requestList.push(this.TestAnfrage);
         this.friendsArray.push(this.TestFreund);
         this.friendsArray.push(this.TestFreund1);
         this.friendsArray.push(this.TestFreund2);
+        */
     }
 
     public ngOnInit(): void {
