@@ -21,7 +21,7 @@
     <fieldset class="field" id="tsay">
         <legend>Tell Something About You</legend>
         <div>
-            <textarea name="about" #about="ngModel" [(ngModel)]="aboutText" row="5" id="comment" placeholder="Leave a comment here"></textarea>
+            <textarea name="about" #about="ngModel" [(ngModel)]="aboutText" row="5" id="comment" placeholder="Tell something about yourself!"></textarea>
         </div>
     </fieldset>
     
@@ -31,7 +31,7 @@
         
         <input  type="radio" value="1" name="chatL" [ngModel]="chatLayout" (click)="setLayoutOnelined()" id="opt1"><label for="opt1">Username and message in one line</label>
         <br>
-        <input  type="radio" value="2" name="chatL" [ngModel]="chatLayout" (click)="setLayoutOnelined()" id="opt2"><label for="opt2">Username and message in separated lines</label>
+        <input  type="radio" value="2" name="chatL" [ngModel]="chatLayout"  (click)="setLayoutTwolined()" id="opt2"><label for="opt2">Username and message in separated lines</label>
         
     </div>
     </fieldset>

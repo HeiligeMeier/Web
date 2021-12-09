@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+//import { userInfo } from 'os';
 import { Profile } from 'src/app/models/Profile';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
@@ -34,6 +35,7 @@ export class SettingsComponent  {
 
     public ngOnInit():void {
        this.loadCurrentUser();
+       
         
         
     }
@@ -44,7 +46,14 @@ export class SettingsComponent  {
             this.router.navigate(['/login']);
         } else {
             this.profil.firstName = user.firstName;
-            alert(this.profil.firstName);
+            this.profil.lastName=user.lastName;
+            //this.profil.description=user.aboutText;
+            this.aboutText=user.description;
+            this.firstname=user.firstName;
+            this.lastname=user.lastName;
+            this.coffeeOrTea=user.coffeeOrTea;
+            this.chatLayout=this.context.currentChatLayout;
+            //alert(this.profil.firstName);
         }   
             })
     }
@@ -52,7 +61,7 @@ export class SettingsComponent  {
     
 
     public settings(username:string){
-        this.context.loggedInUsername =username;
+        this.context.loggedInUsername = username;
     }
 
     public submitSettings(){
@@ -65,12 +74,12 @@ export class SettingsComponent  {
     }
   
     public setLayoutOnelined(): void {
-        this.chatLayout = "onelined";
+        this.chatLayout = "1";
         this.context.currentChatLayout = this.chatLayout;
     }
 
     public setLayoutTwolined(): void {
-        this.chatLayout = "twolined";
+        this.chatLayout = "2";
         this.context.currentChatLayout = this.chatLayout;
     }
 }
