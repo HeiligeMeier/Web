@@ -9,7 +9,6 @@
     <!-- Freundesliste -->
     <fieldset class="fsfriends">
         <ul class="listfriends">
-
             <p *ngFor="let friend of friendsArray" class="pfriends">
                 <li> <a [routerLink]="['/chat']" (click)="chat(friend.username)"> {{ friend.username }}
                         <span class="listspanfriend">
@@ -32,10 +31,10 @@
 
 <ol style="list-style-type:decimal">
     <!-- ersetzen durch Anfragen-->
-    <li *ngFor="let friend of requestList"> <a [hidden]="addedDeclined == true" id="lifriends">Friend request from <span
+    <li *ngFor="let friend of requestList"> <a id="lifriends">Friend request from <span
                 id="spanfriends"> {{ friend.username }} </span> </a>
-        <button class="acceptDeclineButton" type="submit" (click)="acceptFriend()"> Accept </button>
-        <button class="acceptDeclineButton" type="submit" (click)="declineFriend()"> Decline </button>
+        <button class="acceptDeclineButton" type="button" (click)="acceptFriend()"> Accept </button>
+        <button class="acceptDeclineButton" type="button" (click)="declineFriend()"> Decline </button>
     </li>
 </ol>
 <div class="horizontal_dotted_line"></div>
@@ -45,6 +44,6 @@
     <div>
         <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" [(ngModel)]="inputUsername" name="FriendName">
         <datalist id="namen"></datalist>
-        <Button id="addbutton" (click)="addFriendButton()">Add</Button>
+        <Button id="addbutton" type="button" (click)="addFriendButton()">Add</Button>
     </div>
 </form>

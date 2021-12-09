@@ -1,5 +1,5 @@
 import { Component, ComponentFactoryResolver, OnInit, ɵɵpureFunction1 } from '@angular/core';
-import { Router } from '@angular/router';
+// import { Router } from '@angular/router';
 import { Friend } from 'src/app/models/Friend';
 import { User } from 'src/app/models/User';
 import { BackendService } from 'src/app/services/backend.service';
@@ -18,12 +18,11 @@ export class FriendsComponent implements OnInit {
     public currentUser: string = "";
     public friendsArray: Array<Friend> = [];
     public requestList: Array<Friend> = [];
-    public addedDeclined: Boolean = false;
     public um: Map<String, number> = new Map<string, number>();
 
     // Konstruktor
     public constructor(private backend: BackendService, private interval: IntervalService, private context: ContextService) {
-      
+
     }
 
     public ngOnInit(): void {
@@ -36,14 +35,14 @@ export class FriendsComponent implements OnInit {
     // loading the logged in User
     public loadCurrentUser(): void {
         this.backend.loadCurrentUser()
-        .then((value: User | null) => {
-            if (value != null) {
-                this.currentUser = value.username + "'s Friend";
-            } else {
-                this.currentUser = "Someone's Friends";
-            }
-            this.getFriendlist();
-        });
+            .then((value: User | null) => {
+                if (value != null) {
+                    this.currentUser = value.username + "'s Friend";
+                } else {
+                    this.currentUser = "Someone's Friends";
+                }
+                this.getFriendlist();
+            });
     }
 
     // Receive Friendlist from Server
@@ -51,16 +50,16 @@ export class FriendsComponent implements OnInit {
         this.backend.loadFriends()
             .then((value: Array<Friend>) => {
                 if (value != null) {
-                    console.log(JSON.stringify(value));
                     for (let i = 0; i < value.length; i++) {
-                        let flist = new Friend(value[i].username, value[i].status, value[i].unreadMessages);
+                        let flist = new Friend(value[i].username, value[i].status, 0);
                         if (flist.status == "accepted") {
                             this.friendsArray.push(flist);
-                        } else {
+                        } else if (flist.status == "requested") {
                             this.requestList.push(flist);
+                        } else {
+                            console.log("Warum läufst du hier durch?");
                         }
                     }
-                    this.getUnreadMessages();
                 }
             });
     }
@@ -77,22 +76,17 @@ export class FriendsComponent implements OnInit {
 
     // AcceptButtonHandler
     public acceptFriend() {
-        console.log("Test");
         this.backend.acceptFriendRequest(this.currentUser)
             .then((ok: Boolean) => {
                 if (ok) {
-                    for (let i = 0; i < this.requestList.length; i++){
+                    for (let i = 0; i < this.requestList.length; i++) {
                         let list = new Friend(this.requestList[i].username, this.requestList[i].status, this.requestList[i].unreadMessages);
                         this.friendsArray.push(list);
-                        this.requestList.splice(this.requestList.length-1, 1);
+                        this.requestList.splice(this.requestList.length - 1, 1);
+                        console.log(i);
                     }
-                    /* let list = new Friend(this.friendRequestUser, "accepted", 0);
-                    this.friendsArray.push(list);
-                    this.addedDeclined = true; 
-                    */
                     console.log("Accepted Friend!");
                 } else {
-                    // this.addedDeclined = true;
                     console.log("Friend Accept went wrong!");
                 }
             });
@@ -100,18 +94,15 @@ export class FriendsComponent implements OnInit {
 
     // DismissButtonHandler
     public declineFriend() {
-        console.log("TestDecline");
-        // eventuell
         this.backend.dismissFriendRequest(this.currentUser)
             .then((ok: Boolean) => {
                 if (ok) {
-                    for (let i = 0; i < this.requestList.length; i++){
-                        this.requestList.splice(this.requestList.length-1, 1);
+                    for (let i = 0; i < this.requestList.length; i++) {
+                        // this.requestList.splice(this.requestList.length - 1, 1);
+                        this.requestList.pop();
                     }
-                    // this.addedDeclined = true;
                     console.log("Declined Friend!");
                 } else {
-                    // this.addedDeclined = true;
                     console.log("Friend Decline went wrong!");
                 }
             });
@@ -122,43 +113,34 @@ export class FriendsComponent implements OnInit {
         this.backend.userExists(this.inputUsername)
             .then((ok: Boolean) => {
                 if (ok) {
-                    console.log("User exists!");
-                    
-                    this.backend.friendRequest(this.inputUsername)
+                    let userFriend: Boolean = true;
+                    // Überprüft ob Nutzer schon mit input.value befreundet ist
+                    for (let i = 0; i < this.friendsArray.length; i++) {
+                        if (this.friendsArray[i].username == this.inputUsername) {
+                            userFriend = false;         
+                        }
+                    }
+                    // Falls Nein, wird dieser geaddet
+                    if (userFriend == true) {
+                        this.backend.friendRequest(this.inputUsername)
                         .then((ok: Boolean) => {
                             if (ok) {
                                 console.log("Added Friend somehow!");
                             } else {
                                 console.log("Adding Prozess Failed!");
-                            } 
+                            }
                         });
-                    
+                    } else {
+                        console.log("This User is already your friend, find new ones!");
+                    }
                 } else {
                     console.log("User does not exist!");
                 }
             });
     }
-  
+
     // fuer chat
     public chat(username: string) {
         this.context.currentChatUsername = username;
     }
 }
-
-/* zu css dazu
-.acceptDeclineButton {
-    background-color: rgb(243, 231, 211);
-    color: rgb(165, 78, 78);
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 6px;
-    padding-right: 6px;
-    margin: 3px;
-    border-color: rgb(48, 39, 39);
-    border-style: double;
-    border-width: 1px;
-}
-.acceptDeclineButton:hover {
-    background-color: rgb(216, 204, 187);
-}
-*/
