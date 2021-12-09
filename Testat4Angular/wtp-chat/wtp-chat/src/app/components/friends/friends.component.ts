@@ -27,7 +27,11 @@ export class FriendsComponent implements OnInit {
 
     public ngOnInit(): void {
         this.loadCurrentUser();
-        this.interval.setInterval(this.componentName, () => {
+        this.createInterval();
+    }
+
+    private createInterval(): void {
+        this.interval.setInterval("FriendsComponent", () => {
             this.getUnreadMessages();
         });
     }
@@ -60,6 +64,7 @@ export class FriendsComponent implements OnInit {
                             console.log("Warum läufst du hier durch?");
                         }
                     }
+                    this.getUnreadMessages();
                 }
             });
     }
@@ -69,7 +74,7 @@ export class FriendsComponent implements OnInit {
         this.backend.unreadMessageCounts()
             .then((nameNumber: Map<String, number>) => {
                 if (nameNumber != null) {
-                    this.um = nameNumber;
+                    console.log("reloading Messagecounter");
                 }
             });
     }
@@ -122,7 +127,7 @@ export class FriendsComponent implements OnInit {
                     }
                     // Falls Nein, wird dieser geaddet
                     if (userFriend == true) {
-                        this.backend.friendRequest(this.inputUsername)
+                        this.backend.friendRequest(this.currentUser)
                         .then((ok: Boolean) => {
                             if (ok) {
                                 console.log("Added Friend somehow!");
