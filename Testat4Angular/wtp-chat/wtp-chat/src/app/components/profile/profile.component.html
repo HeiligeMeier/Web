@@ -1,7 +1,7 @@
 <title>Profile</title>
 
 
-<h1>Profile of Tom</h1>
+<h1>Profile of {{profil.firstName}}</h1>
 <a [routerLink]="['/chat']"> &lt Back to Chat </a>
 <span>|</span>
 <a (click)='friendRemove()' class="rmvchat" >Remove Friend</a><br>
@@ -15,6 +15,6 @@
         <label class="frage">Coffe or Tea?</label><br>
         <label class="antwort">{{ profil.coffeeOrTea }}</label><br>
         <label class="frage">Name</label><br>
-        <label class="antwort">{{ profil.firstName }}</label><br>
+        <label class="antwort">{{ profil.firstName + " " + profil.lastName }}</label><br>
     </p>
 </div> 
