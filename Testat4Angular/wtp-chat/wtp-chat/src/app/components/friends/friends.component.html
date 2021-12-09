@@ -34,8 +34,8 @@
     <!-- ersetzen durch Anfragen-->
     <li *ngFor="let friend of requestList"> <a [hidden]="addedDeclined == true" id="lifriends">Friend request from <span
                 id="spanfriends"> {{ friend.username }} </span> </a>
-        <button class="acceptDeclineButton" type="submit" click="acceptFriend()"> Accept </button>
-        <button class="acceptDeclineButton" type="submit" click="declineFriend()"> Decline </button>
+        <button class="acceptDeclineButton" type="submit" (click)="acceptFriend()"> Accept </button>
+        <button class="acceptDeclineButton" type="submit" (click)="declineFriend()"> Decline </button>
     </li>
 </ol>
 <div class="horizontal_dotted_line"></div>
@@ -43,7 +43,7 @@
 <!-- Freund hinzufügen -->
 <form action="">
     <div>
-        <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" [(ngModel)]="inputUsername">
+        <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" [(ngModel)]="inputUsername" name="FriendName">
         <datalist id="namen"></datalist>
         <Button id="addbutton" (click)="addFriendButton()">Add</Button>
     </div>
