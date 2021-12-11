@@ -2,8 +2,8 @@
 namespace Model;
 use JsonSerializable;
 class User implements JsonSerializable {
-    protected $username;
-
+    protected $username; 
+    
     public function __construct($username = null) {
         $this->username = $username;
     }
@@ -18,9 +18,11 @@ class User implements JsonSerializable {
 
     public static function fromJson($data) {
         //missing
-        foreach($data as $key => $value) {
-            $user->{key} = $value;
+        $user = new User();
+        foreach ($data as $key => $value) {
+            $user->{$key} = $value;
+            var_dump($data);
         }
-    }
+    } 
 }
 ?>
