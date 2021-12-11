@@ -1,3 +1,4 @@
+require("start.php"); 
 <html>
     <head>
         <title>Friends</title>

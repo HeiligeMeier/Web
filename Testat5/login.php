@@ -1,3 +1,4 @@
+require("start.php");
 <html>
     <head>
         <title>Login</title>
