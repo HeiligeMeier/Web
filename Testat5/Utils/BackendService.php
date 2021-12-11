@@ -1,5 +1,8 @@
 <?php
 namespace Utils;
+
+use Model\User;
+
 class BackendService {
     private $id;
     private $base;
@@ -8,146 +11,180 @@ class BackendService {
         $this->id = $id;
         $this->base = $base;
     }
+ 
+    // Testfunktion
+    public function test() {
+        try {
+            return HttpClient::get($this->base . 'test.json');
+        } catch(\Exception $e) {
+            error_log($e);
+        }
+        return false;
+    }
 
     public function login($username, $password) {
         try {
-            $result = Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/login", array("username" => "Tom", "password" => "12345678"));
+            // $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/login", array("username" => "Tom", "password" => "12345678"));
+            $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/login", array("username" => $username, "password" => $password));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
-            echo "Authentification failed";
+            echo "Loginprocess failed! / " . "<br>" . $e;
         }
     }
 
     public function register($username, $password) {
         try {
-            $result = Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/register", array("username" => "Tom", "password" => "12345678"));
+            // $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/register", array("username" => "Tom", "password" => "12345678"));
+            $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/register", array("username" => $username, "password" => $password));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
-            echo "Authentification failed";
+            echo "Registration failed! / " . "<br>" . $e;
         }
     }
 
     public function userExists($username) {
         try {
-            Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user/Tom");
-            echo "Exists";
+            // HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user/Tom");
+            HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user" . "/" . $username);
+            echo "User exists!";
         } catch(\Exception $e) {
-            echo "Does not exist";
+            echo "User does not exist!" . "<br>" . $e;
         }
     }
 
     public function loadUser($user) {
         try {
-            $data = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user/Tom",
+             $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user/Tom",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            // $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user" . "/" . $user,
+            //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            // woher kriegt man das token?
+            
+            // User::fromJson($data);
             var_dump($data);
         } catch(\Exception $e) {
-            echo "Not found";
+            echo "User not found!" . "<br>" . $e;
         }
     }
 
     public function saveUser($user) {
         try {
-            Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user/Tom",
+            // user anstatt Tom , ...?
+              HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user/Tom",
                 array("customA" => "abc", "customB" => "xyz"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Saved...";
         } catch(\Exception $e) {
-            echo "Not found";
+            echo "saveUser not found / " . "<br>" . $e;
         }
     }
 
     public function listUsers() {
-        try {
-            $list = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user",
+        try {   
+            $list = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($list);
         } catch(\Exception $e) {
-            echo "Error while loading list";
+            echo "Error while loading list Users" . "<br>" . $e;
         }
     }
 
     public function listMessages() {
-        try {
-            $list = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/message/Jerry",
+        try { // Jerry ersetzen durch Friend?
+            $list = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/message/Jerry",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($list);
         } catch(\Exception $e) {
-            echo "Error while loading list";
+            echo "Error while loading list Messages" . "<br>" . $e;
         }
     }
 
     public function sendMessage() {
         try {
-            $list = Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/message",
+            $list = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/message",
+            // Hello, Jerry ersetzen
                 array("message" => "Hello?!", "to" => "Jerry"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($list);
         } catch(\Exception $e) {
-            echo "Error while loading list";
+            echo "Error while sending Message" . "<br>" . $e;
         }
     }
 
     public function unreadMessageCount() {
         try {
-            $data = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/unread",
+            $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/unread",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($data);
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "Could not get unreadMessageCount" . "<br>" . $e;
         }
     }
 
     public function loadFriends() {
         try {
-            $data = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend",
+            $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($data);
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "loading Friends failed" . "<br>" . $e;
         }
     }
 
     public function friendRequest($friend) {
-        try {
-            Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend",
+        try { // Jerry durch friend ersetzen
+            HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend",
                 array("username" => "Jerry"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            // HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend",
+            //     array("username" => // $friend username ?//),
+            //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Requested...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "friendRequest failed" . "<br>" . $e;
         }
     }
 
     public function friendAccept($friend) {
         try {
-            Utils\HttpClient::put("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend/Jerry",
+            HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend/Jerry",
                 array("status" => "accepted"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            
+            // HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend" . "/" . $friend,
+            //     array("status" => "accepted"),
+            //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Accepted...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "Accepting friend failed" . "<br>" . $e;
         }
     }
 
     public function friendDismiss($friend) {
         try {
-            Utils\HttpClient::put("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend/Jerry",
+            HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend/Jerry",
                 array("status" => "dismissed"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            
+            // HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend" . "/" . $friend,
+            //     array("status" => "dismissed"),
+            //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Dismissed...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "Dismissing friend failed" . "<br>" . $e;
         }
     }
 
     public function friendRemove($friend) {
         try {
-            Utils\HttpClient::delete("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend/Jerry",
+            HttpClient::delete(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend/Jerry",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            
+            //  HttpClient::delete(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend" . "/" . $friend,
+            //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Removed...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "FriendRemove Error" . "<br>" . $e;
         }
     }
 }

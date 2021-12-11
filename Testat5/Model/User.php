@@ -18,7 +18,7 @@ class User implements JsonSerializable {
 
     public static function fromJson($data) {
         //missing
-        $user = new User();
+        $user = new User(); 
         foreach ($data as $key => $value) {
             $user->{$key} = $value;
             var_dump($data);
