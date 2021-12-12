@@ -1,5 +1,5 @@
 <?php 
-    require("start.php"); 
+   /* require("start.php"); 
     if (isset($_POST['user'])) {
         if (!empty($_POST['user'])) {
             // User darf in der Friendlist bleiben
@@ -11,6 +11,7 @@
         // User undefined
         header("Location : login.php");
     }
+    */
 ?> 
 <html>
     <head>
