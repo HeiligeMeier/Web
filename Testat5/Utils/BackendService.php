@@ -15,10 +15,12 @@ class BackendService {
     // Testfunktion
     public function test() {
         try {
-            return HttpClient::get($this->base . 'test.json');
+            return HttpClient::get($this->base . '/test.json');
         } catch(\Exception $e) {
             error_log($e);
+            echo "Catch-Block" . "<br>";
         }
+        echo "Ausgabe" . "<br>";
         return false;
     }
 
