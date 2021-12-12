@@ -4,7 +4,7 @@
     $user = new Model\User("Test123");
     $friend = new Model\Friend("Kiwi", "accepted");
     // Testfunktion
-    var_dump($service->test());
+    // var_dump($service->test());
     // Funktionen überprüfen
     var_dump($service->login("Test123", "12345678"));
     // var_dump($service->register("Test123", "12345678"));

@@ -27,8 +27,8 @@ class BackendService {
 
     public function login($username, $password) {
         try {
-            // $result = HttpClient::post($this->base . $this->id . "/login", array("username" => "Tom", "password" => "12345678"));
-            $result = HttpClient::post($this->base . $this->id . "/login", array("username" => $username, "password" => $password));
+            echo "hahahihi" . "<br>";
+            $result = HttpClient::post($this->base . $this->id . "/login", array("username" => "Tom", "password" => "12345678"));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
             echo "Loginprocess failed! / " . "<br>" . $e;
@@ -38,7 +38,7 @@ class BackendService {
     public function register($username, $password) {
         try {
             // $result = HttpClient::post($this->base . $this->id . "/register", array("username" => "Tom", "password" => "12345678"));
-            $result = HttpClient::post($this->base . $this->id . "/register", array("username" => $username, "password" => $password));
+            $result = HttpClient::post($this->base . $this->id . "/register.php", array("username" => $username, "password" => $password));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
             echo "Registration failed! / " . "<br>" . $e;
@@ -55,25 +55,23 @@ class BackendService {
         }
     }
 
-    public function loadUser($user) {
+    public function loadUser(User $user) {
         try {
-             $data = HttpClient::get($this->base . $this->id . "/user/Tom",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            // $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $user,
-            //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            // woher kriegt man das token?
-            
-            // User::fromJson($data);
+            // $data = HttpClient::get($this->base . $this->id . "/user/Tom",
+            //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+             $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $user->getUsername(),
+               "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+             $user::fromJson($data);
             var_dump($data);
         } catch(\Exception $e) {
             echo "User not found!" . "<br>" . $e;
         }
     }
 
-    public function saveUser($user) {
+    public function saveUser(User $user) {
         try {
             // user anstatt Tom , ...?
-              HttpClient::post($this->base . $this->id . "/user/Tom",
+              HttpClient::post($this->base . $this->id . "/user" . "/" . $user->getUsername(),
                 array("customA" => "abc", "customB" => "xyz"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Saved...";
