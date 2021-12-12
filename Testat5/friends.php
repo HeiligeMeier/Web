@@ -1,6 +1,6 @@
 <?php 
-   /* require("start.php"); 
-    if (isset($_POST['user'])) {
+   require("start.php"); 
+   /* if (isset($_POST['user'])) {
         if (!empty($_POST['user'])) {
             // User darf in der Friendlist bleiben
         } else {
@@ -20,16 +20,16 @@
     </head>
     <body>
         <h1>Friends</h1>
-        <a href="logout.html"> &lt; Logout</a> |
-        <a href="settings.html"> Settings</a> <br>
+        <a onclick="Javascript:window.location.href = 'logout.php'" > &lt; Logout</a> |
+        <a onclick="Javascript:window.location.href = 'settings.php'" > Settings</a> <br>
         <div class="horizontal_dotted_line"></div> 
         <p>
             <!-- Freundesliste a-->
             <fieldset class="fsfriends">
                 <ul class="listfriends">
-                    <p class="pfriends" id="p1friends"> <li> <a id="afr" href="chat.html">Tom  
+                    <p class="pfriends" id="p1friends"> <li> <a id="afr" >Tom  
                         <span class="listspanfriend" id="listspan1friend">3</span></a> </li> </p>
-                    <p class="pfriends" id="p2friends"> <li> <a id="afr" href="chat.html">Marvin 
+                    <p class="pfriends" id="p2friends"> <li> <a id="afr" >Marvin 
                         <span class="listspanfriend" id="listspan2friend">1</span></a> </li> </p>
                     <p class="pfriends" id="p3friends"><li> <a id="afr" href="chat.html">Tick</a> </li></p>
                     <p class="pfriends" id="p4friends"><li> <a id="afr" href="chat.html">Trick</a> </li></p>
@@ -52,6 +52,5 @@
             <datalist id="namen"></datalist>
             <Button id="addbutton">Add</Button>
         </form>
-        <script src="friends.js"></script>
     </body>
 </html>

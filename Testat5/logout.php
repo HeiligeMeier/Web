@@ -14,7 +14,7 @@
             See u!
         </p>
         <div class="logoutdiv">
-            <a href="login.html" class="alogout">Login again</a>
+            <a onclick="Javascript:window.location.href = 'login.php'"  class="alogout">Login again</a>
         </div>
     </body>
 </html>
