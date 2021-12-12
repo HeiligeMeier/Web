@@ -5,20 +5,21 @@ use Model\User;
 
 class BackendService {
     private $id;
-    private $base;
+    private $base = CHAT_SERVER_URL . "/";
 
     public function __construct($id, $base) {
         $this->id = $id;
-        $this->base = $base;
+        // $this->base = $base;
     }
  
     // Testfunktion
     public function test() {
         try {
             return HttpClient::get($this->base . '/test.json');
+            echo "Try-Block" . "<br>";
         } catch(\Exception $e) {
             error_log($e);
-            echo "Catch-Block" . "<br>";
+            echo "Catch-Block" . "<br>" . $e;
         }
         echo "Ausgabe" . "<br>";
         return false;
