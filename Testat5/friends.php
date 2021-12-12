@@ -1,17 +1,16 @@
 <?php 
-   require("start.php"); 
-   /* if (isset($_POST['user'])) {
-        if (!empty($_POST['user'])) {
-            // User darf in der Friendlist bleiben
-        } else {
-            // User leer 
-            header("Location : login.php");
-        }
-    } else {
-        // User undefined
-        header("Location : login.php");
+    require("start.php"); 
+    // man kann nicht mehr direkt auf die friendlist
+    /*if (!isset($_SESSION['user'])) {
+        header("Location: login.php");
+        exit();
+    } 
+    if (empty($_POST['user'])) {
+        header("Location: login.php");
+        exit();
     }
     */
+    echo $_SESSION['chat_token'];
 ?> 
 <html>
     <head>

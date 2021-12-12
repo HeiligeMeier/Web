@@ -266,7 +266,11 @@ display: flow-root;}
 #logbuttonlog {
     background-color: royalblue;
 }
-
+.fehlerlogin {
+    color: red;
+    margin: auto;
+    text-align: center;
+}
 /*-------------------------------------*/
 /* Logout*/
 .imagelogout {

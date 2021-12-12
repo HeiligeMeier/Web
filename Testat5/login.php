@@ -4,7 +4,6 @@ if (isset($_SESSION['user'])) {
     header("Location: friends.php");
     exit();
 }
-
 $error = "";
 if (isset($_POST['action']) && $_POST['action'] === 'login') {
     $username = $_POST['username'];
@@ -16,8 +15,8 @@ if (isset($_POST['action']) && $_POST['action'] === 'login') {
         $error = "Authentification failed!";
     }
 }
+echo $_SESSION['chat_token'];
 ?>
-
 <html>
     <head>
         <title>Login</title>
