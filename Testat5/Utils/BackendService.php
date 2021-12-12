@@ -27,9 +27,8 @@ class BackendService {
 
     public function login($username, $password) {
         try {
-            echo "hahahihi" . "<br>";
-            $result = HttpClient::post($this->base . $this->id . "/login", array("username" => "Tom", "password" => "12345678"));
-            echo "Token: " . $result->token;
+            $result = HttpClient::post($this->base . $this->id . "/login", array("username" => $username, "password" => $password));
+            echo "Token: " . $result->token . "<br>";
         } catch(\Exception $e) {
             echo "Loginprocess failed! / " . "<br>" . $e;
         }
@@ -37,9 +36,8 @@ class BackendService {
 
     public function register($username, $password) {
         try {
-            // $result = HttpClient::post($this->base . $this->id . "/register", array("username" => "Tom", "password" => "12345678"));
             $result = HttpClient::post($this->base . $this->id . "/register.php", array("username" => $username, "password" => $password));
-            echo "Token: " . $result->token;
+            echo "Token: " . $result->token . "<br>";
         } catch(\Exception $e) {
             echo "Registration failed! / " . "<br>" . $e;
         }
