@@ -5,18 +5,18 @@ use Model\User;
 
 class BackendService {
     private $id;
-    private $base = CHAT_SERVER_URL . "/";
+    private $base;
 
-    public function __construct($id, $base) {
-        $this->id = $id;
-        // $this->base = $base;
+    public function __construct() {
+        $this->id = CHAT_SERVER_ID;
+        $this->base = CHAT_SERVER_URL . "/";
     }
  
     // Testfunktion
     public function test() {
         try {
-            return HttpClient::get($this->base . '/test.json');
             echo "Try-Block" . "<br>";
+            return HttpClient::get($this->base . '/test.json');
         } catch(\Exception $e) {
             error_log($e);
             echo "Catch-Block" . "<br>" . $e;
@@ -27,8 +27,8 @@ class BackendService {
 
     public function login($username, $password) {
         try {
-            // $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/login", array("username" => "Tom", "password" => "12345678"));
-            $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/login", array("username" => $username, "password" => $password));
+            // $result = HttpClient::post($this->base . $this->id . "/login", array("username" => "Tom", "password" => "12345678"));
+            $result = HttpClient::post($this->base . $this->id . "/login", array("username" => $username, "password" => $password));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
             echo "Loginprocess failed! / " . "<br>" . $e;
@@ -37,8 +37,8 @@ class BackendService {
 
     public function register($username, $password) {
         try {
-            // $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/register", array("username" => "Tom", "password" => "12345678"));
-            $result = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/register", array("username" => $username, "password" => $password));
+            // $result = HttpClient::post($this->base . $this->id . "/register", array("username" => "Tom", "password" => "12345678"));
+            $result = HttpClient::post($this->base . $this->id . "/register", array("username" => $username, "password" => $password));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
             echo "Registration failed! / " . "<br>" . $e;
@@ -47,8 +47,8 @@ class BackendService {
 
     public function userExists($username) {
         try {
-            // HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user/Tom");
-            HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user" . "/" . $username);
+            // HttpClient::get($this->base . $this->id . "/user/Tom");
+            HttpClient::get($this->base . $this->id . "/user" . "/" . $username);
             echo "User exists!";
         } catch(\Exception $e) {
             echo "User does not exist!" . "<br>" . $e;
@@ -57,9 +57,9 @@ class BackendService {
 
     public function loadUser($user) {
         try {
-             $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user/Tom",
+             $data = HttpClient::get($this->base . $this->id . "/user/Tom",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            // $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user" . "/" . $user,
+            // $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $user,
             //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             // woher kriegt man das token?
             
@@ -73,7 +73,7 @@ class BackendService {
     public function saveUser($user) {
         try {
             // user anstatt Tom , ...?
-              HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user/Tom",
+              HttpClient::post($this->base . $this->id . "/user/Tom",
                 array("customA" => "abc", "customB" => "xyz"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Saved...";
@@ -84,7 +84,7 @@ class BackendService {
 
     public function listUsers() {
         try {   
-            $list = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/user",
+            $list = HttpClient::get($this->base . $this->id . "/user",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($list);
         } catch(\Exception $e) {
@@ -94,7 +94,7 @@ class BackendService {
 
     public function listMessages() {
         try { // Jerry ersetzen durch Friend?
-            $list = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/message/Jerry",
+            $list = HttpClient::get($this->base . $this->id . "/message/Jerry",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($list);
         } catch(\Exception $e) {
@@ -104,7 +104,7 @@ class BackendService {
 
     public function sendMessage() {
         try {
-            $list = HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/message",
+            $list = HttpClient::post($this->base . $this->id . "/message",
             // Hello, Jerry ersetzen
                 array("message" => "Hello?!", "to" => "Jerry"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
@@ -116,7 +116,7 @@ class BackendService {
 
     public function unreadMessageCount() {
         try {
-            $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/unread",
+            $data = HttpClient::get($this->base . $this->id . "/unread",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($data);
         } catch(\Exception $e) {
@@ -126,7 +126,7 @@ class BackendService {
 
     public function loadFriends() {
         try {
-            $data = HttpClient::get(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend",
+            $data = HttpClient::get($this->base . $this->id . "/friend",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             var_dump($data);
         } catch(\Exception $e) {
@@ -136,10 +136,10 @@ class BackendService {
 
     public function friendRequest($friend) {
         try { // Jerry durch friend ersetzen
-            HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend",
+            HttpClient::post($this->base . $this->id . "/friend",
                 array("username" => "Jerry"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            // HttpClient::post(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend",
+            // HttpClient::post($this->base . $this->id . "/friend",
             //     array("username" => // $friend username ?//),
             //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Requested...";
@@ -150,11 +150,11 @@ class BackendService {
 
     public function friendAccept($friend) {
         try {
-            HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend/Jerry",
+            HttpClient::put($this->base . $this->id . "/friend/Jerry",
                 array("status" => "accepted"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             
-            // HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend" . "/" . $friend,
+            // HttpClient::put($this->base . $this->id . "/friend" . "/" . $friend,
             //     array("status" => "accepted"),
             //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Accepted...";
@@ -165,11 +165,11 @@ class BackendService {
 
     public function friendDismiss($friend) {
         try {
-            HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend/Jerry",
+            HttpClient::put($this->base . $this->id . "/friend/Jerry",
                 array("status" => "dismissed"),
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             
-            // HttpClient::put(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend" . "/" . $friend,
+            // HttpClient::put($this->base . $this->id . "/friend" . "/" . $friend,
             //     array("status" => "dismissed"),
             //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Dismissed...";
@@ -180,10 +180,10 @@ class BackendService {
 
     public function friendRemove($friend) {
         try {
-            HttpClient::delete(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend/Jerry",
+            HttpClient::delete($this->base . $this->id . "/friend/Jerry",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             
-            //  HttpClient::delete(CHAT_SERVER_URL . "/" . CHAT_SERVER_ID . "/friend" . "/" . $friend,
+            //  HttpClient::delete($this->base . $this->id . "/friend" . "/" . $friend,
             //     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
             echo "Removed...";
         } catch(\Exception $e) {
