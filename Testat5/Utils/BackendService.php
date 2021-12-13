@@ -11,7 +11,6 @@ class BackendService {
     public function __construct() {
         $this->id = CHAT_SERVER_ID;
         $this->base = CHAT_SERVER_URL . "/";
-        $_SESSION['chat_token'] = "Session variable test wegen token";
     }
 
  
@@ -20,8 +19,7 @@ class BackendService {
         try {
             $result = HttpClient::post($this->base . $this->id . "/login", array("username" => $username, "password" => $password));
             $_SESSION['chat_token'] = $result->token;
-            echo $_SESSION['chat_token'];
-            // echo "Token: " . $chat_token . "<br>";
+            echo "Token: " . $_SESSION['chat_token'] . "<br>";
             return true;
         } catch(\Exception $e) {
             // echo "Loginprocess failed! / " . "<br>" . $e;
@@ -31,7 +29,6 @@ class BackendService {
     public function test() {
         try {
             echo "Try-Block" . "<br>";
-            echo $_SESSION['chat_token'];
             return HttpClient::get($this->base . '/test.json');
         } catch(\Exception $e) {
             error_log($e);
@@ -63,13 +60,14 @@ class BackendService {
 
     public function loadUser($username) {
         try {
-            echo $username . "<br>";
+            // echo $username . "<br>";
             $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM5MzE1ODcyfQ.jT17jP6A7raVKnN91hV5ocyqwuuqy8JIq12d5UNONds");
-            $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
-                );
+            // klappt glaube ich nicht
+            // $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
+            //    $_SESSION['chat_token']);
             User::fromJson($data);
-            var_dump($data);
+            // var_dump($data);
         } catch(\Exception $e) {
             echo "User not found!" . "<br>" . $e;
         }
@@ -133,7 +131,8 @@ class BackendService {
         try {
             $data = HttpClient::get($this->base . $this->id . "/friend",
                 "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM5MzE1ODcyfQ.jT17jP6A7raVKnN91hV5ocyqwuuqy8JIq12d5UNONds");
-            var_dump($data);
+            // var_dump($data);
+            return $data;
         } catch(\Exception $e) {
             echo "loading Friends failed" . "<br>" . $e;
         }

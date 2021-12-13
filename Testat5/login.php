@@ -1,21 +1,22 @@
 <?php
+
 require("start.php");
 if (isset($_SESSION['user'])) {
     header("Location: friends.php");
     exit();
 }
 $error = "";
-if (isset($_POST['action']) && $_POST['action'] === 'login') {
+if (isset($_POST['submit']) && $_POST['submit'] === 'login') {
     $username = $_POST['username'];
     $password = $_POST['password'];
     if ($service->login($username, $password)) {
         $_SESSION['user'] = $username;
+        
         header("Location: friends.php");
     } else {
         $error = "Authentification failed!";
     }
 }
-echo $_SESSION['chat_token'];
 ?>
 <html>
     <head>
@@ -46,7 +47,7 @@ echo $_SESSION['chat_token'];
             <!-- Buttons mit Links -->
             <div class="divbutlog">
                 <a onclick="Javascript:window.location.href = 'register.php'"> <button type="button" class="logbutton" id="logbuttonreg">Register</button> </a>
-                <button type="submit" class="logbutton" id="logbuttonlog" name="action" value="login">Login</button>
+                <button type="submit" class="logbutton" id="logbuttonlog" name="submit" value="login">Login</button>
             </div>
         </form>
     </body>
