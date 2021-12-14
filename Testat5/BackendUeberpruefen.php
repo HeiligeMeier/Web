@@ -1,14 +1,16 @@
 <?php
+use Model\Friend;
     require("start.php");
     $service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
     $user = new Model\User("Anna");
     $friend = new Model\Friend("Kiwi", "");
+    $username = "Tom";
 
     // var_dump($service->test());
     // var_dump($service->login("Tom", "12345678"));
     // var_dump($service->register("Quadrat", "12345678"));
     // var_dump($service->userExists("Test123"));
-    // var_dump($service->loadUser("Test123"));
+    // var_dump($service->loadUser($username));
     // var_dump($service->saveUser($user));
     // var_dump($service->listUsers());
     // var_dump($service->listMessages($user));
