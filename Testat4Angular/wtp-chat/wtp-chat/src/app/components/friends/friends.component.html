@@ -15,7 +15,7 @@
                             {{ friend.unreadMessages }} </span> </a> </li>
             </p>
             <!-- hinzugefügte Freunde-->
-            <p *ngFor="let friend for requestList" class="pfriends">
+            <p *ngFor="let friend of requestList" class="pfriends">
                 <li> <a [routerLink]="['/chat']" (click)="chat(friend.username)">
                         {{ friend.username }} <span class="listspanfriend">
                             {{ friend.unreadMessages }} </span> </a> </li>

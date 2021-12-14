@@ -127,7 +127,7 @@ export class FriendsComponent implements OnInit {
                     }
                     // Falls Nein, wird dieser geaddet
                     if (userFriend == true) {
-                        this.backend.friendRequest(this.currentUser)
+                        this.backend.friendRequest(this.inputUsername)
                         .then((ok: Boolean) => {
                             if (ok) {
                                 console.log("Added Friend somehow!");
