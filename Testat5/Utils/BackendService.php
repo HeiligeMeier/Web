@@ -63,6 +63,27 @@ class BackendService {
             User::fromJson($data);
             // var_dump($data);
             return $data;
+            
+            // Merge konflikt, habe dein Code hier her kopiert
+
+            // klappt glaube ich nicht
+            // $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
+            //    $_SESSION['chat_token']);
+            //return $data;
+            //$user = new User($username);
+            
+            $user = new User("test");
+            $json = json_encode($user);
+            //echo $json . "<br>";
+            $jsonObject = json_decode($json);
+            var_dump($jsonObject) . "<br>";
+            
+            $newUser = User::fromJson($jsonObject);
+            //var_dump($newUser);
+            
+            //User::fromJson($data);
+         //var_dump($data);
+            //return "lol";
         } catch(\Exception $e) {
             echo "User not found!" . "<br>" . $e;
         }
@@ -163,7 +184,7 @@ class BackendService {
             echo "Dismissing friend failed" . "<br>" . $e;
         }
     }
-    
+
     public function friendRemove(Friend $friend) {
         try {
             HttpClient::delete($this->base . $this->id . "/friend" . "/" . $friend->getUsername(),

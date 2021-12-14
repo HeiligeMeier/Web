@@ -10,7 +10,7 @@ use Model\Friend;
     // var_dump($service->login("Tom", "12345678"));
     // var_dump($service->register("Quadrat", "12345678"));
     // var_dump($service->userExists("Test123"));
-    // var_dump($service->loadUser($username));
+     var_dump($service->loadUser("Tom"));
     // var_dump($service->saveUser($user));
     // var_dump($service->listUsers());
     // var_dump($service->listMessages($user));
