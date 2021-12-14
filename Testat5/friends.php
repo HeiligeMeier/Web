@@ -3,6 +3,10 @@
 use Model\Friend;
 
 require("start.php");
+
+$userExists = "";
+$addError = "";
+$addedCor = "";
 $friendsCount = 0;
 
 // man kann nicht mehr direkt auf die friendlist
@@ -15,29 +19,34 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-$userExists;
-$addError = "";
-$addedCor = "";
+
+// Addbutton Handler
 if (isset($_POST['action']) && $_POST['action'] === 'add-friend') {
     $addError = "";
-    foreach ($service->loadFriends($_SESSION['user']) as $name) {
-        if ($name->username == $_POST['addFriend']) {
-            $userExists = true;
+    if ($service->userExists($_POST['addFriend'])) {
+        if ($_SESSION['user'] != $_POST['addFriend']) {
+            $newFriend = new Friend($_POST['addFriend'], "requested");
+            $service->friendRequest($newFriend);
+            // var_dump($newFriend); 
+            $addedCor = "Added Successfully";
+        } else {
+            $addError = "You cannot add yourself";
         }
-    }
-    if ($userExists == true) {
-        $newFriend = new Friend($name->username, "requested");
-        $service->friendRequest($newFriend);
-        // var_dump($newFriend);
-        $addedCor = "Added Successfully";
     } else {
         $addError = "User does not exist";
     }
 }
 
+// friend remove
+if (isset($_GET['rfriend']) && $_GET['rfriend'] != "") {
+    foreach ($service->loadFriends($_SESSION['user']) as $value) {
+        if ($value->username == $_GET['rfriend']) {
+            $rmvFriend = new Friend($_GET['rfriend'], "");
+            $service->friendRemove($rmvFriend);
+        }
+    }
+}
 
-// ist standartmäßig 1, sollte aber token rein
-// echo $_SESSION['chat_token'];
 ?>
 <html>
 
@@ -57,21 +66,28 @@ if (isset($_POST['action']) && $_POST['action'] === 'add-friend') {
         <ul class="listfriends">
             <?php
             foreach ($service->loadFriends($_SESSION['user']) as $value) {
-                // var_dump($value->status);
-
                 if ($value->status == "accepted") {
                     $friendName = $value->username;
                     $friendsCount += 1;
             ?>
                     <p class="pfriends" id="p1friends">
-                        <?php // Query Manipulation
-                        $chatQuery = 'chat.php?username=' . $friendName;
-                        //echo $chatQuery // href="chat.php" <?php $_GET['username'] = $friendName ? 
+                        <?php
+                        $chatQuery = 'chat.php?friend=' . $friendName;
                         ?>
                         <li> <a id="afr" href="<?php echo "chat.php" . "?username=" . $friendName ?>">
-                                <?php echo $friendName; ?>
-                                <span class="listspanfriend" id="listspan1friend"> 0
-                                    <?php // Unread Messages 
+                                <?php echo $friendName;
+                                foreach ($object as $index => $wert) {
+                                ?>
+                                    <span class="listspanfriend" id="listspan1friend"> 
+                                    <?php
+                                    if ($index == $friendName) {
+                                        if ($wert != 0) {
+                                            echo $wert;
+                                        } else {
+                                            echo "0";
+                                        }
+                                    }
+                                }
                                     ?> </span></a> </li>
                     </p>
             <?php }
@@ -97,21 +113,25 @@ if (isset($_POST['action']) && $_POST['action'] === 'add-friend') {
 
             // Buttonhandler
             if (isset($_POST['accept']) && $_POST['accept'] === 'acceptButton') {
-                $newFriend = new Friend($value->username, "accepted");
+                $newFriend = new Friend($value->username, "requested");
                 $service->friendAccept($newFriend);
+                // exit();
             }
             if (isset($_POST['dismiss']) && $_POST['dismiss'] === 'dismissButton') {
-                $newFriend = new Friend($value->username, "");
-                $service->friendAccept($newFriend);
+                $newFriend = new Friend($value->username, "requested");
+                $service->friendDismiss($newFriend);
+                // exit();
             }
 
             if ($value->status == "requested") {
         ?>
-                <li><a href="" id="lifriends">Friend request from <span id="spanfriends">
-                            <?php echo $value->username; ?> </span></a>
-                    <button name="accept" value="acceptButton">Accept</button>
-                    <button name="dismiss" value="dismissButton">Dismiss</button>
-                </li>
+                <form action="friends.php" method="post">
+                    <li><a href="" id="lifriends">Friend request from <span id="spanfriends">
+                                <?php echo $value->username; ?> </span></a>
+                        <button name="accept" value="acceptButton">Accept</button>
+                        <button name="dismiss" value="dismissButton">Dismiss</button>
+                    </li>
+                </form>
         <?php }
         }
         ?>
@@ -119,9 +139,9 @@ if (isset($_POST['action']) && $_POST['action'] === 'add-friend') {
     <div class="horizontal_dotted_line"></div>
 
     <div style="color: red; padding-bottom: 2px;" id="fehlerDiv">
-        <?= $addError . "<br>" . $addedCor ?>
+        <?= $addError . $addedCor ?>
     </div>
-    
+
     <!-- Freund hinzufügen -->
     <form action="friends.php" method="post">
         <input type="text" id="addfriend" name="addFriend" list="namen" placeholder="Add friend to List">

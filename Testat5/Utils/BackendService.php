@@ -49,9 +49,10 @@ class BackendService {
     public function userExists($username) {
         try {
             HttpClient::get($this->base . $this->id . "/user" . "/" . $username);
-            echo "User exists!" . "<br>";
+            //echo "User exists!" . "<br>";
+            return true;
         } catch(\Exception $e) {
-            echo "User does not exist!" . "<br>" . $e;
+            // echo "User does not exist!" . "<br>" . $e;
         }
     }
 
@@ -136,9 +137,11 @@ class BackendService {
         try {
             $data = HttpClient::get($this->base . $this->id . "/unread",
                 $_SESSION['chat_token']);
-            var_dump($data);
+            //     echo "try block messages" . "<br>";
+            // var_dump($data);
+            return $data;
         } catch(\Exception $e) {
-            echo "Could not get unreadMessageCount" . "<br>" . $e;
+            // echo "Could not get unreadMessageCount" . "<br>" . $e;
         }
     }
 
