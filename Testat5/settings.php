@@ -13,7 +13,14 @@ if (empty($_SESSION['user'])) {
 //echo $_SESSION['chat_token'];
 //$service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
 //$user=
-$user = $service->loadUser($_SESSION['user']);
+$user=$service->loadUser($_SESSION['user']);
+//var_dump($user);
+/*$user = new Model\User("test");
+$json = json_encode($user);
+echo $json . "<br>";
+$jsonObject = json_decode($json);
+$newUser = Model\User::fromJson($jsonObject);
+var_dump($newUser);*/
 
 //$user = new Model\User("TEST");
 //$user= User::fromJson($data);

@@ -68,9 +68,17 @@ class BackendService {
             //    $_SESSION['chat_token']);
             //return $data;
             //$user = new User($username);
-           
             
-            User::fromJson($data);
+            $user = new User("test");
+            $json = json_encode($user);
+            //echo $json . "<br>";
+            $jsonObject = json_decode($json);
+            var_dump($jsonObject) . "<br>";
+            
+            $newUser = User::fromJson($jsonObject);
+            //var_dump($newUser);
+            
+            //User::fromJson($data);
          //var_dump($data);
             //return "lol";
         } catch(\Exception $e) {

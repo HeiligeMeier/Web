@@ -2,7 +2,7 @@
 namespace Model;
 use JsonSerializable;
 class User implements JsonSerializable {
-    private $username; 
+    private $username="herbert"; 
     private $firstname;
     private $lastname;
     private $about;
