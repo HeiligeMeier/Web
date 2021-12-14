@@ -1,3 +1,34 @@
+<?php 
+//Use Model\User;
+require("start.php");
+if(!(isset($_SESSION['user']))){
+    header("Location: login.php");
+    exit();
+}
+if (empty($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+//var_dump($_GET["firstName"]);
+//echo $_SESSION['chat_token'];
+//$service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
+//$user=
+$user = $service->loadUser($_SESSION['user']);
+
+//$user = new Model\User("TEST");
+//$user= User::fromJson($data);
+//var_dump($user);
+
+//var_dump( $user->getFirstName());
+
+
+//var_dump($user->fromJson->getFirstName());
+//if(isset($_GET[$_SESSION['firstname']])){
+
+//}
+
+
+?>
 <html>
     <head>
         <title>Settings</title>

@@ -66,8 +66,13 @@ class BackendService {
             // klappt glaube ich nicht
             // $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
             //    $_SESSION['chat_token']);
+            //return $data;
+            //$user = new User($username);
+           
+            
             User::fromJson($data);
-            // var_dump($data);
+         //var_dump($data);
+            //return "lol";
         } catch(\Exception $e) {
             echo "User not found!" . "<br>" . $e;
         }
