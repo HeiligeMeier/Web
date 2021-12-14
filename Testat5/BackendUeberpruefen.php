@@ -6,10 +6,10 @@
     // Testfunktion
     // var_dump($service->test());
     // Funktionen überprüfen
-    var_dump($service->login("Test123", "12345678"));
-    // var_dump($service->register("Test123", "12345678"));
+    // var_dump($service->login("Test123", "12345678"));
+    // var_dump($service->register("Test187", "12345678"));
     // var_dump($service->userExists("Test123"));
-    // var_dump($service->loadUser("Test123"));
+     var_dump($service->loadUser("Tom"));
     // var_dump($service->saveUser($user));
     // var_dump($service->listUsers());
     // var_dump($service->listMessages());

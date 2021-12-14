@@ -27,7 +27,6 @@ class BackendService {
 
     public function login($username, $password) {
         try {
-            echo "hahahihi" . "<br>";
             $result = HttpClient::post($this->base . $this->id . "/login", array("username" => "Tom", "password" => "12345678"));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
@@ -38,7 +37,7 @@ class BackendService {
     public function register($username, $password) {
         try {
             // $result = HttpClient::post($this->base . $this->id . "/register", array("username" => "Tom", "password" => "12345678"));
-            $result = HttpClient::post($this->base . $this->id . "/register.php", array("username" => $username, "password" => $password));
+            $result = HttpClient::post($this->base . $this->id . "/register", array("username" => $username, "password" => $password));
             echo "Token: " . $result->token;
         } catch(\Exception $e) {
             echo "Registration failed! / " . "<br>" . $e;
@@ -48,20 +47,20 @@ class BackendService {
     public function userExists($username) {
         try {
             // HttpClient::get($this->base . $this->id . "/user/Tom");
-            HttpClient::get($this->base . $this->id . "/user" . "/" . $username);
+            HttpClient::get($this->base . $this->id . "/user" . "/" . $username);           
             echo "User exists!";
         } catch(\Exception $e) {
             echo "User does not exist!" . "<br>" . $e;
         }
     }
 
-    public function loadUser(User $user) {
+    public function loadUser($username) {
         try {
             // $data = HttpClient::get($this->base . $this->id . "/user/Tom",
             //    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-             $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $user->getUsername(),
+             $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-             $user::fromJson($data);
+             User::fromJson($data);
             var_dump($data);
         } catch(\Exception $e) {
             echo "User not found!" . "<br>" . $e;
