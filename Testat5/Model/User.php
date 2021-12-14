@@ -21,7 +21,6 @@ class User implements JsonSerializable {
         $user = new User(); 
         foreach ($data as $key => $value) {
             $user->{$key} = $value;
-            //var_dump($data);
         }
     } 
 }
