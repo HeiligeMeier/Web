@@ -58,33 +58,9 @@ class BackendService {
 
     public function loadUser($username) {
         try {
-            $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
+            return HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
                 $_SESSION['chat_token']);
-            echo $_SESSION['chat_token'];
-            User::fromJson($data);
-            // var_dump($data);
-            return $data;
             
-            // Merge konflikt, habe dein Code hier her kopiert
-
-            // klappt glaube ich nicht
-            // $data = HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
-            //    $_SESSION['chat_token']);
-            //return $data;
-            //$user = new User($username);
-            
-            $user = new User("test");
-            $json = json_encode($user);
-            //echo $json . "<br>";
-            $jsonObject = json_decode($json);
-            var_dump($jsonObject) . "<br>";
-            
-            $newUser = User::fromJson($jsonObject);
-            //var_dump($newUser);
-            
-            //User::fromJson($data);
-         //var_dump($data);
-            //return "lol";
         } catch(\Exception $e) {
             echo "User not found!" . "<br>" . $e;
         }
@@ -92,8 +68,8 @@ class BackendService {
 
     public function saveUser(User $user) {
         try {
-            HttpClient::post($this->base . $this->id . "/user" . "/" . $user->getUsername(),
-                array("customA" => "abc", "customB" => "xyz"),
+            return HttpClient::post($this->base . $this->id . "/user" . "/" . $user->getUsername(),
+                array("firstname" => $user->getFirstName(), "lastname" => $user->getLastName()),
                 $_SESSION['chat_token']);
             echo "Saved..." . "<br>";
         } catch(\Exception $e) {

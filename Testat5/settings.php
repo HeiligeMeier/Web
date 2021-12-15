@@ -9,31 +9,40 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-//var_dump($_GET["firstName"]);
-//echo $_SESSION['chat_token'];
-//$service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
-//$user=
-$user=$service->loadUser($_SESSION['user']);
+$username = $_SESSION['user'];
+$data = $service->loadUser($username);
+$user = Model\User::fromJson($data);
 //var_dump($user);
-/*$user = new Model\User("test");
-$json = json_encode($user);
-echo $json . "<br>";
-$jsonObject = json_decode($json);
-$newUser = Model\User::fromJson($jsonObject);
-var_dump($newUser);*/
-
-//$user = new Model\User("TEST");
-//$user= User::fromJson($data);
-//var_dump($user);
-
-//var_dump( $user->getFirstName());
+//var_dump($user->jsonSerialize());
 
 
-//var_dump($user->fromJson->getFirstName());
-//if(isset($_GET[$_SESSION['firstname']])){
 
-//}
 
+//$name="";
+//$firstname="";
+if(isset($_POST['eingName'])){  
+    //$name = $_POST['eingName'];
+    $user->setFirstname($_POST['eingName']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['eingLastName'])){  
+    $user->setLastname($_POST['eingLastName']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['eingDescription'])){  
+    $user->setAbout($_POST['eingDescription']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['coffeeOrTea'])){  
+    $user->setCoffeeOrTea($_POST['coffeeOrTea']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['radiobuttons'])){  
+    $user->setChatLayout($_POST['radiobuttons']);
+    //$service->saveUser($user);
+}
+$service->saveUser($user);
+var_dump($user);
 
 ?>
 <html>
@@ -43,18 +52,20 @@ var_dump($newUser);*/
     </head>
     <body>
         <h1>Profile Settings</h1>
-        <form>
+        <form method="post" action="settings.php">
             <fieldset class="field">
                 <legend>Base Data</legend>  
            <div>
-                <div class="basedata"><label for="name"> First Name</label>  <input class="input" id="name" type="text" placeholder="Your name"></div>
-                <div class="basedata"><label for="lastname">Last Name</label> <input class="input" id="lastname" type="text" placeholder="Your surname"></div>
+                <div class="basedata"><label for="name"> First Name</label>  <input name="eingName" class="input" id="name" type="text" placeholder="Your name" value="<?php if(isset($_POST['eingName']))
+                    {echo $_POST['eingName'];  } ?>"></div>
+                <div class="basedata"><label for="lastname">Last Name</label> <input name="eingLastName" class="input" id="lastname" type="text" placeholder="Your surname" value="<?php if(isset($_POST['eingLastName']))
+                    {echo $_POST['eingLastName'];  }?>"></div>
                 <div class="basedata">
                 Coffee or Tea? 
-            <select class="input" id="select">
-                <option>Coffee</option>
-                <option>Tea</option>
-                <option selected>Neither nor</option>
+            <select name="coffeeOrTea" class="input" id="select">
+                <option value="1">Coffee</option>
+                <option value="2">Tea</option>
+                <option selected value="3">Neither nor</option>
             </select></div>
             </div>
             </fieldset>
@@ -62,7 +73,7 @@ var_dump($newUser);*/
             <fieldset class="field" id="tsay">
                 <legend>Tell Something About You</legend>
                 <div>
-                    <textarea id="comment" placeholder="Leave a comment here"></textarea>
+                    <textarea name="eingDescription" id="comment" placeholder="Leave a comment here" value="<?php echo $user->getAbout()?>"></textarea>
                 </div>
             </fieldset>
             

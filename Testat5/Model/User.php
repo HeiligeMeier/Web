@@ -4,7 +4,7 @@ use JsonSerializable;
 class User implements JsonSerializable {
     private $username="herbert"; 
     private $firstname;
-    private $lastname;
+    private $lastname;  
     private $about;
     private $coffeeOrTea;
     private $chatLayout;
@@ -22,13 +22,11 @@ class User implements JsonSerializable {
     }
 
     public static function fromJson($data) {
-        //missing
-        $user = new User(); 
-        foreach ($data as $key => $value) {
-            $user->{$key} = $value;
+        $user = new User();
+        foreach($data as $key => $value){
+            $user->{$key}=$value;
         }
-        //var_dump($user);
-        //return $user;
+        return $user;
     } 
 
     public function getFirstname(){
