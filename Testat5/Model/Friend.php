@@ -1,7 +1,7 @@
 <?php
 namespace Model;
 use JsonSerializable;
-class User implements JsonSerializable {
+class Friend implements JsonSerializable {
     protected $username;
     protected $status;
 
@@ -30,9 +30,10 @@ class User implements JsonSerializable {
     }
 
     public static function fromJson($data) {
-        //missing
-        foreach($data as $key => $value) {
-            $user->{key} = $value;
+        // missing
+        $friend = new Friend();
+        foreach ($data as $key => $value) {
+            $friend->{$key} = $value;
         }
     }
 }

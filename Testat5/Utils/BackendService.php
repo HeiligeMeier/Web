@@ -1,153 +1,176 @@
 <?php
 namespace Utils;
+
+use Model\User;
+use Model\Friend;
+
 class BackendService {
     private $id;
     private $base;
 
-    public function __construct($id, $base) {
-        $this->id = $id;
-        $this->base = $base;
+    public function __construct() {
+        $this->id = CHAT_SERVER_ID;
+        $this->base = CHAT_SERVER_URL . "/";
+    }
+ 
+    // Testfunktion
+    public function test() {
+        try {
+            echo "Try-Block" . "<br>";
+            return HttpClient::get($this->base . '/test.json');
+        } catch(\Exception $e) {
+            error_log($e);
+            echo "Catch-Block" . "<br>" . $e;
+        }
+        echo "Ausgabe" . "<br>";
+        return false;
     }
 
     public function login($username, $password) {
         try {
-            $result = Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/login", array("username" => "Tom", "password" => "12345678"));
-            echo "Token: " . $result->token;
+            $result = HttpClient::post($this->base . $this->id . "/login", array("username" => $username, "password" => $password));
+            $_SESSION['chat_token'] = $result->token;
+            return true;
         } catch(\Exception $e) {
-            echo "Authentification failed";
-        }
-    }
+            // echo "Loginprocess failed! / " . "<br>" . $e;
+        }    
+    }    
+
 
     public function register($username, $password) {
         try {
-            $result = Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/register", array("username" => "Tom", "password" => "12345678"));
-            echo "Token: " . $result->token;
+            $result = HttpClient::post($this->base . $this->id . "/register", array("username" => $username, "password" => $password));
+            echo "Token: " . $result->token . "<br>";
         } catch(\Exception $e) {
-            echo "Authentification failed";
+            echo "Registration failed! / " . "<br>" . $e;
         }
     }
 
     public function userExists($username) {
         try {
-            Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user/Tom");
-            echo "Exists";
+            HttpClient::get($this->base . $this->id . "/user" . "/" . $username);
+            //echo "User exists!" . "<br>";
+            return true;
         } catch(\Exception $e) {
-            echo "Does not exist";
+            // echo "User does not exist!" . "<br>" . $e;
         }
     }
 
-    public function loadUser($user) {
+    public function loadUser($username) {
         try {
-            $data = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user/Tom",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            var_dump($data);
+            return HttpClient::get($this->base . $this->id . "/user" . "/" . $username,
+                $_SESSION['chat_token']);
+            
         } catch(\Exception $e) {
-            echo "Not found";
+            echo "User not found!" . "<br>" . $e;
         }
     }
 
-    public function saveUser($user) {
+    public function saveUser(User $user) {
         try {
-            Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user/Tom",
-                array("customA" => "abc", "customB" => "xyz"),
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            echo "Saved...";
+            return HttpClient::post($this->base . $this->id . "/user" . "/" . $user->getUsername(),
+                array("firstname" => $user->getFirstName(), "lastname" => $user->getLastName()),
+                $_SESSION['chat_token']);
+            echo "Saved..." . "<br>";
         } catch(\Exception $e) {
-            echo "Not found";
+            echo "saveUser not found / " . "<br>" . $e;
         }
     }
 
     public function listUsers() {
-        try {
-            $list = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/user",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+        try {   
+            $list = HttpClient::get($this->base . $this->id . "/user",
+                $_SESSION['chat_token']);
             var_dump($list);
         } catch(\Exception $e) {
-            echo "Error while loading list";
+            echo "Error while loading list Users" . "<br>" . $e;
         }
     }
 
-    public function listMessages() {
-        try {
-            $list = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/message/Jerry",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+    public function listMessages(User $user) {
+        try { 
+            $list = HttpClient::get($this->base . $this->id . "/message" . "/" . $user->getUsername(),
+                $_SESSION['chat_token']);
             var_dump($list);
         } catch(\Exception $e) {
-            echo "Error while loading list";
+            echo "Error while loading list Messages" . "<br>" . $e;
         }
     }
 
-    public function sendMessage() {
+    public function sendMessage($text, User $receiver) {
         try {
-            $list = Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/message",
-                array("message" => "Hello?!", "to" => "Jerry"),
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            $list = HttpClient::post($this->base . $this->id . "/message",
+                array("message" => $text, "to" => $receiver->getUsername()),
+                $_SESSION['chat_token']);
             var_dump($list);
         } catch(\Exception $e) {
-            echo "Error while loading list";
+            echo "Error while sending Message" . "<br>" . $e;
         }
     }
 
+    // Später testen
     public function unreadMessageCount() {
         try {
-            $data = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/unread",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            var_dump($data);
+            $data = HttpClient::get($this->base . $this->id . "/unread",
+                $_SESSION['chat_token']);
+            //     echo "try block messages" . "<br>";
+            // var_dump($data);
+            return $data;
         } catch(\Exception $e) {
-            echo "Error...";
+            // echo "Could not get unreadMessageCount" . "<br>" . $e;
         }
     }
 
     public function loadFriends() {
         try {
-            $data = Utils\HttpClient::get("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
-            var_dump($data);
+            $data = HttpClient::get($this->base . $this->id . "/friend",
+                $_SESSION['chat_token']);
+            return $data;
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "loading Friends failed" . "<br>" . $e;
         }
     }
 
-    public function friendRequest($friend) {
-        try {
-            Utils\HttpClient::post("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend",
-                array("username" => "Jerry"),
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+    public function friendRequest(Friend $friend) {
+        try { 
+            HttpClient::post($this->base . $this->id . "/friend",
+                array("username" => $friend->getUsername()),
+                $_SESSION['chat_token']);
             echo "Requested...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "friendRequest failed" . "<br>" . $e;
         }
     }
-
-    public function friendAccept($friend) {
+    
+    public function friendAccept(Friend $friend) {
         try {
-            Utils\HttpClient::put("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend/Jerry",
+            HttpClient::put($this->base . $this->id . "/friend" . "/" . $friend->getUsername(),
                 array("status" => "accepted"),
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+                $_SESSION['chat_token']);
             echo "Accepted...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "Accepting friend failed" . "<br>" . $e;
         }
     }
 
-    public function friendDismiss($friend) {
+    public function friendDismiss(Friend $friend) {
         try {
-            Utils\HttpClient::put("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend/Jerry",
+            HttpClient::put($this->base . $this->id . "/friend" . "/" . $friend->getUsername(),
                 array("status" => "dismissed"),
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+                $_SESSION['chat_token']);
             echo "Dismissed...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "Dismissing friend failed" . "<br>" . $e;
         }
     }
 
-    public function friendRemove($friend) {
+    public function friendRemove(Friend $friend) {
         try {
-            Utils\HttpClient::delete("https://online-lectures-cs.thi.de/chat/56ce2af0-ee84-4e78-85bc-6bba6c51c739/friend/Jerry",
-                "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjI5ODkzNTkwfQ.MRSZeLY8YNGp1dBWoYLUXTfs4ci1v13TkhQmke2nfII");
+            HttpClient::delete($this->base . $this->id . "/friend" . "/" . $friend->getUsername(),
+                $_SESSION['chat_token']);
             echo "Removed...";
         } catch(\Exception $e) {
-            echo "Error...";
+            echo "FriendRemove Error" . "<br>" . $e;
         }
     }
 }

@@ -1,42 +1,158 @@
-<html>
-    <head>
-        <title>Friends</title>
-      <link rel="stylesheet" type="text/css" href="style.css"> 
-    </head>
-    <body>
-        <h1>Friends</h1>
-        <a href="logout.html"> &lt; Logout</a> |
-        <a href="settings.html"> Settings</a> <br>
-        <div class="horizontal_dotted_line"></div> 
-        <p>
-            <!-- Freundesliste a-->
-            <fieldset class="fsfriends">
-                <ul class="listfriends">
-                    <p class="pfriends" id="p1friends"> <li> <a id="afr" href="chat.html">Tom  
-                        <span class="listspanfriend" id="listspan1friend">3</span></a> </li> </p>
-                    <p class="pfriends" id="p2friends"> <li> <a id="afr" href="chat.html">Marvin 
-                        <span class="listspanfriend" id="listspan2friend">1</span></a> </li> </p>
-                    <p class="pfriends" id="p3friends"><li> <a id="afr" href="chat.html">Tick</a> </li></p>
-                    <p class="pfriends" id="p4friends"><li> <a id="afr" href="chat.html">Trick</a> </li></p>
-                </ul>    
-            </fieldset>
-        </p>
-        <div class="horizontal_dotted_line"></div>
-        
-        <!-- Freundesanfragen -->
-        <h2>New Requests</h2> 
-        <ol style="list-style-type:decimal">
-            <li><a href="" id="lifriends">Friend request from <span id="spanfriends">Track</span></a></li>
-        </ol>    
-        <div class="horizontal_dotted_line"></div>
+<?php
 
-        <!-- Freund hinzufügen -->
-        <form action="profile.html" onsubmit="return validateForm();">
-            <!-- onkeyup="keyup(this)" --> 
-            <input type="text" id="addfriend" list="namen" placeholder="Add friend to List" onkeyup="keyup(this)"> 
-            <datalist id="namen"></datalist>
-            <Button id="addbutton">Add</Button>
-        </form>
-        <script src="friends.js"></script>
-    </body>
+use Model\Friend;
+
+require("start.php");
+
+$userExists = "";
+$addError = "";
+$addedCor = "";
+$friendsCount = 0;
+
+// man kann nicht mehr direkt auf die friendlist
+if (isset($_SESSION['user'])) {
+} else {
+    header("Location: login.php");
+    exit();
+}
+if (empty($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+// Addbutton Handler
+if (isset($_POST['action']) && $_POST['action'] === 'add-friend') {
+    $addError = "";
+    if ($service->userExists($_POST['addFriend'])) {
+        if ($_SESSION['user'] != $_POST['addFriend']) {
+            $newFriend = new Friend($_POST['addFriend'], "requested");
+            $service->friendRequest($newFriend);
+            // var_dump($newFriend); 
+            $addedCor = "Added Successfully";
+        } else {
+            $addError = "You cannot add yourself";
+        }
+    } else {
+        $addError = "User does not exist";
+    }
+}
+
+// friend remove
+if (isset($_GET['rfriend']) && $_GET['rfriend'] != "") {
+    foreach ($service->loadFriends($_SESSION['user']) as $value) {
+        if ($value->username == $_GET['rfriend']) {
+            $rmvFriend = new Friend($_GET['rfriend'], "");
+            $service->friendRemove($rmvFriend);
+        }
+    }
+}
+
+?>
+<html>
+
+<head>
+    <title>Friends</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <h1> <?php echo $_SESSION['user'] ?>'s Friends</h1>
+    <a onclick="Javascript:window.location.href = 'logout.php'"> &lt; Logout</a> |
+    <a onclick="Javascript:window.location.href = 'settings.php'"> Settings</a> <br>
+    <div class="horizontal_dotted_line"></div>
+    <p>
+        <!-- Freundesliste a-->
+    <fieldset class="fsfriends">
+        <ul class="listfriends">
+            <?php
+            foreach ($service->loadFriends($_SESSION['user']) as $value) {
+                if ($value->status == "accepted") {
+                    $friendName = $value->username;
+                    $friendsCount += 1;
+            ?>
+                    <p class="pfriends" id="p1friends">
+                        <?php
+                        $chatQuery = 'chat.php?friend=' . $friendName;
+                        ?>
+                        <li> <a id="afr" href="<?php echo "chat.php" . "?username=" . $friendName ?>">
+                                <?php echo $friendName;
+                                foreach ($object as $index => $wert) {
+                                ?>
+                                    <span class="listspanfriend" id="listspan1friend"> 
+                                    <?php
+                                    if ($index == $friendName) {
+                                        if ($wert != 0) {
+                                            echo $wert;
+                                        } else {
+                                            echo "0";
+                                        }
+                                    }
+                                }
+                                    ?> </span></a> </li>
+                    </p>
+            <?php }
+            }
+            ?>
+            <div>
+                <?php
+                if ($friendsCount < 1) {
+                    echo "Friendlist is empty!";
+                }
+                ?>
+            </div>
+        </ul>
+    </fieldset>
+    </p>
+    <div class="horizontal_dotted_line"></div>
+
+    <!-- Freundesanfragen -->
+    <h2>New Requests</h2>
+    <ol style="list-style-type:decimal">
+        <?php
+        foreach ($service->loadFriends($_SESSION['user']) as $value) {
+
+            // Buttonhandler
+            if (isset($_POST['accept']) && $_POST['accept'] === 'acceptButton') {
+                $newFriend = new Friend($value->username, "requested");
+                $service->friendAccept($newFriend);
+                // exit();
+            }
+            if (isset($_POST['dismiss']) && $_POST['dismiss'] === 'dismissButton') {
+                $newFriend = new Friend($value->username, "requested");
+                $service->friendDismiss($newFriend);
+                // exit();
+            }
+
+            if ($value->status == "requested") {
+        ?>
+                <form action="friends.php" method="post">
+                    <li><a href="" id="lifriends">Friend request from <span id="spanfriends">
+                                <?php echo $value->username; ?> </span></a>
+                        <button name="accept" value="acceptButton">Accept</button>
+                        <button name="dismiss" value="dismissButton">Dismiss</button>
+                    </li>
+                </form>
+        <?php }
+        }
+        ?>
+    </ol>
+    <div class="horizontal_dotted_line"></div>
+
+    <div style="color: red; padding-bottom: 2px;" id="fehlerDiv">
+        <?= $addError . $addedCor ?>
+    </div>
+
+    <!-- Freund hinzufügen -->
+    <form action="friends.php" method="post">
+        <input type="text" id="addfriend" name="addFriend" list="namen" placeholder="Add friend to List">
+        <datalist id="namen"></datalist>
+        <Button type="submit" id="addbutton" name="action" value="add-friend">Add</Button>
+    </form>
+    <script>
+        window.chatToken = "<?= $_SESSION['chat_token'] ?>";
+        window.chatCollectionId = "<?= CHAT_SERVER_ID ?>";
+        window.chatServer = "<?= CHAT_SERVER_URL ?>";
+    </script>
+</body>
+
 </html>
