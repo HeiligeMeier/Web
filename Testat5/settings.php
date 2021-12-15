@@ -56,10 +56,8 @@ var_dump($user);
             <fieldset class="field">
                 <legend>Base Data</legend>  
            <div>
-                <div class="basedata"><label for="name"> First Name</label>  <input name="eingName" class="input" id="name" type="text" placeholder="Your name" value="<?php if(isset($_POST['eingName']))
-                    {echo $_POST['eingName'];  } ?>"></div>
-                <div class="basedata"><label for="lastname">Last Name</label> <input name="eingLastName" class="input" id="lastname" type="text" placeholder="Your surname" value="<?php if(isset($_POST['eingLastName']))
-                    {echo $_POST['eingLastName'];  }?>"></div>
+                <div class="basedata"><label for="name"> First Name</label>  <input name="eingName" class="input" id="name" type="text" placeholder="Your name" value="<?php if(isset($_SESSION['user'])){echo $user->getFirstname();} ?>"></div>
+                <div class="basedata"><label for="lastname">Last Name</label> <input name="eingLastName" class="input" id="lastname" type="text" placeholder="Your surname" value="<?php if(isset($_SESSION['user'])){echo $user->getLastname();} ?>"></div>
                 <div class="basedata">
                 Coffee or Tea? 
             <select name="coffeeOrTea" class="input" id="select">
@@ -73,16 +71,18 @@ var_dump($user);
             <fieldset class="field" id="tsay">
                 <legend>Tell Something About You</legend>
                 <div>
-                    <textarea name="eingDescription" id="comment" placeholder="Leave a comment here" value="<?php echo $user->getAbout()?>"></textarea>
+                    <textarea name="eingDescription" id="comment">
+                    <?php if(isset($_SESSION['user'])){echo $user->getAbout();} ?>
+                    </textarea>
                 </div>
             </fieldset>
             
             <fieldset class="field">
                 <legend>Prefered Chat Layout</legend>
             <div>
-                <input type="radio" name="radiobuttons" id="opt1"><label for="opt1">Username and message in one line</label>
+                <input type="radio" name="radiobuttons" <?php if(isset($radiobuttons)&&$radiobuttons=="opt1")echo "checked"; ?> value="opt1" id="opt1"><label for="opt1">Username and message in one line</label>
                 <br>
-                <input type="radio" name="radiobuttons" id="opt2"><label for="opt2">Username and message in separated lines</label>
+                <input type="radio" name="radiobuttons" <?php if(isset($radiobuttons)&&$radiobuttons=="opt2")echo "checked"; ?> value="opt2" id="opt2"><label for="opt2">Username and message in separated lines</label>
             </div>
             </fieldset>
             <a href="friends.html">
