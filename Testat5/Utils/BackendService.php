@@ -69,7 +69,7 @@ class BackendService {
     public function saveUser(User $user) {
         try {
             return HttpClient::post($this->base . $this->id . "/user" . "/" . $user->getUsername(),
-                array("firstname" => $user->getFirstName(), "lastname" => $user->getLastName()),
+                array("firstname" => $user->getFirstName(), "lastname" => $user->getLastName(), "about"=> $user->getAbout(), "coffeeOrTea"=> $user->getCoffeeOrTea(), "chatLayout"=> $user->getChatLayout()),
                 $_SESSION['chat_token']);
             echo "Saved..." . "<br>";
         } catch(\Exception $e) {

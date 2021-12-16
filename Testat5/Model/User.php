@@ -2,7 +2,7 @@
 namespace Model;
 use JsonSerializable;
 class User implements JsonSerializable {
-    private $username="herbert"; 
+    private $username; 
     private $firstname;
     private $lastname;  
     private $about;
@@ -50,7 +50,7 @@ class User implements JsonSerializable {
         $this->about = $About;
     }
 
-    public function getCofferOrTea(){
+    public function getCoffeeOrTea(){
         return $this->coffeeOrTea;
     }
     public function setCoffeeOrTea($CoffeeOrTea){
@@ -60,8 +60,8 @@ class User implements JsonSerializable {
     public function getChatLayout(){
         return $this->chatLayout;
     }
-    public function setChatLayout($ChatLayout){
-        $this->chatLayout = $ChatLayout;
+    public function setChatLayout($layout){
+        $this->chatLayout = $layout;
     }
 }
 ?>

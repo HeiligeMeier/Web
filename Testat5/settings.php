@@ -30,7 +30,7 @@ if(isset($_POST['eingLastName'])){
     //$service->saveUser($user);
 }
 if(isset($_POST['eingDescription'])){  
-    $user->setAbout($_POST['eingDescription']);
+    $user->setAbout(trim($_POST['eingDescription']));
     //$service->saveUser($user);
 }
 if(isset($_POST['coffeeOrTea'])){  
@@ -39,10 +39,15 @@ if(isset($_POST['coffeeOrTea'])){
 }
 if(isset($_POST['radiobuttons'])){  
     $user->setChatLayout($_POST['radiobuttons']);
-    //$service->saveUser($user);
+    $service->saveUser($user);
+    header("location: friends.php");
 }
-$service->saveUser($user);
-var_dump($user);
+
+$text = trim($user->getAbout());
+$text=trim($text);
+$auswahl=$user->getCoffeeOrTea();
+//var_dump($user);
+
 
 ?>
 <html>
@@ -60,10 +65,10 @@ var_dump($user);
                 <div class="basedata"><label for="lastname">Last Name</label> <input name="eingLastName" class="input" id="lastname" type="text" placeholder="Your surname" value="<?php if(isset($_SESSION['user'])){echo $user->getLastname();} ?>"></div>
                 <div class="basedata">
                 Coffee or Tea? 
-            <select name="coffeeOrTea" class="input" id="select">
-                <option value="1">Coffee</option>
-                <option value="2">Tea</option>
-                <option selected value="3">Neither nor</option>
+            <select name="coffeeOrTea" class="input" id="select" <?php if(isset($_SESSION['user'])){echo $user->getCoffeeOrTea();}  ?>>
+                <option value="1" <?php if('1'==$auswahl){echo 'selected="selected"';}?>>Coffee</option>
+                <option value="2" <?php if('2'==$auswahl){echo 'selected="selected"';}?>>Tea</option>
+                <option value="3" <?php if('3'==$auswahl){echo 'selected="selected"';}?>>Neither nor</option>
             </select></div>
             </div>
             </fieldset>
@@ -71,8 +76,7 @@ var_dump($user);
             <fieldset class="field" id="tsay">
                 <legend>Tell Something About You</legend>
                 <div>
-                    <textarea name="eingDescription" id="comment">
-                    <?php if(isset($_SESSION['user'])){echo $user->getAbout();} ?>
+                    <textarea name="eingDescription" id="comment" placeholder="Write something here..."><?php if(isset($_SESSION['user'])){echo trim($user->getAbout());} ?>
                     </textarea>
                 </div>
             </fieldset>
@@ -80,16 +84,17 @@ var_dump($user);
             <fieldset class="field">
                 <legend>Prefered Chat Layout</legend>
             <div>
-                <input type="radio" name="radiobuttons" <?php if(isset($radiobuttons)&&$radiobuttons=="opt1")echo "checked"; ?> value="opt1" id="opt1"><label for="opt1">Username and message in one line</label>
+                <input type="radio" name="radiobuttons" <?php if('opt1' == $user->getChatLayout()){echo 'checked="checked"';} ?> value="opt1" id="opt1"><label for="opt1">Username and message in one line</label>
                 <br>
-                <input type="radio" name="radiobuttons" <?php if(isset($radiobuttons)&&$radiobuttons=="opt2")echo "checked"; ?> value="opt2" id="opt2"><label for="opt2">Username and message in separated lines</label>
+                <input type="radio" name="radiobuttons" <?php if('opt2' == $user->getChatLayout()){echo 'checked="checked"';} ?> value="opt2" id="opt2"><label for="opt2">Username and message in separated lines</label>
             </div>
             </fieldset>
-            <a href="friends.html">
+            <a href="friends.php">
                 <button class="cancel" type="button">Cancel</button>
             </a>
-            <button class="save" type="submit">Save</button>
-        
+            <a href="friends.php">
+                <button class="save" type="submit">Save</button>
+            </a>
         </form>
 
         
