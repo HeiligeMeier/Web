@@ -8,7 +8,7 @@ if(isset($_POST['submit']) && $_POST['submit'] === 'register') {
     $confirm = $_POST['confirm'];
     $errors = array();
 
-    if(strlen($username) < 4) {
+    if(strlen($username) < 3) {
         $errors[] = "Username is too short";
     }
     
@@ -73,6 +73,9 @@ if(isset($_POST['submit']) && $_POST['submit'] === 'register') {
         <div class="buttondiv">
             <a href="login.php"><button class="button1" formnovalidate>cancel</button></a>
         </div>
-        <script src="registerscript.js"></script>
+        <script>
+            window.chatCollectionId = "<?= CHAT_SERVER_ID ?>";
+            window.chatServer = "<?= CHAT_SERVER_URL ?>";
+        </script>
     </body>
 </html>
