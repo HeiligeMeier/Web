@@ -14,12 +14,6 @@
                         <span class="listspanfriend">
                             {{ friend.unreadMessages }} </span> </a> </li>
             </p>
-            <!-- hinzugefügte Freunde-->
-            <p *ngFor="let friend of requestList" class="pfriends">
-                <li> <a [routerLink]="['/chat']" (click)="chat(friend.username)">
-                        {{ friend.username }} <span class="listspanfriend">
-                            {{ friend.unreadMessages }} </span> </a> </li>
-            </p>
         </ul>
     </fieldset>
 </div>
@@ -29,13 +23,13 @@
 <!-- Freundesanfragen -->
 <h2>New Requests</h2>
 
-<ol>
+<ol style="list-style-type: decimal;">
     <!-- ersetzen durch Anfragen-->
     
-    <li *ngFor="let friend of requestList, index as i"> <a id="lifriends">{{ i + 1 }} Friend request from <span
+    <li *ngFor="let friend of requestList, index as i"> <a id="lifriends"> Friend request from <span
                 id="spanfriends"> {{ friend.username }} </span> </a>
-        <button class="acceptDeclineButton" type="button" (click)="acceptFriend()"> Accept </button>
-        <button class="acceptDeclineButton" type="button" (click)="declineFriend()"> Decline </button>
+        <button type="button" (click)="acceptFriend(i)"> Accept </button>
+        <button type="button" (click)="declineFriend(i)"> Decline </button>
     </li>
 </ol>
 <div class="horizontal_dotted_line"></div>
