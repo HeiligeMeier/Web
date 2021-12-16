@@ -9,11 +9,11 @@
             <h1>Chat with Tom</h1>
         </div>
         <div>
-            <a href="friends.html">&lt Back</a>
+            <a href="friends.php">&lt Back</a>
             |
-            <a href="profile.html">Profile</a>
+            <a href="profile.php">Profile</a>
             |
-            <a href="friends.html" class="rmvchat">Remove Friend</a>
+            <a href="friends.php" class="rmvchat">Remove Friend</a>
  
         </div>
         
