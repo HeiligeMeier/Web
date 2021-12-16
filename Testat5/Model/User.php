@@ -5,7 +5,7 @@ class User implements JsonSerializable {
     private $username; 
     private $firstname;
     private $lastname;  
-    private $about=;
+    private $about;
     private $coffeeOrTea;
     private $chatLayout;
     

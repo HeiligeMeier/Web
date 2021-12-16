@@ -8,8 +8,13 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-var_dump($_SESSION['user']);
+//var_dump($_SESSION['user']);
 
+//$friends= $service->loadFriends($_SESSION['user']);
+//var_dump($friends);
+$friendName = $_SESSION['user'];
+$data = $service->loadUser($friendName);
+$user = Model\User::fromJson($data);
 ?>
 
 <html>
@@ -18,23 +23,32 @@ var_dump($_SESSION['user']);
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Profile of Tom</h1>
+        <h1>Profile of <?php echo $user->getUsername();?></h1>
         <a href="chat.php"> &lt Back to Chat </a>
         <span>|</span>
         <a class="rmvchat" href="friends.php">Remove Friend</a><br>
         <div class="content">
         <img id="pb" src="images/profile.png">
         <p class="aboutTextCss">
-                
-                
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                <?php echo $user->getAbout();?>
                 
                 <br>
                 <br>
                 <label class="frage">Coffe or Tea?</label><br>
-                <label class="antwort">Tea</label><br>
+                <label class="antwort">
+                    <?php 
+                        $CoT = $user->getCoffeeOrTea();
+                        if($CoT=="1"){
+                            echo "Coffee";
+                        }else if($CoT=="2   "){
+                            echo "Tea";
+                        }else{
+                            echo "Neither nor";
+                        }
+                    ?>
+                </label><br>
                 <label class="frage">Name</label><br>
-                <label class="antwort">Thomas</label><br>
+                <label class="antwort"><?php echo $user->getFirstname() ." ". $user->getLastname();?></label><br>
             </p>
         </div>    
     </body>
