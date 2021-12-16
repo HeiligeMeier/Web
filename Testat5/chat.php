@@ -1,4 +1,40 @@
-<!DOCTYPE html>
+<?php
+
+use Model\User;
+use Model\Friend;
+
+require(start.php);
+
+
+
+if (isset($_SESSION['user'])) {
+} else {
+    header("Location: login.php");
+    exit();
+}
+if (empty($_SESSION['user'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$friendName = $_GET["friend"];
+
+if ($partner = "") {
+    header("Location: friends.php");
+    exit()
+}
+
+$msg = $_POST['message'];
+$friend = new User($friendName); 
+
+if(isset($_POST['submit']) && $_POST['submit'] === 'send')) {
+    $service->sendMessage($msg, $friend);
+}
+
+
+?>
+
+
 <html>
     <head>
         <title>Chat</title>
@@ -6,10 +42,10 @@
     </head>
     <body>
         <div>
-            <h1>Chat with Tom</h1>
+            <h1>Chat with <?php echo $friendName ?></h1>
         </div>
         <div>
-            <a href="friends.php">&lt Back</a>
+            <a href="friends.php">Back</a>
             |
             <a href="profile.php">Profile</a>
             |
@@ -20,27 +56,38 @@
         <div class="horizontal_dotted_line"></div>
         
         <fieldset  id="msg-form" class="fschat">
-            
+            <?php
+            foreach ($service->listMessages($friend) as $value) {
+                echo $value->from
+            ?>
+                <span>:</span>
+            <?php
+                echo $value->msg
+            ?>
+                <span class="timechat">
+            <?php
+                echo $value->time
+            ?>    
+                </span>
+                <br>
+            <?php
+            }    
+            ?>
             
         </fieldset>
 
         <div class="horizontal_dotted_line"></div>
 
         <div>
-            <form>
+            <form method="post">
                 <input type="text" id="messageLabel" name="message" placeholder="New Message" class="msgchat">
-                <button onclick=sendMsg() type="button" class="buttonchat">Send</button>
+                <button type="submit" class="buttonchat" name="submit" value="send">Send</button>
             </form>
         </div>
         <script>
-            window.prevMsgLen = 0;
-            window.msgIn= document.getElementById("messageLabel");
-            window.msgForm= document.getElementById("msg-form");
-
-            window.chatToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiVG9tIiwiaWF0IjoxNjM2ODAyNjk5fQ.8AAINKyShLmpNic_zKYaBmmffM3LqDEkaztRVl9L9CQ";
-            window.chatCollectionId = "4f52c505-5f3c-4354-8365-b878a83c3896";
-            window.baseURL = "https://online-lectures-cs.thi.de/chat";
+            window.chatToken = "<?= $_SESSION['chat_token'] ?>";
+            window.chatCollectionId = "<?= CHAT_SERVER_ID ?>";
+            window.chatServer = "<?= CHAT_SERVER_URL ?>";
         </script>
-        <script src="chat.js"></script>
     </body>
 </html>
