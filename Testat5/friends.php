@@ -75,19 +75,18 @@ if (isset($_GET['rfriend']) && $_GET['rfriend'] != "") {
                         $chatQuery = 'chat.php?friend=' . $friendName;
                         ?>
                         <li> <a id="afr" href="<?php echo "chat.php" . "?username=" . $friendName ?>">
-                                <?php echo $friendName;
-                                foreach ($object as $index => $wert) {
-                                ?>
-                                    <span class="listspanfriend" id="listspan1friend"> 
+                                <?php echo $friendName; ?>
+                                <span class="listspanfriend" id="listspan1friend">
                                     <?php
-                                    if ($index == $friendName) {
-                                        if ($wert != 0) {
-                                            echo $wert;
-                                        } else {
-                                            echo "0";
+                                    foreach ($service->unreadMessageCount() as $index => $wert) {
+                                        if ($index == $friendName) {
+                                            if ($wert != 0) {
+                                                echo $wert;
+                                            } else {
+                                                echo "0";
+                                            }
                                         }
                                     }
-                                }
                                     ?> </span></a> </li>
                     </p>
             <?php }
