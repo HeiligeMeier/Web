@@ -9,30 +9,44 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-//var_dump($_GET["firstName"]);
-//echo $_SESSION['chat_token'];
-//$service = new Utils\BackendService(CHAT_SERVER_URL, CHAT_SERVER_ID);
-//$user=
-$user=$service->loadUser($_SESSION['user']);
+$username = $_SESSION['user'];
+$data = $service->loadUser($username);
+$user = Model\User::fromJson($data);
 //var_dump($user);
-/*$user = new Model\User("test");
-$json = json_encode($user);
-echo $json . "<br>";
-$jsonObject = json_decode($json);
-$newUser = Model\User::fromJson($jsonObject);
-var_dump($newUser);*/
+//var_dump($user->jsonSerialize());
 
-//$user = new Model\User("TEST");
-//$user= User::fromJson($data);
+
+
+
+//$name="";
+//$firstname="";
+if(isset($_POST['eingName'])){  
+    //$name = $_POST['eingName'];
+    $user->setFirstname($_POST['eingName']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['eingLastName'])){  
+    $user->setLastname($_POST['eingLastName']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['eingDescription'])){  
+    $user->setAbout(trim($_POST['eingDescription']));
+    //$service->saveUser($user);
+}
+if(isset($_POST['coffeeOrTea'])){  
+    $user->setCoffeeOrTea($_POST['coffeeOrTea']);
+    //$service->saveUser($user);
+}
+if(isset($_POST['radiobuttons'])){  
+    $user->setChatLayout($_POST['radiobuttons']);
+    $service->saveUser($user);
+    header("location: friends.php");
+}
+
+$text = trim($user->getAbout());
+$text=trim($text);
+$auswahl=$user->getCoffeeOrTea();
 //var_dump($user);
-
-//var_dump( $user->getFirstName());
-
-
-//var_dump($user->fromJson->getFirstName());
-//if(isset($_GET[$_SESSION['firstname']])){
-
-//}
 
 
 ?>
@@ -43,18 +57,18 @@ var_dump($newUser);*/
     </head>
     <body>
         <h1>Profile Settings</h1>
-        <form>
+        <form method="post" action="settings.php">
             <fieldset class="field">
                 <legend>Base Data</legend>  
            <div>
-                <div class="basedata"><label for="name"> First Name</label>  <input class="input" id="name" type="text" placeholder="Your name"></div>
-                <div class="basedata"><label for="lastname">Last Name</label> <input class="input" id="lastname" type="text" placeholder="Your surname"></div>
+                <div class="basedata"><label for="name"> First Name</label>  <input name="eingName" class="input" id="name" type="text" placeholder="Your name" value="<?php if(isset($_SESSION['user'])){echo $user->getFirstname();} ?>"></div>
+                <div class="basedata"><label for="lastname">Last Name</label> <input name="eingLastName" class="input" id="lastname" type="text" placeholder="Your surname" value="<?php if(isset($_SESSION['user'])){echo $user->getLastname();} ?>"></div>
                 <div class="basedata">
                 Coffee or Tea? 
-            <select class="input" id="select">
-                <option>Coffee</option>
-                <option>Tea</option>
-                <option selected>Neither nor</option>
+            <select name="coffeeOrTea" class="input" id="select" <?php if(isset($_SESSION['user'])){echo $user->getCoffeeOrTea();}  ?>>
+                <option value="1" <?php if('1'==$auswahl){echo 'selected="selected"';}?>>Coffee</option>
+                <option value="2" <?php if('2'==$auswahl){echo 'selected="selected"';}?>>Tea</option>
+                <option value="3" <?php if('3'==$auswahl){echo 'selected="selected"';}?>>Neither nor</option>
             </select></div>
             </div>
             </fieldset>
@@ -62,23 +76,25 @@ var_dump($newUser);*/
             <fieldset class="field" id="tsay">
                 <legend>Tell Something About You</legend>
                 <div>
-                    <textarea id="comment" placeholder="Leave a comment here"></textarea>
+                    <textarea name="eingDescription" id="comment" placeholder="Write something here..."><?php if(isset($_SESSION['user'])){echo trim($user->getAbout());} ?>
+                    </textarea>
                 </div>
             </fieldset>
             
             <fieldset class="field">
                 <legend>Prefered Chat Layout</legend>
             <div>
-                <input type="radio" name="radiobuttons" id="opt1"><label for="opt1">Username and message in one line</label>
+                <input type="radio" name="radiobuttons" <?php if('opt1' == $user->getChatLayout()){echo 'checked="checked"';} ?> value="opt1" id="opt1"><label for="opt1">Username and message in one line</label>
                 <br>
-                <input type="radio" name="radiobuttons" id="opt2"><label for="opt2">Username and message in separated lines</label>
+                <input type="radio" name="radiobuttons" <?php if('opt2' == $user->getChatLayout()){echo 'checked="checked"';} ?> value="opt2" id="opt2"><label for="opt2">Username and message in separated lines</label>
             </div>
             </fieldset>
-            <a href="friends.html">
+            <a href="friends.php">
                 <button class="cancel" type="button">Cancel</button>
             </a>
-            <button class="save" type="submit">Save</button>
-        
+            <a href="friends.php">
+                <button class="save" type="submit">Save</button>
+            </a>
         </form>
 
         

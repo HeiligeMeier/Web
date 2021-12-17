@@ -81,7 +81,7 @@ export class BackendService {
             return Promise.resolve(friends);
         })
         .catch(() => {
-            alert('Error loading friends!');
+            // alert('Error loading friends!');
             return Promise.resolve([])
         });
     }

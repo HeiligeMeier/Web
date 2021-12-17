@@ -150,7 +150,7 @@ a:hover {
 .content{
     margin-top: 20px;
 }
-.about{
+.aboutTextCss{
     border: 1px dotted blue;
     display: flow-root;
     background-color: white;
