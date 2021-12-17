@@ -4,6 +4,10 @@ use Model\Friend;
 
 require("start.php");
 
+//Reload
+$sec = "5";
+header("Refresh: $sec");
+
 $userExists = "";
 $addError = "";
 $addedCor = "";
