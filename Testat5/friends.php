@@ -5,7 +5,7 @@ use Model\Friend;
 require("start.php");
 
 //Reload
-$sec = "5";
+$sec = "3";
 header("Refresh: $sec");
 
 $userExists = "";
