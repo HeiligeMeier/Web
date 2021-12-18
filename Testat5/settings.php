@@ -12,14 +12,8 @@ if (empty($_SESSION['user'])) {
 $username = $_SESSION['user'];
 $data = $service->loadUser($username);
 $user = Model\User::fromJson($data);
-//var_dump($user);
-//var_dump($user->jsonSerialize());
 
 
-
-
-//$name="";
-//$firstname="";
 if(isset($_POST['eingName'])){  
     //$name = $_POST['eingName'];
     $user->setFirstname($_POST['eingName']);

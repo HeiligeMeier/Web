@@ -8,13 +8,19 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     exit();
 }
-//var_dump($_SESSION['user']);
+
 
 //$friends= $service->loadFriends($_SESSION['user']);
 //var_dump($friends);
-$friendName = $_SESSION['user'];
-$data = $service->loadUser($friendName);
-$user = Model\User::fromJson($data);
+
+if((!($friendName = $_GET["friendName"])=="")){
+    $data = $service->loadUser($friendName);
+    $user = Model\User::fromJson($data);
+}else{
+    header("Location: friends.php");
+}
+
+
 ?>
 
 <html>
@@ -24,7 +30,7 @@ $user = Model\User::fromJson($data);
     </head>
     <body>
         <h1>Profile of <?php echo $user->getUsername();?></h1>
-        <a href="chat.php"> &lt Back to Chat </a>
+        <a href="<?php echo "chat.php" . "?username=" . $friendName ?>"> &lt Back to Chat </a>
         <span>|</span>
         <a class="rmvchat" href="friends.php">Remove Friend</a><br>
         <div class="content">
@@ -34,13 +40,13 @@ $user = Model\User::fromJson($data);
                 
                 <br>
                 <br>
-                <label class="frage">Coffe or Tea?</label><br>
+                <label class="frage">Coffee or Tea?</label><br>
                 <label class="antwort">
                     <?php 
                         $CoT = $user->getCoffeeOrTea();
                         if($CoT=="1"){
                             echo "Coffee";
-                        }else if($CoT=="2   "){
+                        }else if($CoT=="2"){
                             echo "Tea";
                         }else{
                             echo "Neither nor";

@@ -3,7 +3,7 @@
 use Model\User;
 use Model\Friend;
 
-require(start.php);
+require("start.php");
 
 
 
@@ -17,17 +17,18 @@ if (empty($_SESSION['user'])) {
     exit();
 }
 
-$friendName = $_GET["friend"];
+$friendName = $_GET["username"];
+//var_dump($friendName);
 
 if ($partner = "") {
     header("Location: friends.php");
-    exit()
+    exit();
 }
 
 $msg = $_POST['message'];
 $friend = new User($friendName); 
 
-if(isset($_POST['submit']) && $_POST['submit'] === 'send')) {
+if(isset($_POST['submit']) && $_POST['submit'] === 'send') {
     $service->sendMessage($msg, $friend);
 }
 
@@ -47,7 +48,7 @@ if(isset($_POST['submit']) && $_POST['submit'] === 'send')) {
         <div>
             <a href="friends.php">Back</a>
             |
-            <a href="profile.php">Profile</a>
+            <a href="<?php echo "profile.php" . "?friendName=" . $friendName ?>">Profile</a>
             |
             <a href="friends.php" class="rmvchat">Remove Friend</a>
  
