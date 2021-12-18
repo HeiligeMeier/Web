@@ -61,7 +61,7 @@ export class FriendsComponent implements OnInit {
                     for (let i = a + b; i < friends.length; i++) {
                         if (friends[i].status == "accepted") {
                             // flackert, weil auf 0 initialisiert wird
-                            if (friends[i].unreadMessages == 0 || friends[i].unreadMessages == undefined) {
+                            if (friends[i].unreadMessages == 0 || friends[i].unreadMessages == undefined) {                                
                                 friends[i].unreadMessages = 0;
                             }
                             this.friendsArray[a] = friends[i];
@@ -97,25 +97,26 @@ export class FriendsComponent implements OnInit {
     }
 
     // AcceptButtonHandler
-    public acceptFriend(i: number) {
-        this.backend.acceptFriendRequest(this.user.requests[i])
+    public acceptFriend(friend: Friend) {
+        this.backend.acceptFriendRequest(friend.username)
             .then((ok: Boolean) => {
                 if (ok) {
                     console.log("added!");
-                    this.user.friends.push(this.requestList[i].username);
-                    this.user.requests.pop();
+                    // this.user.requests.pop();
+                    this.requestList.pop();
+                    this.friendsArray.push(friend);
                 }
             });
     }
 
     // DismissButtonHandler
-    public declineFriend(i: number) {
-        this.backend.dismissFriendRequest(this.user.requests[i])
+    public declineFriend(friend: Friend) {
+        this.backend.dismissFriendRequest(friend.username)
             .then((ok: Boolean) => {
                 if (ok) {
                     console.log("declined!");
-                    this.requestList[i].status = "";
-                    this.user.requests.pop();
+                    // this.user.requests.pop();
+                    this.requestList.pop();
                 }
             });
     }

@@ -23,13 +23,13 @@
 <!-- Freundesanfragen -->
 <h2>New Requests</h2>
 
-<ol style="list-style-type: decimal;">
+<ol>
     <!-- ersetzen durch Anfragen-->
     
-    <li *ngFor="let friend of requestList, index as i"> <a id="lifriends"> Friend request from <span
+    <li *ngFor="let friend of requestList"> <a id="lifriends"> Friend request from <span
                 id="spanfriends"> {{ friend.username }} </span> </a>
-        <button type="button" (click)="acceptFriend(i)"> Accept </button>
-        <button type="button" (click)="declineFriend(i)"> Decline </button>
+        <button type="button" (click)="acceptFriend(friend)"> Accept </button>
+        <button type="button" (click)="declineFriend(friend)"> Decline </button>
     </li>
 </ol>
 <div class="horizontal_dotted_line"></div>
