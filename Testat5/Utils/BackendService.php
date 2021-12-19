@@ -91,7 +91,8 @@ class BackendService {
         try { 
             $list = HttpClient::get($this->base . $this->id . "/message" . "/" . $user->getUsername(),
                 $_SESSION['chat_token']);
-            var_dump($list);
+            return $list;
+            //var_dump($list);
         } catch(\Exception $e) {
             echo "Error while loading list Messages" . "<br>" . $e;
         }
@@ -102,7 +103,7 @@ class BackendService {
             $list = HttpClient::post($this->base . $this->id . "/message",
                 array("message" => $text, "to" => $receiver->getUsername()),
                 $_SESSION['chat_token']);
-            var_dump($list);
+            //var_dump($list);
         } catch(\Exception $e) {
             echo "Error while sending Message" . "<br>" . $e;
         }
