@@ -18,18 +18,25 @@ if (empty($_SESSION['user'])) {
 }
 
 $friendName = $_GET["username"];
-//var_dump($friendName);
 
 if ($partner = "") {
     header("Location: friends.php");
     exit();
 }
 
-$msg = $_POST['message'];
+
 $friend = new User($friendName); 
+$friendAlt = new Friend($friendName);
 
 if(isset($_POST['submit']) && $_POST['submit'] === 'send') {
+    $msg = $_POST['message'];
     $service->sendMessage($msg, $friend);
+}
+
+//removeFriend
+if(isset($_POST['rmv']) && $_POST['rmv'] === 'rmvfriend') {
+    $service->friendRemove($friendAlt);
+    header("Location: friends.php");
 }
 
 
@@ -48,9 +55,9 @@ if(isset($_POST['submit']) && $_POST['submit'] === 'send') {
         <div>
             <a href="friends.php">Back</a>
             |
-            <a href="<?php echo "profile.php" . "?friendName=" . $friendName ?>">Profile</a>
+            <a href="profile.php">Profile</a>
             |
-            <a href="friends.php" class="rmvchat">Remove Friend</a>
+            <form method="post" class="rmvform"><button type="submit" class="looklikelink" name="rmv" value="rmvfriend">Remove Friend</button></form>
  
         </div>
         
@@ -67,6 +74,8 @@ if(isset($_POST['submit']) && $_POST['submit'] === 'send') {
             ?>
                 <span class="timechat">
             <?php
+                $time = $value->time;
+                //echo date("m-d H:i:s", $time)
                 echo $value->time
             ?>    
                 </span>
