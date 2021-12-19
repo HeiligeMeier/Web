@@ -138,6 +138,19 @@ a:hover {
     color: lightgray;
     float: right;
 }
+
+.looklikelink {
+    font-size: medium;
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    color: red;
+    cursor: pointer;
+}
+
+.rmvform {
+    display: inline;
+}
 /*-------------------------------------*/
 /* Profile*/
 #pb{
