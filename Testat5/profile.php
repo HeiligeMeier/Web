@@ -1,4 +1,5 @@
 <?php
+use Model\Friend;
 require("start.php");
 if(!(isset($_SESSION['user']))){
     header("Location: login.php");
@@ -16,10 +17,16 @@ if (empty($_SESSION['user'])) {
 if((!($friendName = $_GET["friendName"])=="")){
     $data = $service->loadUser($friendName);
     $user = Model\User::fromJson($data);
+    $friendAlt = new Friend($friendName);
 }else{
     header("Location: friends.php");
 }
 
+//removeFriend
+if(isset($_POST['rmv']) && $_POST['rmv'] === 'rmvfriend') {
+    $service->friendRemove($friendAlt);
+    header("Location: friends.php");
+}
 
 ?>
 
@@ -32,7 +39,7 @@ if((!($friendName = $_GET["friendName"])=="")){
         <h1>Profile of <?php echo $user->getUsername();?></h1>
         <a href="<?php echo "chat.php" . "?username=" . $friendName ?>"> &lt Back to Chat </a>
         <span>|</span>
-        <a class="rmvchat" href="friends.php">Remove Friend</a><br>
+        <form method="post" class="rmvform"><button type="submit" class="looklikelink" name="rmv" value="rmvfriend">Remove Friend</button></form>><br>
         <div class="content">
         <img id="pb" src="images/profile.png">
         <p class="aboutTextCss">
