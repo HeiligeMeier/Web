@@ -149,7 +149,7 @@ class BackendService {
             HttpClient::put($this->base . $this->id . "/friend" . "/" . $friend->getUsername(),
                 array("status" => "accepted"),
                 $_SESSION['chat_token']);
-            echo "Accepted...";
+            // echo "Accepted...";
         } catch(\Exception $e) {
             echo "Accepting friend failed" . "<br>" . $e;
         }
@@ -160,7 +160,7 @@ class BackendService {
             HttpClient::put($this->base . $this->id . "/friend" . "/" . $friend->getUsername(),
                 array("status" => "dismissed"),
                 $_SESSION['chat_token']);
-            echo "Dismissed...";
+            // echo "Dismissed...";
         } catch(\Exception $e) {
             echo "Dismissing friend failed" . "<br>" . $e;
         }
