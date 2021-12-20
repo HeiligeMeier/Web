@@ -40,6 +40,7 @@ class BackendService {
     public function register($username, $password) {
         try {
             $result = HttpClient::post($this->base . $this->id . "/register", array("username" => $username, "password" => $password));
+            $_SESSION['chat_token'] = $result->token;
             echo "Token: " . $result->token . "<br>";
         } catch(\Exception $e) {
             echo "Registration failed! / " . "<br>" . $e;
