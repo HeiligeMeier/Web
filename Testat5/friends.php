@@ -5,7 +5,7 @@ use Model\Friend;
 require("start.php");
 
 //Reload
-$sec = "7";
+$sec = "5";
 header("Refresh: $sec");
 
 $userExists = "";
@@ -75,9 +75,6 @@ if (isset($_GET['rfriend']) && $_GET['rfriend'] != "") {
                     $friendsCount += 1;
             ?>
                     <p class="pfriends" id="p1friends">
-                        <?php
-                        $chatQuery = 'chat.php?friend=' . $friendName;
-                        ?>
                         <li> <a id="afr" href="<?php echo "chat.php" . "?username=" . $friendName ?>">
                                 <?php echo $friendName; ?>
                                 <span class="listspanfriend" id="listspan1friend">
