@@ -55,7 +55,7 @@ if(isset($_POST['rmv']) && $_POST['rmv'] === 'rmvfriend') {
         <div>
             <a href="friends.php">Back</a>
             |
-            <a href="profile.php">Profile</a>
+            <a href="<?php echo "profile.php". "?friendName=" . $friendName ?>">Profile</a>
             |
             <form method="post" class="rmvform"><button type="submit" class="looklikelink" name="rmv" value="rmvfriend">Remove Friend</button></form>
  
