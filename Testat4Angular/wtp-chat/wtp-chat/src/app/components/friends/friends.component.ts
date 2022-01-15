@@ -79,6 +79,7 @@ export class FriendsComponent implements OnInit {
         console.log("Reloading!");
     }
 
+    
     public unreadMessages(): void {
         this.backend.unreadMessageCounts()
             .then((map: Map<String, number>) => {
@@ -101,6 +102,8 @@ export class FriendsComponent implements OnInit {
         this.backend.acceptFriendRequest(friend.username)
             .then((ok: Boolean) => {
                 if (ok) {
+
+                    friend = new Friend(friend.username, "accepted", 0);
                     console.log("added!");
                     // this.user.requests.pop();
                     this.requestList.pop();
@@ -126,15 +129,7 @@ export class FriendsComponent implements OnInit {
         this.backend.userExists(this.inputUsername)
             .then((ok: Boolean) => {
                 if (ok) {
-                    let userFriend: Boolean = true;
-                    // Überprüft ob Nutzer schon mit input.value befreundet ist
-                    for (let i = 0; i < this.friendsArray.length; i++) {
-                        if (this.friendsArray[i].username == this.inputUsername) {
-                            userFriend = false;
-                        }
-                    }
                     // Falls Nein, wird dieser geaddet
-                    if (userFriend == true) {
                         this.backend.friendRequest(this.inputUsername)
                             .then((ok: Boolean) => {
                                 if (ok) {
@@ -143,12 +138,7 @@ export class FriendsComponent implements OnInit {
                                     console.log("Adding Prozess Failed!");
                                 }
                             });
-                    } else {
-                        console.log("Already your friend! / Added you!");
                     }
-                } else {
-                    console.log("User does not exist!");
-                }
             });
     }
 
