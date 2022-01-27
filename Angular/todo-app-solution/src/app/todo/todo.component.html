@@ -1,0 +1,48 @@
+<div class="container mt-2">
+    
+    <h4>Your todos</h4>
+    <ul *ngIf="getOpenTodos().length > 0">
+        <li *ngFor="let no = index; let todo of getOpenTodos()">
+            <input type="checkbox" [(ngModel)]="todo.done">
+            {{ todo.responsible }} should 
+            {{ todo.description }} 
+            until {{ todo.due | date:'dd.MM.yy' }}
+            <button class="btn-sm btn-primary" (click)="deleteTodo(no)">delete</button>
+        </li>
+    </ul>
+    <p *ngIf="getOpenTodos().length == 0">
+        List empty! Enjoy your day!
+    </p>
+
+    <hr>
+    
+    <h4>Create a new Todo!</h4>
+    <form>
+        <div class="form-group">
+            <label for="desc">Description:</label>
+            <input type="text" class="form-control" placeholder="What needs to be done?"
+                id="desc" [(ngModel)]="description" name="description">
+        </div>
+        <div class="form-group">
+            <label for="resp">Person responsible:</label>
+            <input type="text" class="form-control" placeholder="Who should do it?"
+                id="resp" [(ngModel)]="responsible" name="responsible">
+        </div>
+        <div class="form-group">
+            <label for="due">Due date:</label>
+            <input type="date" class="form-control" id="due"  [(ngModel)]="due" name="due">
+        </div>
+        <button type="submit" class="btn-sm btn-secondary" (click)="addTodo()">add todo</button>
+    </form>
+
+    <hr>
+    <h4>Your completed todos</h4>
+    <ul *ngIf="getClosedTodos().length > 0">
+        <li *ngFor="let no = index; let todo of getClosedTodos()">
+            {{ todo.responsible }} should 
+            {{ todo.description }} 
+            until {{ todo.due | date:'dd.MM.yy' }}
+        </li>
+    </ul>
+    
+</div>
